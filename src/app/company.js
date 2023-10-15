@@ -27,7 +27,7 @@ const language = [
     return classes.filter(Boolean).join(' ')
   }
 
-export default function Home() {
+export default function Company() {
 
   const [selected, setSelected] = useState(language[0])
 
