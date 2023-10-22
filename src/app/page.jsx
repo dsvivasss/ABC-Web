@@ -21,15 +21,40 @@ const language = [
     name: 'Alemán',
   },
 
-  ]
+]
 
-  function classNames(...classes) {
-    return classes.filter(Boolean).join(' ')
-  }
+function classNames(...classes) {
+  return classes.filter(Boolean).join(' ')
+}
 
 export default function Home() {
 
   const [selected, setSelected] = useState(language[0])
+
+  // TODO: Add validation
+  const register = async (e) => {
+
+    const body = {
+      username: e.target.name.value,
+      email: e.target.email.value,
+      password: e.target.password.value,
+      language: selected.name,
+      skill: e.target.skill.value,
+      personality: e.target.personality.value
+    }
+
+    e.preventDefault()
+    const res = await fetch('https://fli2mqd2g8.execute-api.us-east-1.amazonaws.com/dev/users/', {
+      body: JSON.stringify(body),
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      method: 'POST'
+    })
+
+    const result = await res.json()
+    console.log(result)
+  }
 
   return (
     <main className={styles.main}>
@@ -43,25 +68,25 @@ export default function Home() {
       </div>
 
       <div
-          className="mx-auto mt-6 flex animate-fade-up items-center justify-center space-x-5 opacity-0 pb-6"
-          style={{ animationDelay: "0.3s", animationFillMode: "forwards" }}
+        className="mx-auto mt-6 flex animate-fade-up items-center justify-center space-x-5 opacity-0 pb-6"
+        style={{ animationDelay: "0.3s", animationFillMode: "forwards" }}
+      >
+        <a
+          className="group flex max-w-fit items-center justify-center space-x-2 rounded-full border border-black bg-black px-5 py-2 text-sm text-white transition-colors hover:bg-white hover:text-black"
+          href="/"
+          rel="noopener noreferrer"
         >
-          <a
-            className="group flex max-w-fit items-center justify-center space-x-2 rounded-full border border-black bg-black px-5 py-2 text-sm text-white transition-colors hover:bg-white hover:text-black"
-            href="/"
-            rel="noopener noreferrer"
-          >
-            <p>Accede como aspirante</p>
-          </a>
-          <a
-            className="flex max-w-fit items-center justify-center space-x-2 rounded-full border border-gray-300 bg-white px-5 py-2 text-sm text-gray-600 shadow-md transition-colors hover:border-gray-800"
-            href="/company"
-            rel="noopener noreferrer"
-          >
-            <p>
-              <span className="hidden sm:inline-block">Accede como empresa</span>
-            </p>
-          </a>
+          <p>Accede como aspirante</p>
+        </a>
+        <a
+          className="flex max-w-fit items-center justify-center space-x-2 rounded-full border border-gray-300 bg-white px-5 py-2 text-sm text-gray-600 shadow-md transition-colors hover:border-gray-800"
+          href="/company"
+          rel="noopener noreferrer"
+        >
+          <p>
+            <span className="hidden sm:inline-block">Accede como empresa</span>
+          </p>
+        </a>
       </div>
 
       <div className={styles.card}>
@@ -72,9 +97,9 @@ export default function Home() {
         </div>
 
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-          <form className="space-y-6" action="#" method="POST">
+          <form className="space-y-6" onSubmit={(e) => register(e)}>
 
-          <div>
+            <div>
               <label htmlFor="name" className="block text-sm font-medium leading-6 text-gray-900">
                 Nombre
               </label>
