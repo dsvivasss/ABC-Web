@@ -32,7 +32,7 @@ export default function Home() {
   const [selected, setSelected] = useState(language[0])
 
   // TODO: Add validation
-  const register = async (e) => {
+  function register(e) {
 
     const body = {
       username: e.target.name.value,
@@ -44,16 +44,17 @@ export default function Home() {
     }
 
     e.preventDefault()
-    const res = await fetch('https://fli2mqd2g8.execute-api.us-east-1.amazonaws.com/dev/users/', {
+    fetch('https://fli2mqd2g8.execute-api.us-east-1.amazonaws.com/dev/users/', {
       body: JSON.stringify(body),
       headers: {
         'Content-Type': 'application/json'
       },
       method: 'POST'
     })
-
-    const result = await res.json()
-    console.log(result)
+    .then(response => {
+      console.log(response.json())
+      toast("Aspirante creado!", {position: "bottom-left",theme: "dark"})
+    });
   }
 
   return (
@@ -97,7 +98,7 @@ export default function Home() {
         </div>
 
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-          <form className="space-y-6" onSubmit={(e) => register(e)}>
+          <form className="space-y-6" onSubmit={register}>
 
             <div>
               <label htmlFor="name" className="block text-sm font-medium leading-6 text-gray-900">

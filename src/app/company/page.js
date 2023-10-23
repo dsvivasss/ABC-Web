@@ -4,6 +4,8 @@ import styles from '../page.module.css'
 import { Fragment, useState } from 'react'
 import { Listbox, Transition } from '@headlessui/react'
 import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const tamanio = [
   {
@@ -69,6 +71,34 @@ export default function Company() {
   const [selected2, setSelected2] = useState(ubicacion[0])
   const [selected3, setSelected3] = useState(sector[0])
 
+  function register(e){
+    e.preventDefault();
+    const form = e.target;
+    const formData = new FormData(form);
+    const formJson = Object.fromEntries(formData.entries());
+    const body = {
+        name: formJson.company_name,
+        email: formJson.email,
+        password: formJson.password,
+        size: selected.name,
+        location: selected2.name,
+        website: formJson.website,
+        sector: selected3.name
+    }
+    fetch('https://fli2mqd2g8.execute-api.us-east-1.amazonaws.com/dev/companies/', 
+    { 
+      method: 'POST', 
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(body)
+    })
+    .then(response => {
+      console.log(response.json())
+      toast("Empresa creada!", {position: "bottom-left",theme: "dark"})
+    });
+  }
+
   return (
     <main className={styles.main}>
 
@@ -110,7 +140,7 @@ export default function Company() {
         </div>
 
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-          <form className="space-y-6" action="#" method="POST">
+          <form className="space-y-6" action="#" method="POST" onSubmit={register}>
 
           <div>
               <label htmlFor="company_name" className="block text-sm font-medium leading-6 text-gray-900">
@@ -393,7 +423,7 @@ export default function Company() {
           </p>
         </div>
       </div>
-
+      <ToastContainer />
     </main>
   )
 }
