@@ -8,6 +8,8 @@ import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { PaperClipIcon, ChevronUpDownIcon } from "@heroicons/react/20/solid";
 import { useCallback, useEffect } from "react";
 import { CheckIcon } from "@heroicons/react/20/solid";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const skills_soft = [
   {
@@ -66,10 +68,42 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
+
 export default function Project_create() {
   const [selected, setSelected] = useState(skills_soft[0]);
   const [selected2, setSelected2] = useState(skills_hard[0]);
   const [selected3, setSelected3] = useState(roles[0]);
+
+  function register(e){
+    const company = 1;
+    e.preventDefault();
+    const form = e.target;
+    const formData = new FormData(form);
+    const formJson = Object.fromEntries(formData.entries());
+    const soft_skills = selected.name.split(" ");
+    const hard_skills = selected2.name.split(" ");
+    const roles = selected3.name.split(" ");
+    const body = {
+      company_id: 1,
+      title: formJson.project_title,
+      description: formJson.project_description,
+      soft_skills: soft_skills,
+      hard_skills: hard_skills,
+      roles: roles
+    }
+    fetch('https://fli2mqd2g8.execute-api.us-east-1.amazonaws.com/dev/projects/', 
+    { 
+      method: 'POST', 
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(body)
+    })
+    .then(response => {
+      console.log(response.json())
+      toast("Proyecto creado!", {position: "bottom-left",theme: "dark"})
+    });
+  }
 
   return (
     <>
@@ -247,7 +281,7 @@ export default function Project_create() {
             <div className={styles.card}>
               <div className="lg:flex lg:items-center lg:justify-between pb-2">
                 <div className="min-w-0 flex-1">
-                  <form className="space-y-6" onSubmit={(e) => register(e)}>
+                  <form className="space-y-6" onSubmit={register}>
                     <div>
                       <label
                         htmlFor="project_title"
@@ -538,10 +572,10 @@ export default function Project_create() {
                     </Listbox>
 
                     <div className="pb-1 pt-2">
-                      <span class="hidden sm:block pr-5">
+                      <span className="hidden sm:block pr-5">
                         <button
                           type="button"
-                          class="inline-flex items-center rounded-md px-3 py-2 text-sm font-semibold text-indigo-800 leading-6"
+                          className="inline-flex items-center rounded-md px-3 py-2 text-sm font-semibold text-indigo-800 leading-6"
                         >
                           Cancelar
                         </button>
@@ -562,6 +596,7 @@ export default function Project_create() {
           </div>
         </div>
       </div>
+      <ToastContainer />
     </>
   );
 }
