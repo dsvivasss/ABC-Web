@@ -7,7 +7,6 @@ import { Disclosure, Menu } from "@headlessui/react";
 import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { PaperClipIcon } from "@heroicons/react/20/solid";
 import { useCallback, useEffect } from "react";
-import axios from "axios";
 import {
   BriefcaseIcon,
   CalendarIcon,
@@ -20,45 +19,6 @@ import {
 } from "@heroicons/react/20/solid";
 
 import ProjectcardItem from "../components/ProjectcardItem";
-
-const proyectosEjemplo = [
-  {
-    nombre: "Proyecto A",
-    descripcion: "Descripción del Proyecto A",
-    roles: ["Gerente de Proyecto", "Desarrollador Frontend", "Diseñador UX"],
-    habilidades: [
-      "Comunicación efectiva",
-      "Trabajo en equipo",
-      "Resolución de problemas",
-    ],
-  },
-  {
-    nombre: "Proyecto B",
-    descripcion: "Descripción del Proyecto B",
-    roles: [
-      "Director de Marketing",
-      "Desarrollador Backend",
-      "Especialista en SEO",
-    ],
-    habilidades: [
-      "Marketing digital",
-      "Programación en Python",
-      "Optimización de motores de búsqueda",
-    ],
-  },
-  {
-    nombre: "Proyecto C",
-    descripcion: "Descripción del Proyecto C",
-    roles: ["CEO", "Analista de Datos", "Especialista en Finanzas"],
-    habilidades: [
-      "Gestión estratégica",
-      "Análisis de datos",
-      "Planificación financiera",
-    ],
-  },
-];
-
-const navigation = [{ name: "Dashboard", href: "#", current: true }];
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -88,7 +48,7 @@ export default function Project() {
 
   return (
     <>
-      <div class="">
+      <div className="">
         <Disclosure as="nav" className="bg-white">
           {({ open }) => (
             <>
@@ -197,15 +157,15 @@ export default function Project() {
           )}
         </Disclosure>
       </div>
-      <div class="flex">
-        <div class="bg-neutral-50 w-1/6">
-          <div class="min-h-screen flex flex-col flex-auto flex-shrink-0 antialiased bg-neutral-50 text-gray-800">
-            <div class="flex flex-col top-0 left-0 bg-neutral-50 h-full border-r">
-              <div class="overflow-y-auto overflow-x-hidden flex-grow">
-                <ul class="flex flex-col py-4 space-y-1">
-                  <li class="px-5">
-                    <div class="flex flex-row items-center h-8">
-                      <div class="text-sm font-light tracking-wide text-gray-500">
+      <div className="flex">
+        <div className="bg-neutral-50 w-1/6">
+          <div className="min-h-screen flex flex-col flex-auto flex-shrink-0 antialiased bg-neutral-50 text-gray-800">
+            <div className="flex flex-col top-0 left-0 bg-neutral-50 h-full border-r">
+              <div className="overflow-y-auto overflow-x-hidden flex-grow">
+                <ul className="flex flex-col py-4 space-y-1">
+                  <li className="px-5">
+                    <div className="flex flex-row items-center h-8">
+                      <div className="text-sm font-light tracking-wide text-gray-500">
                         Menu
                       </div>
                     </div>
@@ -214,28 +174,28 @@ export default function Project() {
                   <li>
                     <a
                       href="#"
-                      class="flex items-center h-11 focus:outline-none hover:bg-gray-50 text-gray-600 hover:text-gray-800 border-l-4 border-transparent hover:border-indigo-500 pr-6"
+                      className="flex items-center h-11 focus:outline-none hover:bg-gray-50 text-gray-600 hover:text-gray-800 border-l-4 border-transparent hover:border-indigo-500 pr-6"
                     >
-                      <span class="inline-flex justify-center items-center ml-4">
+                      <span className="inline-flex justify-center items-center ml-4">
                         <svg
-                          class="w-5 h-5"
+                          className="w-5 h-5"
                           fill="none"
                           stroke="currentColor"
                           viewBox="0 0 24 24"
                           xmlns="http://www.w3.org/2000/svg"
                         >
                           <path
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            stroke-width="2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth="2"
                             d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
                           ></path>
                         </svg>
                       </span>
-                      <span class="ml-2 text-sm tracking-wide truncate">
+                      <span className="ml-2 text-sm tracking-wide truncate">
                         Proyectos
                       </span>
-                      <span class="px-2 py-0.5 ml-auto text-xs font-medium tracking-wide text-green-500 bg-green-50 rounded-full">
+                      <span className="px-2 py-0.5 ml-auto text-xs font-medium tracking-wide text-green-500 bg-green-50 rounded-full">
                         3
                       </span>
                     </a>
@@ -246,7 +206,7 @@ export default function Project() {
           </div>
         </div>
 
-        <div class="w-5/6 p-4">
+        <div className="w-5/6 p-4">
           <div className="lg:flex lg:items-center lg:justify-between">
             <div className="min-w-0 flex-1 pl-6 pb-4">
               <h2 className="animate-fade-up from-black bg-clip-text text-2xl font-bold leading-7 text-gray-900 sm:truncate sm:text-3xl sm:tracking-tight py-2">
