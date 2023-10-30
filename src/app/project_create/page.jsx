@@ -10,6 +10,7 @@ import { useCallback, useEffect } from "react";
 import { CheckIcon } from "@heroicons/react/20/solid";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useRouter } from 'next/navigation'
 
 const skills_soft = [
   {
@@ -101,9 +102,12 @@ export default function Project_create() {
       },
       body: JSON.stringify(body)
     })
-    .then(response => {
-      console.log(response.json())
+    .then(response => response.json())
+    .then((data) => {
+      console.log(data)
       toast("Proyecto creado!", {position: "bottom-left",theme: "dark"})
+      router.refresh()
+      router.push("/project_list")
     });
   }
 
