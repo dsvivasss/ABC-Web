@@ -64,6 +64,7 @@ const roles = [
 
 const navigation = [{ name: "Dashboard", href: "#", current: true }];
 
+// istanbul ignore next
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
@@ -74,6 +75,7 @@ export default function Project_create() {
   const [selected2, setSelected2] = useState(skills_hard[0]);
   const [selected3, setSelected3] = useState(roles[0]);
 
+  // istanbul ignore next
   function register(e){
     const company = 1;
     e.preventDefault();

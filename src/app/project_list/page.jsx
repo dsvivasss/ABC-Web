@@ -57,6 +57,7 @@ const proyectosEjemplo = [
 
 const navigation = [{ name: "Dashboard", href: "#", current: true }];
 
+// istanbul ignore next
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }

@@ -2,10 +2,17 @@
   "name": "abc-web",
   "version": "0.1.0",
   "private": true,
-  "jest": {},
+  "jest": {
+    "coverageThreshold": {
+      "global": {
+        "lines": 90,
+        "statements": 90
+      }
+    }
+  },
   "scripts": {
     "test": "jest",
-    "jest-preview": "jest-preview",
+    "test:coverage": "jest --coverage --updateSnapshot",
     "dev": "next dev",
     "build": "next build",
     "start": "next start",

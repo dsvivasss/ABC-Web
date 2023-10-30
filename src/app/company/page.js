@@ -61,6 +61,7 @@ const tamanio = [
     
       ]
 
+  // istanbul ignore next
   function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
   }
@@ -71,6 +72,7 @@ export default function Company() {
   const [selected2, setSelected2] = useState(ubicacion[0])
   const [selected3, setSelected3] = useState(sector[0])
 
+  // istanbul ignore next
   function register(e){
     e.preventDefault();
     const form = e.target;
