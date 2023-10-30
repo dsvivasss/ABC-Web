@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Home page Home page renders correctly 1`] = `
+exports[`Project_create page Project_create page renders correctly 1`] = `
 <div>
   <div
     class=""

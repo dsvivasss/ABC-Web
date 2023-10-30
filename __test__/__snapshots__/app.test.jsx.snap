@@ -123,6 +123,32 @@ exports[`Home page Home page renders correctly 1`] = `
               />
             </div>
           </div>
+          <div>
+            <div
+              class="flex items-center justify-between"
+            >
+              <label
+                class="block text-sm font-medium leading-6 text-gray-900"
+                for="phone"
+              >
+                Telefono Celular
+              </label>
+            </div>
+            <div
+              class="mt-2"
+            >
+              <input
+                autocomplete="phone"
+                class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                id="phone"
+                maxlength="10"
+                name="phone"
+                placeholder="+571112223333"
+                required=""
+                type="number"
+              />
+            </div>
+          </div>
           <label
             class="block text-sm font-medium leading-6 text-gray-900"
             data-headlessui-state=""
@@ -170,26 +196,97 @@ exports[`Home page Home page renders correctly 1`] = `
               </span>
             </button>
           </div>
-          <div>
-            <label
-              class="block text-sm font-medium leading-6 text-gray-900"
-              for="skill"
+          <label
+            class="block text-sm font-medium leading-6 text-gray-900"
+            data-headlessui-state=""
+            id="headlessui-listbox-label-:r2:"
+          >
+            Pais
+          </label>
+          <div
+            class="relative mt-2"
+          >
+            <button
+              aria-expanded="false"
+              aria-haspopup="listbox"
+              aria-labelledby="headlessui-listbox-label-:r2: headlessui-listbox-button-:r3:"
+              class="relative w-full cursor-default rounded-md bg-white py-1.5 pr-10 text-left text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 sm:text-sm sm:leading-6"
+              data-headlessui-state=""
+              id="headlessui-listbox-button-:r3:"
+              type="button"
             >
-              Habilidades
-            </label>
-            <div
-              class="mt-2"
+              <span
+                class="flex items-center"
+              >
+                <span
+                  class="ml-3 block truncate"
+                >
+                  Colombia
+                </span>
+              </span>
+              <span
+                class="pointer-events-none absolute inset-y-0 right-0 ml-2 flex items-center pr-2 pt-2"
+              >
+                <svg
+                  aria-hidden="true"
+                  class="h-5 w-5 text-gray-900"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    clip-rule="evenodd"
+                    d="M10 3a.75.75 0 01.55.24l3.25 3.5a.75.75 0 11-1.1 1.02L10 4.852 7.3 7.76a.75.75 0 01-1.1-1.02l3.25-3.5A.75.75 0 0110 3zm-3.76 9.2a.75.75 0 011.06.04l2.7 2.908 2.7-2.908a.75.75 0 111.1 1.02l-3.25 3.5a.75.75 0 01-1.1 0l-3.25-3.5a.75.75 0 01.04-1.06z"
+                    fill-rule="evenodd"
+                  />
+                </svg>
+              </span>
+            </button>
+          </div>
+          <label
+            class="block text-sm font-medium leading-6 text-gray-900"
+            data-headlessui-state=""
+            id="headlessui-listbox-label-:r4:"
+          >
+            Pais
+          </label>
+          <div
+            class="relative mt-2"
+          >
+            <button
+              aria-expanded="false"
+              aria-haspopup="listbox"
+              aria-labelledby="headlessui-listbox-label-:r4: headlessui-listbox-button-:r5:"
+              class="relative w-full cursor-default rounded-md bg-white py-1.5 pr-10 text-left text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 sm:text-sm sm:leading-6"
+              data-headlessui-state=""
+              id="headlessui-listbox-button-:r5:"
+              type="button"
             >
-              <input
-                autocomplete="skill"
-                class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                id="skill"
-                name="skill"
-                placeholder="  Selecciona tus habilidades"
-                required=""
-                type="skill"
-              />
-            </div>
+              <span
+                class="flex items-center"
+              >
+                <span
+                  class="ml-3 block truncate"
+                />
+              </span>
+              <span
+                class="pointer-events-none absolute inset-y-0 right-0 ml-2 flex items-center pr-2 pt-2"
+              >
+                <svg
+                  aria-hidden="true"
+                  class="h-5 w-5 text-gray-900"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    clip-rule="evenodd"
+                    d="M10 3a.75.75 0 01.55.24l3.25 3.5a.75.75 0 11-1.1 1.02L10 4.852 7.3 7.76a.75.75 0 01-1.1-1.02l3.25-3.5A.75.75 0 0110 3zm-3.76 9.2a.75.75 0 011.06.04l2.7 2.908 2.7-2.908a.75.75 0 111.1 1.02l-3.25 3.5a.75.75 0 01-1.1 0l-3.25-3.5a.75.75 0 01.04-1.06z"
+                    fill-rule="evenodd"
+                  />
+                </svg>
+              </span>
+            </button>
           </div>
           <div>
             <label

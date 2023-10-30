@@ -6,6 +6,7 @@ import { Listbox, Transition } from '@headlessui/react'
 import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useRouter } from 'next/navigation'
 
 const tamanio = [
   {
@@ -68,6 +69,7 @@ const tamanio = [
 
 export default function Company() {
 
+  const router = useRouter()
   const [selected, setSelected] = useState(tamanio[0])
   const [selected2, setSelected2] = useState(ubicacion[0])
   const [selected3, setSelected3] = useState(sector[0])
@@ -95,9 +97,12 @@ export default function Company() {
       },
       body: JSON.stringify(body)
     })
-    .then(response => {
-      console.log(response.json())
+    .then(response => response.json())
+    .then((data) =>{
+      console.log(data)
       toast("Empresa creada!", {position: "bottom-left",theme: "dark"})
+      router.refresh()
+      router.push("/project_list")
     });
   }
 
