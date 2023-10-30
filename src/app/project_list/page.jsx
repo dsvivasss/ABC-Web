@@ -19,6 +19,8 @@ import {
 } from "@heroicons/react/20/solid";
 
 import ProjectcardItem from "../components/ProjectcardItem";
+import Link from 'next/link'
+
 
 // istanbul ignore next
 function classNames(...classes) {
@@ -228,7 +230,7 @@ export default function Project() {
                     className="-ml-0.5 mr-1.5 h-5 w-5"
                     aria-hidden="true"
                   />
-                  Crear nuevo proyecto
+                  <Link href="/project_create">Crear nuevo proyecto</Link>
                 </button>
               </span>
 
