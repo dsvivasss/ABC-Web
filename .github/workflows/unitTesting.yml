@@ -9,7 +9,7 @@ on:
       - develop
 
 jobs:
-  test-users:
+  tests-web:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout code
