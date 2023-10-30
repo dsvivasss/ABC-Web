@@ -2,8 +2,12 @@
 
 exports[`Dummy test 1`] = `
 <div>
-  <main>
-    <div>
+  <main
+    class="main"
+  >
+    <div
+      class="center"
+    >
       <h1
         class="animate-fade-up from-black bg-clip-text text-center font-display text-4xl font-bold tracking-[-0.02em] [text-wrap:balance] md:text-7xl md:leading-[5rem]"
         style="animation-delay: 0.15s; animation-fill-mode: forwards;"
@@ -38,7 +42,9 @@ exports[`Dummy test 1`] = `
         </p>
       </a>
     </div>
-    <div>
+    <div
+      class="card"
+    >
       <div>
         <h2>
           Conectamos profesionales de TI
