@@ -72,6 +72,7 @@ function classNames(...classes) {
 
 
 export default function Project_create() {
+  const router = useRouter()
   const [selected, setSelected] = useState(skills_soft[0]);
   const [selected2, setSelected2] = useState(skills_hard[0]);
   const [selected3, setSelected3] = useState(roles[0]);
