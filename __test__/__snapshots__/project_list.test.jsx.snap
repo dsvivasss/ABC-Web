@@ -234,7 +234,11 @@ exports[`Project page Project page renders correctly 1`] = `
                   fill-rule="evenodd"
                 />
               </svg>
-              Crear nuevo proyecto
+              <a
+                href="/project_create"
+              >
+                Crear nuevo proyecto
+              </a>
             </button>
           </span>
           <div
