@@ -326,7 +326,8 @@ export default function Project_create() {
                 <h1 className="animate-fade-up text-2xl from-black bg-clip-text  font-bold leading-7 text-gray-900 sm:truncate sm:tracking-tight py-2">
                   Listado de pruebas
                 </h1>
-                <table className="table-auto divide-y divide-gray-300 py-2">
+                <p className="pb-1">Conoce el resultado de las pruebas realizadas a tus candidatos.</p>
+                <table className="table-auto divide-y divide-gray-300 py-3">
                   <thead className="">
                     <tr>
                       <th className="text-lg from-black font-bold leading-2 text-gray-900 sm:truncate sm:tracking-tight py-1">
