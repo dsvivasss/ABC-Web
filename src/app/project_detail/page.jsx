@@ -11,6 +11,7 @@ import { CheckIcon } from "@heroicons/react/20/solid";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import TestcardItem from "../components/TestcardItem";
+import { Container } from "postcss";
 
 const skills_soft = [
   {
@@ -237,7 +238,7 @@ export default function Project_create() {
             <div className={styles.grid3}>
               <div className={styles.card}>
                 <h1 className="animate-fade-up text-2xl from-black bg-clip-text  font-bold leading-7 text-gray-900 sm:truncate sm:tracking-tight py-2">
-                  Transformación del aplicativo Dialogo
+                  Proyecto 1
                 </h1>
                 <h1 className="animate-fade-up text-xl from-black bg-clip-text  font-bold leading-7 text-gray-900 sm:truncate sm:tracking-tight py-2">
                   Descripción
@@ -290,28 +291,107 @@ export default function Project_create() {
                 </h1>
                 <div>
                   <dl className="divide-y divide-gray-100">
-                    <div className="px-4 py-2 sm:grid sm:grid-cols-2 sm:gap-4 sm:px-0">
+                    <div className="px-4 py-2 sm:grid sm:grid-cols-1 sm:gap-4 sm:px-0">
                       <dd className="text-sm font-medium leading-6 text-gray-700 sm:px-0">
                         Backend Developer
                       </dd>
                     </div>
-                    <div className="px-4 py-2 sm:grid sm:grid-cols-2 sm:gap-4 sm:px-0">
+                    <div className="px-4 py-2 sm:grid sm:grid-cols-1 sm:gap-4 sm:px-0">
                       <dd className="text-sm font-medium leading-6 text-gray-700 sm:px-0">
                         Senior Frontend Engineer
                       </dd>
                     </div>
-                    <div className="px-4 py-2 sm:grid sm:grid-cols-2 sm:gap-4 sm:px-0">
+                    <div className="px-4 py-2 sm:grid sm:grid-cols-1 sm:gap-4 sm:px-0">
                       <dd className="text-sm font-medium leading-6 text-gray-700 sm:px-0">
                         Software Architect
                       </dd>
                     </div>
-                    <div className="px-4 py-2 sm:grid sm:grid-cols-2 sm:gap-4 sm:px-0">
+                    <div className="px-4 py-2 sm:grid sm:grid-cols-1 sm:gap-4 sm:px-0">
                       <dd className="text-sm font-medium leading-6 text-gray-700 sm:px-0">
                         Backend Developer
                       </dd>
                     </div>
                   </dl>
                 </div>
+              </div>
+              <div className={styles.card}>
+                <h1 className="animate-fade-up text-2xl from-black bg-clip-text  font-bold leading-7 text-gray-900 sm:truncate sm:tracking-tight py-2">
+                  Búsqueda de candidatos ssssss
+                </h1>
+              </div>
+              <div className={styles.card}>
+                <h1 className="animate-fade-up text-2xl from-black bg-clip-text  font-bold leading-7 text-gray-900 sm:truncate sm:tracking-tight py-2">
+                  Listado de pruebas
+                </h1>
+                <table class="table-auto divide-y divide-gray-300 py-2">
+                  <thead className="">
+                    <tr>
+                      <th className="text-lg from-black font-bold leading-2 text-gray-900 sm:truncate sm:tracking-tight py-1">
+                        Candidato
+                      </th>
+                      <th className="text-lg from-black font-bold leading-2 text-gray-900 sm:truncate sm:tracking-tight py-1">
+                        Prueba
+                      </th>
+                      <th className="text-lg from-black font-bold leading-2 text-gray-900 sm:truncate sm:tracking-tight py-1">
+                        Resultado
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-gray-300 py-2">
+                    <tr>
+                      <td className="text-sm font-medium leading-6 text-gray-700 sm:px-3">
+                        Pedro Melenas
+                      </td>
+                      <td className="text-sm font-medium leading-6 text-gray-700 sm:px-3">
+                        Psicológica
+                      </td>
+                      <td>
+                        <span className="inline-flex items-center rounded-md bg-blue-50 px-2 py-1 text-xs font-medium text-blue-700 ring-1 ring-inset ring-blue-700/10">
+                          50%
+                        </span>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td className="text-sm font-medium leading-6 text-gray-700 sm:px-3">
+                        Nino Bravo
+                      </td>
+                      <td className="text-sm font-medium leading-6 text-gray-700 sm:px-3">
+                        Idiomas
+                      </td>
+                      <td>
+                        <span className="inline-flex items-center rounded-md bg-blue-50 px-2 py-1 text-xs font-medium text-blue-700 ring-1 ring-inset ring-blue-700/10">
+                          90%
+                        </span>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td className="text-sm font-medium leading-6 text-gray-700 sm:px-3">
+                        José José
+                      </td>
+                      <td className="text-sm font-medium leading-6 text-gray-700 sm:px-3">
+                        Python
+                      </td>
+                      <td>
+                        <span className="inline-flex items-center rounded-md bg-blue-50 px-2 py-1 text-xs font-medium text-blue-700 ring-1 ring-inset ring-blue-700/10">
+                          80%
+                        </span>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td className="text-sm font-medium leading-6 text-gray-700 sm:px-3">
+                        Beyonce
+                      </td>
+                      <td className="text-sm font-medium leading-6 text-gray-700 sm:px-3">
+                        Psicológica
+                      </td>
+                      <td>
+                        <span className="inline-flex items-center rounded-md bg-blue-50 px-2 py-1 text-xs font-medium text-blue-700 ring-1 ring-inset ring-blue-700/10">
+                          20%
+                        </span>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
               </div>
             </div>
           </div>

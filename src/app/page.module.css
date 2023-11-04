@@ -58,6 +58,7 @@
   grid-template-columns: repeat(3, minmax(25%, auto));
   max-width: 100%;
   width: var(--max-width);
+  column-gap: 1rem;
 }
 
 .card {
