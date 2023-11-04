@@ -12,6 +12,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import TestcardItem from "../components/TestcardItem";
 import { Container } from "postcss";
+import TableComponent from "../components/TableComponent";
 
 const skills_soft = [
   {
@@ -316,14 +317,16 @@ export default function Project_create() {
               </div>
               <div className={styles.card}>
                 <h1 className="animate-fade-up text-2xl from-black bg-clip-text  font-bold leading-7 text-gray-900 sm:truncate sm:tracking-tight py-2">
-                  Búsqueda de candidatos ssssss
+                  Búsqueda de candidatos
                 </h1>
+                <p>Estas a pocos pasos de encontrar tu candidato ideal.</p>
+                <TableComponent></TableComponent>
               </div>
               <div className={styles.card}>
                 <h1 className="animate-fade-up text-2xl from-black bg-clip-text  font-bold leading-7 text-gray-900 sm:truncate sm:tracking-tight py-2">
                   Listado de pruebas
                 </h1>
-                <table class="table-auto divide-y divide-gray-300 py-2">
+                <table className="table-auto divide-y divide-gray-300 py-2">
                   <thead className="">
                     <tr>
                       <th className="text-lg from-black font-bold leading-2 text-gray-900 sm:truncate sm:tracking-tight py-1">
@@ -339,52 +342,52 @@ export default function Project_create() {
                   </thead>
                   <tbody className="divide-y divide-gray-300 py-2">
                     <tr>
-                      <td className="text-sm font-medium leading-6 text-gray-700 sm:px-3">
+                      <td className="text-sm font-medium leading-6 text-gray-700 sm:px-3 py-1">
                         Pedro Melenas
                       </td>
-                      <td className="text-sm font-medium leading-6 text-gray-700 sm:px-3">
+                      <td className="text-sm font-medium leading-6 text-gray-700 sm:px-3 py-1">
                         Psicológica
                       </td>
-                      <td>
+                      <td className="pl-5">
                         <span className="inline-flex items-center rounded-md bg-blue-50 px-2 py-1 text-xs font-medium text-blue-700 ring-1 ring-inset ring-blue-700/10">
                           50%
                         </span>
                       </td>
                     </tr>
                     <tr>
-                      <td className="text-sm font-medium leading-6 text-gray-700 sm:px-3">
+                      <td className="text-sm font-medium leading-6 text-gray-700 sm:px-3 py-1">
                         Nino Bravo
                       </td>
-                      <td className="text-sm font-medium leading-6 text-gray-700 sm:px-3">
+                      <td className="text-sm font-medium leading-6 text-gray-700 sm:px-3 py-1">
                         Idiomas
                       </td>
-                      <td>
+                      <td className="pl-5">
                         <span className="inline-flex items-center rounded-md bg-blue-50 px-2 py-1 text-xs font-medium text-blue-700 ring-1 ring-inset ring-blue-700/10">
                           90%
                         </span>
                       </td>
                     </tr>
                     <tr>
-                      <td className="text-sm font-medium leading-6 text-gray-700 sm:px-3">
+                      <td className="text-sm font-medium leading-6 text-gray-700 sm:px-3 py-1">
                         José José
                       </td>
-                      <td className="text-sm font-medium leading-6 text-gray-700 sm:px-3">
+                      <td className="text-sm font-medium leading-6 text-gray-700 sm:px-3 py-1">
                         Python
                       </td>
-                      <td>
+                      <td className="pl-5">
                         <span className="inline-flex items-center rounded-md bg-blue-50 px-2 py-1 text-xs font-medium text-blue-700 ring-1 ring-inset ring-blue-700/10">
                           80%
                         </span>
                       </td>
                     </tr>
                     <tr>
-                      <td className="text-sm font-medium leading-6 text-gray-700 sm:px-3">
+                      <td className="text-sm font-medium leading-6 text-gray-700 sm:px-3 py-1">
                         Beyonce
                       </td>
-                      <td className="text-sm font-medium leading-6 text-gray-700 sm:px-3">
+                      <td className="text-sm font-medium leading-6 text-gray-700 sm:px-3 py-1">
                         Psicológica
                       </td>
-                      <td>
+                      <td className="pl-5">
                         <span className="inline-flex items-center rounded-md bg-blue-50 px-2 py-1 text-xs font-medium text-blue-700 ring-1 ring-inset ring-blue-700/10">
                           20%
                         </span>
