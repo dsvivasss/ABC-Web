@@ -11,6 +11,7 @@ import { CheckIcon } from "@heroicons/react/20/solid";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import TestcardItem from "../components/TestcardItem";
+import Link from "next/link";
 
 const skills_soft = [
   {
@@ -500,11 +501,10 @@ export default function Project_create() {
                     <div className="pb-1 pt-2">
                       <span className="hidden sm:block pr-5">
                         <button
-                          type="button"
-                          href="http://localhost:3000/project_list"  
+                          type="button"  
                           className="inline-flex items-center rounded-md px-3 py-2 text-sm font-semibold text-indigo-800 leading-6"
                         >
-                          Cancelar
+                          <Link href="/project_detail">Cancelar</Link>
                         </button>
                       </span>
                       <button

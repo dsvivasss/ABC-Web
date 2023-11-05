@@ -13,6 +13,7 @@ import "react-toastify/dist/ReactToastify.css";
 import TestcardItem from "../components/TestcardItem";
 import { Container } from "postcss";
 import TableComponent from "../components/TableComponent";
+import Link from "next/link";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -245,7 +246,7 @@ export default function CandidateItem() {
                 <h1 className="animate-fade-up text-xl from-black bg-clip-text  font-bold leading-7 text-gray-900 sm:truncate sm:tracking-tight py-2">
                   Experiencia
                 </h1>
-                <div>
+                <div className="pb-2">
                   <dl className="divide-y divide-gray-100">
                     <div className="px-4 py-2 sm:grid sm:grid-cols-1 sm:gap-4 sm:px-0">
                       <dd className="text-sm font-medium leading-6 text-gray-700 sm:px-0">
@@ -273,7 +274,7 @@ export default function CandidateItem() {
                   type="submit"
                   className="flex justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                 >
-                  Seleccionar candidato
+                  <Link href="/project_detail">Seleccionar candidato</Link>
                 </button>
               </div>
               <div className={styles.card}>
