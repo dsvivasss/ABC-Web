@@ -14,66 +14,11 @@ import TestcardItem from "../components/TestcardItem";
 import { Container } from "postcss";
 import TableComponent from "../components/TableComponent";
 
-const skills_soft = [
-  {
-    id: 1,
-    name: "Comunicación estratégica",
-  },
-
-  {
-    id: 2,
-    name: "Pensamiento sistémico",
-  },
-
-  {
-    id: 3,
-    name: "Creatividad",
-  },
-];
-
-const skills_hard = [
-  {
-    id: 1,
-    name: "Python",
-  },
-
-  {
-    id: 2,
-    name: "Typescript",
-  },
-
-  {
-    id: 3,
-    name: "Cálculo multivariable",
-  },
-];
-
-const dificultad = [
-  {
-    id: 1,
-    name: "Alta",
-  },
-
-  {
-    id: 2,
-    name: "Media",
-  },
-
-  {
-    id: 3,
-    name: "Baja",
-  },
-];
-
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
 export default function CandidateItem() {
-  const [selected, setSelected] = useState(skills_soft[0]);
-  const [selected2, setSelected2] = useState(skills_hard[0]);
-  const [selected3, setSelected3] = useState(dificultad[0]);
-
   return (
     <>
       <div className="">
@@ -236,20 +181,30 @@ export default function CandidateItem() {
 
         <div className="w-5/6 p-4">
           <div className={styles.center2}>
+            <div className="flex -space-x-2 overflow-hidden">
+              <img
+                className="inline-block h-20 w-20 rounded-full ring-2 ring-white"
+                src="https://images.unsplash.com/photo-1491528323818-fdd1faba62cc?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                alt=""
+              />
+            </div>
+          </div>
+
+          <div className={styles.center2}>
             <div className={styles.grid3}>
               <div className={styles.card}>
                 <h1 className="animate-fade-up text-2xl from-black bg-clip-text  font-bold leading-7 text-gray-900 sm:truncate sm:tracking-tight py-2">
-                  Proyecto 1
+                  Pedro Melenas
                 </h1>
                 <h1 className="animate-fade-up text-xl from-black bg-clip-text  font-bold leading-7 text-gray-900 sm:truncate sm:tracking-tight py-2">
                   Descripción
                 </h1>
                 <p>
-                  En este proyecto se busca mejorar la calidad de vida de las
-                  personas.
+                  Pedro Melenas es un distinguido ingeniero de software,
+                  destacado por sus contrubuciones a a la computación cuántica.
                 </p>
                 <h1 className="animate-fade-up text-xl from-black bg-clip-text  font-bold leading-7 text-gray-900 sm:truncate sm:tracking-tight py-2">
-                  Soft skills necesarias
+                  Soft skills
                 </h1>
                 <span className="inline-flex items-center rounded-md bg-indigo-50 px-2 py-1 text-xs font-medium text-indigo-700 ring-1 ring-inset ring-indigo-700/10">
                   Comunicación estratégica
@@ -267,7 +222,7 @@ export default function CandidateItem() {
                   Empatía
                 </span>
                 <h1 className="animate-fade-up text-xl from-black bg-clip-text  font-bold leading-7 text-gray-900 sm:truncate sm:tracking-tight py-2">
-                  Hard skills necesarias
+                  Hard skills
                 </h1>
                 <span className="inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20">
                   Python
@@ -288,7 +243,7 @@ export default function CandidateItem() {
                   Next Js
                 </span>
                 <h1 className="animate-fade-up text-xl from-black bg-clip-text  font-bold leading-7 text-gray-900 sm:truncate sm:tracking-tight py-2">
-                  Roles necesarios
+                  Experiencia
                 </h1>
                 <div>
                   <dl className="divide-y divide-gray-100">
@@ -314,25 +269,24 @@ export default function CandidateItem() {
                     </div>
                   </dl>
                 </div>
+                <button
+                  type="submit"
+                  className="flex justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                >
+                  Seleccionar candidato
+                </button>
               </div>
               <div className={styles.card}>
                 <h1 className="animate-fade-up text-2xl from-black bg-clip-text  font-bold leading-7 text-gray-900 sm:truncate sm:tracking-tight py-2">
-                  Búsqueda de candidatos
+                  Pruebas de selección
                 </h1>
-                <p>Estas a pocos pasos de encontrar tu candidato ideal.</p>
-                <TableComponent></TableComponent>
-              </div>
-              <div className={styles.card}>
-                <h1 className="animate-fade-up text-2xl from-black bg-clip-text  font-bold leading-7 text-gray-900 sm:truncate sm:tracking-tight py-2">
-                  Listado de pruebas
-                </h1>
-                <p className="pb-1">Conoce el resultado de las pruebas realizadas a tus candidatos.</p>
+                <p>
+                  Este es un resumen de las pruebas que ha realizado el
+                  candidato.
+                </p>
                 <table className="table-auto divide-y divide-gray-300 py-3">
                   <thead className="">
                     <tr>
-                      <th className="text-lg from-black font-bold leading-2 text-gray-900 sm:truncate sm:tracking-tight py-1">
-                        Candidato
-                      </th>
                       <th className="text-lg from-black font-bold leading-2 text-gray-900 sm:truncate sm:tracking-tight py-1">
                         Prueba
                       </th>
@@ -344,9 +298,6 @@ export default function CandidateItem() {
                   <tbody className="divide-y divide-gray-300 py-2">
                     <tr>
                       <td className="text-sm font-medium leading-6 text-gray-700 sm:px-3 py-1">
-                        Pedro Melenas
-                      </td>
-                      <td className="text-sm font-medium leading-6 text-gray-700 sm:px-3 py-1">
                         Psicológica
                       </td>
                       <td className="pl-5">
@@ -354,11 +305,18 @@ export default function CandidateItem() {
                           50%
                         </span>
                       </td>
+                      <td>
+                        <button
+                          className="inline-flex items-center rounded-md bg-indigo-50 px-2 py-1 text-xs font-medium text-indigo-700 ring-1 ring-inset ring-indigo-700/10 hover:bg-indigo-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                          //onClick={() =>
+                          //console.log(`Detalles de ${row.original.rol}`)
+                          //}
+                        >
+                          Modificar
+                        </button>
+                      </td>
                     </tr>
                     <tr>
-                      <td className="text-sm font-medium leading-6 text-gray-700 sm:px-3 py-1">
-                        Nino Bravo
-                      </td>
                       <td className="text-sm font-medium leading-6 text-gray-700 sm:px-3 py-1">
                         Idiomas
                       </td>
@@ -367,11 +325,18 @@ export default function CandidateItem() {
                           90%
                         </span>
                       </td>
+                      <td>
+                        <button
+                          className="inline-flex items-center rounded-md bg-indigo-50 px-2 py-1 text-xs font-medium text-indigo-700 ring-1 ring-inset ring-indigo-700/10 hover:bg-indigo-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                          //onClick={() =>
+                          //console.log(`Detalles de ${row.original.rol}`)
+                          //}
+                        >
+                          Modificar
+                        </button>
+                      </td>
                     </tr>
                     <tr>
-                      <td className="text-sm font-medium leading-6 text-gray-700 sm:px-3 py-1">
-                        José José
-                      </td>
                       <td className="text-sm font-medium leading-6 text-gray-700 sm:px-3 py-1">
                         Python
                       </td>
@@ -380,18 +345,117 @@ export default function CandidateItem() {
                           80%
                         </span>
                       </td>
+                      <td>
+                        <button
+                          className="inline-flex items-center rounded-md bg-indigo-50 px-2 py-1 text-xs font-medium text-indigo-700 ring-1 ring-inset ring-indigo-700/10 hover:bg-indigo-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                          //onClick={() =>
+                          //console.log(`Detalles de ${row.original.rol}`)
+                          //}
+                        >
+                          Modificar
+                        </button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div className={styles.card}>
+                <h1 className="animate-fade-up text-2xl from-black bg-clip-text  font-bold leading-7 text-gray-900 sm:truncate sm:tracking-tight py-2">
+                  Entrevistas
+                </h1>
+                <p className="pb-1">
+                  Verifica las entrevistas realizadas al candidato.
+                </p>
+                <table className="table-auto divide-y divide-gray-300 py-3">
+                  <thead className="">
+                    <tr>
+                      <th className="text-lg from-black font-bold leading-2 text-gray-900 sm:truncate sm:tracking-tight py-1">
+                        Fecha y hora
+                      </th>
+                      <th className="text-lg from-black font-bold leading-2 text-gray-900 sm:truncate sm:tracking-tight py-1">
+                        Resultado
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-gray-300 py-2">
+                    <tr>
+                      <td className="text-sm font-medium leading-6 text-gray-700 sm:px-3 py-1">
+                        10 de Oct 2023
+                      </td>
+                      <td className="pl-5">
+                        <span className="inline-flex items-center rounded-md bg-blue-50 px-2 py-1 text-xs font-medium text-blue-700 ring-1 ring-inset ring-blue-700/10">
+                          50%
+                        </span>
+                      </td>
+                      <td>
+                        <button
+                          className="inline-flex items-center rounded-md bg-indigo-50 px-2 py-1 text-xs font-medium text-indigo-700 ring-1 ring-inset ring-indigo-700/10 hover:bg-indigo-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                          //onClick={() =>
+                          //console.log(`Detalles de ${row.original.rol}`)
+                          //}
+                        >
+                          Modificar
+                        </button>
+                      </td>
                     </tr>
                     <tr>
                       <td className="text-sm font-medium leading-6 text-gray-700 sm:px-3 py-1">
-                        Beyonce
+                        20 de Oct 2023
                       </td>
+                      <td className="pl-5">
+                        <span className="inline-flex items-center rounded-md bg-blue-50 px-2 py-1 text-xs font-medium text-blue-700 ring-1 ring-inset ring-blue-700/10">
+                          90%
+                        </span>
+                      </td>
+                      <td>
+                        <button
+                          className="inline-flex items-center rounded-md bg-indigo-50 px-2 py-1 text-xs font-medium text-indigo-700 ring-1 ring-inset ring-indigo-700/10 hover:bg-indigo-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                          //onClick={() =>
+                          //console.log(`Detalles de ${row.original.rol}`)
+                          //}
+                        >
+                          Modificar
+                        </button>
+                      </td>
+                    </tr>
+                    <tr>
                       <td className="text-sm font-medium leading-6 text-gray-700 sm:px-3 py-1">
-                        Psicológica
+                        3 de Ago 2022
+                      </td>
+                      <td className="pl-5">
+                        <span className="inline-flex items-center rounded-md bg-blue-50 px-2 py-1 text-xs font-medium text-blue-700 ring-1 ring-inset ring-blue-700/10">
+                          80%
+                        </span>
+                      </td>
+                      <td>
+                        <button
+                          className="inline-flex items-center rounded-md bg-indigo-50 px-2 py-1 text-xs font-medium text-indigo-700 ring-1 ring-inset ring-indigo-700/10 hover:bg-indigo-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                          //onClick={() =>
+                          //console.log(`Detalles de ${row.original.rol}`)
+                          //}
+                        >
+                          Modificar
+                        </button>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td className="text-sm font-medium leading-6 text-gray-700 sm:px-3 py-1">
+                        1 Feb de 2023
                       </td>
                       <td className="pl-5">
                         <span className="inline-flex items-center rounded-md bg-blue-50 px-2 py-1 text-xs font-medium text-blue-700 ring-1 ring-inset ring-blue-700/10">
                           20%
                         </span>
+                      </td>
+                      <td>
+                        <button
+                          className="inline-flex items-center rounded-md bg-indigo-50 px-2 py-1 text-xs font-medium text-indigo-700 ring-1 ring-inset ring-indigo-700/10 hover:bg-indigo-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                          //onClick={() =>
+                          //console.log(`Detalles de ${row.original.rol}`)
+                          //}
+                        >
+                          Modificar
+                        </button>
                       </td>
                     </tr>
                   </tbody>
