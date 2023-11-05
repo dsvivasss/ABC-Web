@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useTable, useFilters, useGlobalFilter } from "react-table";
+import Link from "next/link";
 
 const data = [
   {
@@ -113,7 +114,7 @@ const TableComponent = () => {
                 })}
                 <td>
                     <button className="inline-flex items-center rounded-md bg-indigo-50 px-2 py-1 text-xs font-medium text-indigo-700 ring-1 ring-inset ring-indigo-700/10 hover:bg-indigo-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600" onClick={() => console.log(`Detalles de ${row.original.rol}`)}>
-                      Ver Detalle
+                      <Link href="/candidate_detail">Ver Detalle</Link>
                     </button>
                   </td>
               </tr>

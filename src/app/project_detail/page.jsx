@@ -13,6 +13,7 @@ import "react-toastify/dist/ReactToastify.css";
 import TestcardItem from "../components/TestcardItem";
 import { Container } from "postcss";
 import TableComponent from "../components/TableComponent";
+import Link from "next/link";
 
 const skills_soft = [
   {
@@ -70,8 +71,8 @@ function classNames(...classes) {
 }
 
 export default function Project_create() {
-  const project_data = JSON.parse(localStorage.getItem("project_selected"))
-  console.log(project_data)
+  const project_data = JSON.parse(localStorage.getItem("project_selected"));
+  console.log(project_data);
 
   const [selected, setSelected] = useState(skills_soft[0]);
   const [selected2, setSelected2] = useState(skills_hard[0]);
@@ -247,24 +248,22 @@ export default function Project_create() {
                 <h1 className="animate-fade-up text-xl from-black bg-clip-text  font-bold leading-7 text-gray-900 sm:truncate sm:tracking-tight py-2">
                   Descripción
                 </h1>
-                <p>
-                  {project_data.description}
-                </p>
+                <p>{project_data.description}</p>
                 <h1 className="animate-fade-up text-xl from-black bg-clip-text  font-bold leading-7 text-gray-900 sm:truncate sm:tracking-tight py-2">
                   Soft skills necesarias
                 </h1>
-                {project_data.soft_skills.map((skill) =>(
+                {project_data.soft_skills.map((skill) => (
                   <span className="inline-flex items-center rounded-md bg-indigo-50 px-2 py-1 text-xs font-medium text-indigo-700 ring-1 ring-inset ring-indigo-700/10">
-                  {skill}
-                </span>
+                    {skill}
+                  </span>
                 ))}
                 <h1 className="animate-fade-up text-xl from-black bg-clip-text  font-bold leading-7 text-gray-900 sm:truncate sm:tracking-tight py-2">
                   Hard skills necesarias
                 </h1>
-                {project_data.hard_skills.map((hard) =>(
+                {project_data.hard_skills.map((hard) => (
                   <span className="inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20">
-                  {hard}
-                </span>
+                    {hard}
+                  </span>
                 ))}
                 <h1 className="animate-fade-up text-xl from-black bg-clip-text  font-bold leading-7 text-gray-900 sm:truncate sm:tracking-tight py-2">
                   Roles necesarios
@@ -273,10 +272,10 @@ export default function Project_create() {
                   <dl className="divide-y divide-gray-100">
                     {project_data.roles.map((role) => (
                       <div className="px-4 py-2 sm:grid sm:grid-cols-1 sm:gap-4 sm:px-0">
-                      <dd className="text-sm font-medium leading-6 text-gray-700 sm:px-0">
-                        {role}
-                      </dd>
-                    </div>
+                        <dd className="text-sm font-medium leading-6 text-gray-700 sm:px-0">
+                          {role}
+                        </dd>
+                      </div>
                     ))}
                   </dl>
                 </div>
@@ -292,7 +291,24 @@ export default function Project_create() {
                 <h1 className="animate-fade-up text-2xl from-black bg-clip-text  font-bold leading-7 text-gray-900 sm:truncate sm:tracking-tight py-2">
                   Listado de pruebas
                 </h1>
-                <p className="pb-1">Conoce el resultado de las pruebas realizadas a tus candidatos.</p>
+                <p className="pb-1">
+                  Conoce el resultado de las pruebas realizadas a tus
+                  candidatos.
+                </p>
+
+                <span className="sm:ml-3 py-2">
+                  <button
+                    type="button"
+                    className="inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                  >
+                    <CheckIcon
+                      className="-ml-0.5 mr-1.5 h-5 w-5"
+                      aria-hidden="true"
+                    />
+                    <Link href="/test_create">Crear nueva prueba</Link>
+                  </button>
+                </span>
+
                 <table className="table-auto divide-y divide-gray-300 py-3">
                   <thead className="">
                     <tr>
