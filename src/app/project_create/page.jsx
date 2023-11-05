@@ -10,7 +10,8 @@ import { useCallback, useEffect } from "react";
 import { CheckIcon } from "@heroicons/react/20/solid";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { useRouter } from 'next/navigation'
+import { useRouter } from 'next/navigation';
+import Link from "next/link";
 
 const skills_soft = [
   {
@@ -204,13 +205,12 @@ export default function Project_create() {
                           <Menu.Item>
                             {({ active }) => (
                               <a
-                                href="#"
                                 className={classNames(
                                   active ? "bg-gray-100" : "",
                                   "block px-4 py-2 text-sm text-gray-700"
                                 )}
                               >
-                                Cerrar sesión
+                                <Link href="/company_login">Cerrar sesión</Link>
                               </a>
                             )}
                           </Menu.Item>

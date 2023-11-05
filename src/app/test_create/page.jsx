@@ -131,7 +131,7 @@ export default function Project_create() {
       }
     ).then((response) => {
       console.log(response.json());
-      toast("Proyecto creado!", { position: "bottom-left", theme: "dark" });
+      toast("Prueba creada!", { position: "bottom-left", theme: "dark" });
     });
   }
 
@@ -226,13 +226,12 @@ export default function Project_create() {
                           <Menu.Item>
                             {({ active }) => (
                               <a
-                                href="#"
                                 className={classNames(
                                   active ? "bg-gray-100" : "",
                                   "block px-4 py-2 text-sm text-gray-700"
                                 )}
                               >
-                                Cerrar sesión
+                                <Link href="/company_login">Cerrar sesión</Link>
                               </a>
                             )}
                           </Menu.Item>
@@ -262,7 +261,7 @@ export default function Project_create() {
 
                   <li>
                     <a
-                      href="http://localhost:3000/project_list"
+                      href="/project_list"
                       className="flex items-center h-11 focus:outline-none hover:bg-gray-50 text-gray-600 hover:text-gray-800 border-l-4 border-transparent hover:border-indigo-500 pr-6"
                     >
                       <span className="inline-flex justify-center items-center ml-4">
@@ -509,7 +508,6 @@ export default function Project_create() {
                       </span>
                       <button
                         type="submit"
-                        href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
                         className="justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                       >
                         Crear test

@@ -414,7 +414,6 @@ export default function Company() {
             <div className="pb-1">
               <button
                 type="submit"
-                href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
                 className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
               >
                 Registrarse
@@ -424,7 +423,7 @@ export default function Company() {
 
           <p className="mt-10 text-center text-sm text-gray-500 pt-4">
             ¿Ya tienes una cuenta?{' '}
-            <a href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app" className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">
+            <a href="/company_login" className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">
               Iniciar sesión
             </a>
           </p>
