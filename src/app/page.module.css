@@ -53,6 +53,14 @@
   width: var(--max-width);
 }
 
+.grid3 {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(25%, auto));
+  max-width: 100%;
+  width: var(--max-width);
+  column-gap: 1rem;
+}
+
 .card {
   padding: 1rem 1.2rem;
   border-radius: var(--border-radius);
@@ -80,6 +88,14 @@
 }
 
 .center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  padding: 1rem 0;
+}
+
+.center2 {
   display: flex;
   justify-content: center;
   align-items: center;
