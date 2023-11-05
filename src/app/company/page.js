@@ -99,8 +99,8 @@ export default function Company() {
     })
     .then(response => response.json())
     .then((data) =>{
-      console.log(data)
       toast("Empresa creada!", {position: "bottom-left",theme: "dark"})
+      localStorage.setItem("company_id", data.id)
       router.refresh()
       router.push("/project_list")
     });

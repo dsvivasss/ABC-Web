@@ -29,13 +29,15 @@ function classNames(...classes) {
 
 export default function Project() {
   const [projects, setProjects] = useState([]);
+  const company_id = localStorage.getItem("company_id")
 
   useEffect(() => ListProject(), []);
 
   // istanbul ignore next
   function ListProject() {
+    
     fetch(
-      "https://fli2mqd2g8.execute-api.us-east-1.amazonaws.com/dev/projects/companies/2",
+      `https://fli2mqd2g8.execute-api.us-east-1.amazonaws.com/dev/projects/companies/${company_id}`,
       {
         method: "GET",
         headers: {
@@ -44,10 +46,9 @@ export default function Project() {
       }
     )
       .then((response) => response.json())
-
-      .then((data) => setProjects(data.projects));
+      .then((data) => {console.log(data)
+        setProjects(data.projects)});
   }
-
   // {projects=data.projects}
 
   return (
@@ -270,7 +271,6 @@ export default function Project() {
                     <Menu.Item>
                       {({ active }) => (
                         <a
-                          href="#"
                           className={classNames(
                             active ? "bg-gray-100" : "",
                             "block px-4 py-2 text-sm text-gray-700"
@@ -288,13 +288,8 @@ export default function Project() {
 
           <div>
             {projects.map((project, index) => (
-              <ProjectcardItem
-                company_id={index}
-                title={project.title}
-                description={project.description}
-                soft_skills={project.soft_skills}
-                hard_skills={project.hard_skills}
-                roles={project.roles}
+              <ProjectcardItem 
+              project_data={project}
               />
             ))}
           </div>

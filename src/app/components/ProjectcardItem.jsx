@@ -13,20 +13,26 @@ import {
     MapPinIcon,
     PencilIcon,
   } from "@heroicons/react/20/solid";
+  import { useRouter } from 'next/navigation'
 
-const ProjectcardItem = ({
-  title,
-  description,
-  soft_skills,
-  hard_skills,
-  roles,
-}) => {
+const ProjectcardItem = ({project_data}) => {
+  const router = useRouter() 
+  function viewProject(project){
+    localStorage.setItem("project_selected", JSON.stringify(project))
+    router.refresh()
+    router.push("/project_detail")
+  }
+  function editProject(project){
+    localStorage.setItem("project_selected", JSON.stringify(project))
+    router.refresh()
+    router.push("/project_detail")
+  }
   return (
     <div className={styles.card}>
       <div className="lg:flex lg:items-center lg:justify-between pb-2">
         <div className="min-w-0 flex-1">
           <h2 className="animate-fade-up from-black bg-clip-text text-1xl leading-7 text-gray-900 sm:truncate sm:text-2xl sm:tracking-tight">
-            {title}
+            {project_data.title}
           </h2>
           <div className="mt-1 flex flex-col sm:mt-0 sm:flex-row sm:flex-wrap sm:space-x-6">
             <div className="mt-2 flex items-center text-sm text-gray-500">
@@ -62,6 +68,7 @@ const ProjectcardItem = ({
         <div className="mt-5 flex lg:ml-4 lg:mt-0">
           <span className="hidden sm:block">
             <button
+            onClick={(e) => viewProject(project_data)}
               type="button"
               className="inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
             >
@@ -75,6 +82,7 @@ const ProjectcardItem = ({
 
           <span className="ml-3 hidden sm:block">
             <button
+            onClick={(e) => editProject(project_data)}
               type="button"
               className="inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
             >
@@ -110,6 +118,7 @@ const ProjectcardItem = ({
                   {({ active }) => (
                     <a
                       href="#"
+                      onClick={(e) => console.log("fasdf")}
                       className={classNames(
                         active ? "bg-gray-100" : "",
                         "block px-4 py-2 text-sm text-gray-700"
@@ -119,10 +128,10 @@ const ProjectcardItem = ({
                     </a>
                   )}
                 </Menu.Item>
-                <Menu.Item>
+                <Menu.Item >
                   {({ active }) => (
                     <a
-                      href="#"
+                    onClick={(e) => console.log("fasdf")}
                       className={classNames(
                         active ? "bg-gray-100" : "",
                         "block px-4 py-2 text-sm text-gray-700"
