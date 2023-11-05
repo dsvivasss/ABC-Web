@@ -76,6 +76,7 @@ export default function Project_create() {
   const [selected, setSelected] = useState(skills_soft[0]);
   const [selected2, setSelected2] = useState(skills_hard[0]);
   const [selected3, setSelected3] = useState(roles[0]);
+  const company_id = localStorage.getItem("company_id")
 
   // istanbul ignore next
   function register(e){
@@ -88,7 +89,7 @@ export default function Project_create() {
     const hard_skills = selected2.name.split(" ");
     const roles = selected3.name.split(" ");
     const body = {
-      company_id: 1,
+      company_id: company_id,
       title: formJson.project_title,
       description: formJson.project_description,
       soft_skills: soft_skills,

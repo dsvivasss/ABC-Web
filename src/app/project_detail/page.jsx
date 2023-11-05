@@ -70,6 +70,9 @@ function classNames(...classes) {
 }
 
 export default function Project_create() {
+  const project_data = JSON.parse(localStorage.getItem("project_selected"))
+  console.log(project_data)
+
   const [selected, setSelected] = useState(skills_soft[0]);
   const [selected2, setSelected2] = useState(skills_hard[0]);
   const [selected3, setSelected3] = useState(dificultad[0]);
@@ -239,79 +242,42 @@ export default function Project_create() {
             <div className={styles.grid3}>
               <div className={styles.card}>
                 <h1 className="animate-fade-up text-2xl from-black bg-clip-text  font-bold leading-7 text-gray-900 sm:truncate sm:tracking-tight py-2">
-                  Proyecto 1
+                  {project_data.title}
                 </h1>
                 <h1 className="animate-fade-up text-xl from-black bg-clip-text  font-bold leading-7 text-gray-900 sm:truncate sm:tracking-tight py-2">
                   Descripción
                 </h1>
                 <p>
-                  En este proyecto se busca mejorar la calidad de vida de las
-                  personas.
+                  {project_data.description}
                 </p>
                 <h1 className="animate-fade-up text-xl from-black bg-clip-text  font-bold leading-7 text-gray-900 sm:truncate sm:tracking-tight py-2">
                   Soft skills necesarias
                 </h1>
-                <span className="inline-flex items-center rounded-md bg-indigo-50 px-2 py-1 text-xs font-medium text-indigo-700 ring-1 ring-inset ring-indigo-700/10">
-                  Comunicación estratégica
+                {project_data.soft_skills.map((skill) =>(
+                  <span className="inline-flex items-center rounded-md bg-indigo-50 px-2 py-1 text-xs font-medium text-indigo-700 ring-1 ring-inset ring-indigo-700/10">
+                  {skill}
                 </span>
-                <span className="inline-flex items-center rounded-md bg-indigo-50 px-2 py-1 text-xs font-medium text-indigo-700 ring-1 ring-inset ring-indigo-700/10">
-                  Trabajo en equipo
-                </span>
-                <span className="inline-flex items-center rounded-md bg-indigo-50 px-2 py-1 text-xs font-medium text-indigo-700 ring-1 ring-inset ring-indigo-700/10">
-                  Solución de problemas
-                </span>
-                <span className="inline-flex items-center rounded-md bg-indigo-50 px-2 py-1 text-xs font-medium text-indigo-700 ring-1 ring-inset ring-indigo-700/10">
-                  Creatividad
-                </span>
-                <span className="inline-flex items-center rounded-md bg-indigo-50 px-2 py-1 text-xs font-medium text-indigo-700 ring-1 ring-inset ring-indigo-700/10">
-                  Empatía
-                </span>
+                ))}
                 <h1 className="animate-fade-up text-xl from-black bg-clip-text  font-bold leading-7 text-gray-900 sm:truncate sm:tracking-tight py-2">
                   Hard skills necesarias
                 </h1>
-                <span className="inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20">
-                  Python
+                {project_data.hard_skills.map((hard) =>(
+                  <span className="inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20">
+                  {hard}
                 </span>
-                <span className="inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20">
-                  Typescript
-                </span>
-                <span className="inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20">
-                  DevOps
-                </span>
-                <span className="inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20">
-                  Security
-                </span>
-                <span className="inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20">
-                  Software Architecture
-                </span>
-                <span className="inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20">
-                  Next Js
-                </span>
+                ))}
                 <h1 className="animate-fade-up text-xl from-black bg-clip-text  font-bold leading-7 text-gray-900 sm:truncate sm:tracking-tight py-2">
                   Roles necesarios
                 </h1>
                 <div>
                   <dl className="divide-y divide-gray-100">
-                    <div className="px-4 py-2 sm:grid sm:grid-cols-1 sm:gap-4 sm:px-0">
+                    {project_data.roles.map((role) => (
+                      <div className="px-4 py-2 sm:grid sm:grid-cols-1 sm:gap-4 sm:px-0">
                       <dd className="text-sm font-medium leading-6 text-gray-700 sm:px-0">
-                        Backend Developer
+                        {role}
                       </dd>
                     </div>
-                    <div className="px-4 py-2 sm:grid sm:grid-cols-1 sm:gap-4 sm:px-0">
-                      <dd className="text-sm font-medium leading-6 text-gray-700 sm:px-0">
-                        Senior Frontend Engineer
-                      </dd>
-                    </div>
-                    <div className="px-4 py-2 sm:grid sm:grid-cols-1 sm:gap-4 sm:px-0">
-                      <dd className="text-sm font-medium leading-6 text-gray-700 sm:px-0">
-                        Software Architect
-                      </dd>
-                    </div>
-                    <div className="px-4 py-2 sm:grid sm:grid-cols-1 sm:gap-4 sm:px-0">
-                      <dd className="text-sm font-medium leading-6 text-gray-700 sm:px-0">
-                        Backend Developer
-                      </dd>
-                    </div>
+                    ))}
                   </dl>
                 </div>
               </div>
