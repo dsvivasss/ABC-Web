@@ -30,36 +30,31 @@ const skills_soft = [
   },
 ];
 
-const skills_hard = [
+const type = [
   {
-    id: 1,
-    name: "Python",
+    id: 'technical',
+    name: "Tecnica",
   },
 
   {
-    id: 2,
-    name: "Typescript",
-  },
-
-  {
-    id: 3,
-    name: "Cálculo multivariable",
-  },
+    id: 'psychology',
+    name: "Pisicolgia",
+  }
 ];
 
 const dificultad = [
   {
-    id: 1,
+    id: 'hard',
     name: "Alta",
   },
 
   {
-    id: 2,
+    id: 'medium',
     name: "Media",
   },
 
   {
-    id: 3,
+    id: 'basic',
     name: "Baja",
   },
 ];
@@ -100,8 +95,10 @@ function classNames(...classes) {
 
 export default function Project_create() {
   const [selected, setSelected] = useState(skills_soft[0]);
-  const [selected2, setSelected2] = useState(skills_hard[0]);
+  const [selected2, setSelected2] = useState(type[0]);
   const [selected3, setSelected3] = useState(dificultad[0]);
+  const company_id = localStorage.getItem("company_id")
+  const project_data = JSON.parse(localStorage.getItem("project_selected"));
 
   function register(e) {
     const company = 1;
@@ -113,15 +110,14 @@ export default function Project_create() {
     const hard_skills = selected2.name.split(" ");
     const roles = selected3.name.split(" ");
     const body = {
-      company_id: 1,
-      title: formJson.project_title,
-      description: formJson.project_description,
-      soft_skills: soft_skills,
-      hard_skills: hard_skills,
-      roles: roles,
+      company_id: +company_id,
+      project_id: project_data.id,
+      title: formJson.test_title,
+      type: selected2.id,
+      difficulty_level: selected3.id
     };
     fetch(
-      "https://fli2mqd2g8.execute-api.us-east-1.amazonaws.com/dev/projects/",
+      "https://fli2mqd2g8.execute-api.us-east-1.amazonaws.com/dev/test/",
       {
         method: "POST",
         headers: {
@@ -129,8 +125,9 @@ export default function Project_create() {
         },
         body: JSON.stringify(body),
       }
-    ).then((response) => {
-      console.log(response.json());
+    ).then((response) => response.json())
+    .then(data => {
+      console.log(data)
       toast("Prueba creada!", { position: "bottom-left", theme: "dark" });
     });
   }
@@ -360,7 +357,7 @@ export default function Project_create() {
                               leaveTo="opacity-0"
                             >
                               <Listbox.Options className="absolute z-10 mt-1 max-h-56 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
-                                {skills_hard.map((person) => (
+                                {type.map((person) => (
                                   <Listbox.Option
                                     key={person.id}
                                     className={({ active }) =>
