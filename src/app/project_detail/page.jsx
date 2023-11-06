@@ -71,15 +71,16 @@ function classNames(...classes) {
 }
 
 export default function Project_create() {
-  var project_data = null
+  let project_data = {soft_skills: [], hard_skills:[], roles:[]}
+  if (typeof window !== 'undefined') {
+    // Perform localStorage action
+    project_data = JSON.parse(localStorage.getItem("project_selected"))
+  }
+  
 
   const [selected, setSelected] = useState(skills_soft[0]);
   const [selected2, setSelected2] = useState(skills_hard[0]);
   const [selected3, setSelected3] = useState(dificultad[0]);
-
-  useEffect(() => {
-    project_data = JSON.parse(localStorage.getItem("project_selected"));
-  } )
   return (
     <>
       <div className="">
@@ -244,16 +245,16 @@ export default function Project_create() {
             <div className={styles.grid3}>
               <div className={styles.card}>
                 <h1 className="animate-fade-up text-2xl from-black bg-clip-text  font-bold leading-7 text-gray-900 sm:truncate sm:tracking-tight py-2">
-                  {project_data?.title}
+                  {project_data.title}
                 </h1>
                 <h1 className="animate-fade-up text-xl from-black bg-clip-text  font-bold leading-7 text-gray-900 sm:truncate sm:tracking-tight py-2">
                   Descripción
                 </h1>
-                <p>{project_data?.description}</p>
+                <p>{project_data.description}</p>
                 <h1 className="animate-fade-up text-xl from-black bg-clip-text  font-bold leading-7 text-gray-900 sm:truncate sm:tracking-tight py-2">
                   Soft skills necesarias
                 </h1>
-                {project_data?.soft_skills.map((skill) => (
+                {project_data.soft_skills.map((skill) => (
                   <span className="inline-flex items-center rounded-md bg-indigo-50 px-2 py-1 text-xs font-medium text-indigo-700 ring-1 ring-inset ring-indigo-700/10">
                     {skill}
                   </span>
@@ -261,7 +262,7 @@ export default function Project_create() {
                 <h1 className="animate-fade-up text-xl from-black bg-clip-text  font-bold leading-7 text-gray-900 sm:truncate sm:tracking-tight py-2">
                   Hard skills necesarias
                 </h1>
-                {project_data?.hard_skills.map((hard) => (
+                {project_data.hard_skills.map((hard) => (
                   <span className="inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20">
                     {hard}
                   </span>
@@ -271,7 +272,7 @@ export default function Project_create() {
                 </h1>
                 <div>
                   <dl className="divide-y divide-gray-100">
-                    {project_data?.roles.map((role) => (
+                    {project_data.roles.map((role) => (
                       <div className="px-4 py-2 sm:grid sm:grid-cols-1 sm:gap-4 sm:px-0">
                         <dd className="text-sm font-medium leading-6 text-gray-700 sm:px-0">
                           {role}
