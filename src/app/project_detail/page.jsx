@@ -14,7 +14,6 @@ import TestcardItem from "../components/TestcardItem";
 import { Container } from "postcss";
 import TableComponent from "../components/TableComponent";
 import Link from "next/link";
-import { useEffect } from "react";
 
 const skills_soft = [
   {
