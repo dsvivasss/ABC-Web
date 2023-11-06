@@ -29,11 +29,12 @@ function classNames(...classes) {
 
 export default function Project() {
   const [projects, setProjects] = useState([]);
-  const company_id = localStorage.getItem("company_id")
+  var company_id = null
+  useEffect(() => {
+    company_id = localStorage.getItem("company_id")
+    ListProject()
+  }, []);
 
-  useEffect(() => ListProject(), []);
-
-  // istanbul ignore next
   function ListProject() {
     
     fetch(
@@ -49,8 +50,6 @@ export default function Project() {
       .then((data) => {console.log(data)
         setProjects(data.projects)});
   }
-  // {projects=data.projects}
-
   return (
     <>
       <div className="">

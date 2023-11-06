@@ -14,6 +14,7 @@ import TestcardItem from "../components/TestcardItem";
 import { Container } from "postcss";
 import TableComponent from "../components/TableComponent";
 import Link from "next/link";
+import { useEffect } from "react";
 
 const skills_soft = [
   {
@@ -71,13 +72,16 @@ function classNames(...classes) {
 }
 
 export default function Project_create() {
-  const project_data = JSON.parse(localStorage.getItem("project_selected"));
+  var project_data = null
   console.log(project_data);
 
   const [selected, setSelected] = useState(skills_soft[0]);
   const [selected2, setSelected2] = useState(skills_hard[0]);
   const [selected3, setSelected3] = useState(dificultad[0]);
 
+  useEffect(() => {
+    project_data = JSON.parse(localStorage.getItem("project_selected"));
+  } )
   return (
     <>
       <div className="">
