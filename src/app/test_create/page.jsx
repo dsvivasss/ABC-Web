@@ -117,7 +117,7 @@ export default function Project_create() {
       difficulty_level: selected3.id
     };
     fetch(
-      "https://fli2mqd2g8.execute-api.us-east-1.amazonaws.com/dev/test/",
+      "https://fli2mqd2g8.execute-api.us-east-1.amazonaws.com/dev/tests/",
       {
         method: "POST",
         headers: {
