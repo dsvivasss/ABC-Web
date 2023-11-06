@@ -97,8 +97,8 @@ export default function Project_create() {
   const [selected, setSelected] = useState(skills_soft[0]);
   const [selected2, setSelected2] = useState(type[0]);
   const [selected3, setSelected3] = useState(dificultad[0]);
-  const company_id = localStorage.getItem("company_id")
-  const project_data = JSON.parse(localStorage.getItem("project_selected"));
+  var company_id = null
+  var project_data = null
 
   function register(e) {
     const company = 1;
@@ -131,6 +131,11 @@ export default function Project_create() {
       toast("Prueba creada!", { position: "bottom-left", theme: "dark" });
     });
   }
+
+  useEffect(() => {
+    company_id = localStorage.getItem("company_id")
+    project_data = JSON.parse(localStorage.getItem("project_selected"));
+  })
 
   return (
     <>

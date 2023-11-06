@@ -77,7 +77,7 @@ export default function Project_create() {
   const [selected, setSelected] = useState(skills_soft[0]);
   const [selected2, setSelected2] = useState(skills_hard[0]);
   const [selected3, setSelected3] = useState(roles[0]);
-  const company_id = localStorage.getItem("company_id")
+  var company_id = null
 
   // istanbul ignore next
   function register(e){
@@ -113,6 +113,10 @@ export default function Project_create() {
       router.push("/project_list")
     });
   }
+
+  useEffect(() => {
+    company_id = localStorage.getItem("company_id")
+  } )
 
   return (
     <>
