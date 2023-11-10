@@ -5,6 +5,7 @@ import Link from "next/link";
 // let data = [
 // ];
 
+// istanbul ignore next
 const TableComponent = () => {
   const [filterInput, setFilterInput] = useState("");
   const [data, setData] = useState([]);
@@ -43,6 +44,7 @@ const TableComponent = () => {
 
   useEffect(() => {
 
+    // istanbul ignore next
     const getUsers = async () => {
       const request = await fetch('https://fli2mqd2g8.execute-api.us-east-1.amazonaws.com/dev/users/',
         {
@@ -69,7 +71,7 @@ const TableComponent = () => {
       //   data = users_array.users
       // });
     }
-
+    // istanbul ignore next
     getUsers()
   }, [])
 

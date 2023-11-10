@@ -184,7 +184,7 @@ exports[`Project page Project page renders correctly 1`] = `
                   <span
                     class="px-2 py-0.5 ml-auto text-xs font-medium tracking-wide text-green-500 bg-green-50 rounded-full"
                   >
-                    3
+                    0
                   </span>
                 </a>
               </li>

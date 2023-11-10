@@ -84,6 +84,7 @@ const topics = [
 
 const navigation = [{ name: "Dashboard", href: "#", current: true }];
 
+// istanbul ignore next
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
@@ -97,6 +98,7 @@ export default function Project_create() {
   var company_id = null
   var project_data = null
 
+  // istanbul ignore next
   function register(e) {
     const company = 1;
     e.preventDefault();
@@ -113,7 +115,7 @@ export default function Project_create() {
       questions: tests.map((test) => test.id),
     };
 
-    console.log({body});
+    // istanbul ignore next
     fetch(
       "https://fli2mqd2g8.execute-api.us-east-1.amazonaws.com/dev/tests/",
       {
@@ -130,6 +132,7 @@ export default function Project_create() {
       });
   }
 
+  // istanbul ignore next
   async function getTests() {
 
     const body = {

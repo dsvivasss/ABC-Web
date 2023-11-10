@@ -1,5 +1,130 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Home page Header renders correctly 1`] = `
+<div>
+  <div
+    class=""
+  >
+    <nav
+      class="bg-white"
+      data-headlessui-state=""
+    >
+      <div
+        class="mx-auto max-w-7xl px-1 sm:px-1 lg:px-1"
+      >
+        <div
+          class="relative flex h-16 items-center justify-between"
+        >
+          <div
+            class="absolute inset-y-0 left-0 flex items-center sm:hidden"
+          >
+            <button
+              aria-expanded="false"
+              class="relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
+              data-headlessui-state=""
+              id="headlessui-disclosure-button-:r7:"
+              type="button"
+            >
+              <span
+                class="absolute -inset-0.5"
+              />
+              <span
+                class="sr-only"
+              >
+                Open main menu
+              </span>
+              <svg
+                aria-hidden="true"
+                class="block h-6 w-6"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.5"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </button>
+          </div>
+          <div
+            class="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start"
+          >
+            <div
+              class="flex flex-shrink-0 items-center"
+            />
+          </div>
+          <div
+            class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0"
+          >
+            <button
+              class="relative rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
+              type="button"
+            >
+              <span
+                class="absolute -inset-1.5"
+              />
+              <span
+                class="sr-only"
+              >
+                Ver notifications
+              </span>
+              <svg
+                aria-hidden="true"
+                class="h-6 w-6"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.5"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </button>
+            <div
+              class="relative ml-3"
+              data-headlessui-state=""
+            >
+              <div>
+                <button
+                  aria-expanded="false"
+                  aria-haspopup="menu"
+                  class="relative flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
+                  data-headlessui-state=""
+                  id="headlessui-menu-button-:r8:"
+                  type="button"
+                >
+                  <span
+                    class="absolute -inset-1.5"
+                  />
+                  <span
+                    class="sr-only"
+                  >
+                    Open user menu
+                  </span>
+                  <img
+                    alt=""
+                    class="h-8 w-8 rounded-full"
+                    src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                  />
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
+  </div>
+</div>
+`;
+
 exports[`Home page Home page renders correctly 1`] = `
 <div>
   <main
@@ -248,7 +373,7 @@ exports[`Home page Home page renders correctly 1`] = `
             data-headlessui-state=""
             id="headlessui-listbox-label-:r4:"
           >
-            Pais
+            Habilidad
           </label>
           <div
             class="relative mt-2"
@@ -336,5 +461,300 @@ exports[`Home page Home page renders correctly 1`] = `
       </div>
     </div>
   </main>
+</div>
+`;
+
+exports[`Home page ProjectcardItem renders correctly 1`] = `
+<div>
+  <div
+    class="card"
+  >
+    <div
+      class="lg:flex lg:items-center lg:justify-between pb-2"
+    >
+      <div
+        class="min-w-0 flex-1"
+      >
+        <h2
+          class="animate-fade-up from-black bg-clip-text text-1xl leading-7 text-gray-900 sm:truncate sm:text-2xl sm:tracking-tight"
+        >
+          Segundo proyecto
+        </h2>
+        <div
+          class="mt-1 flex flex-col sm:mt-0 sm:flex-row sm:flex-wrap sm:space-x-6"
+        >
+          <div
+            class="mt-2 flex items-center text-sm text-gray-500"
+          >
+            <svg
+              aria-hidden="true"
+              class="mr-1.5 h-5 w-5 flex-shrink-0 text-gray-400"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                clip-rule="evenodd"
+                d="M6 3.75A2.75 2.75 0 018.75 1h2.5A2.75 2.75 0 0114 3.75v.443c.572.055 1.14.122 1.706.2C17.053 4.582 18 5.75 18 7.07v3.469c0 1.126-.694 2.191-1.83 2.54-1.952.599-4.024.921-6.17.921s-4.219-.322-6.17-.921C2.694 12.73 2 11.665 2 10.539V7.07c0-1.321.947-2.489 2.294-2.676A41.047 41.047 0 016 4.193V3.75zm6.5 0v.325a41.622 41.622 0 00-5 0V3.75c0-.69.56-1.25 1.25-1.25h2.5c.69 0 1.25.56 1.25 1.25zM10 10a1 1 0 00-1 1v.01a1 1 0 001 1h.01a1 1 0 001-1V11a1 1 0 00-1-1H10z"
+                fill-rule="evenodd"
+              />
+              <path
+                d="M3 15.055v-.684c.126.053.255.1.39.142 2.092.642 4.313.987 6.61.987 2.297 0 4.518-.345 6.61-.987.135-.041.264-.089.39-.142v.684c0 1.347-.985 2.53-2.363 2.686a41.454 41.454 0 01-9.274 0C3.985 17.585 3 16.402 3 15.055z"
+              />
+            </svg>
+            Full-time
+          </div>
+          <div
+            class="mt-2 flex items-center text-sm text-gray-500"
+          >
+            <svg
+              aria-hidden="true"
+              class="mr-1.5 h-5 w-5 flex-shrink-0 text-gray-400"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                clip-rule="evenodd"
+                d="M9.69 18.933l.003.001C9.89 19.02 10 19 10 19s.11.02.308-.066l.002-.001.006-.003.018-.008a5.741 5.741 0 00.281-.14c.186-.096.446-.24.757-.433.62-.384 1.445-.966 2.274-1.765C15.302 14.988 17 12.493 17 9A7 7 0 103 9c0 3.492 1.698 5.988 3.355 7.584a13.731 13.731 0 002.273 1.765 11.842 11.842 0 00.976.544l.062.029.018.008.006.003zM10 11.25a2.25 2.25 0 100-4.5 2.25 2.25 0 000 4.5z"
+                fill-rule="evenodd"
+              />
+            </svg>
+            Remote
+          </div>
+          <div
+            class="mt-2 flex items-center text-sm text-gray-500"
+          >
+            <svg
+              aria-hidden="true"
+              class="mr-1.5 h-5 w-5 flex-shrink-0 text-gray-400"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M10.75 10.818v2.614A3.13 3.13 0 0011.888 13c.482-.315.612-.648.612-.875 0-.227-.13-.56-.612-.875a3.13 3.13 0 00-1.138-.432zM8.33 8.62c.053.055.115.11.184.164.208.16.46.284.736.363V6.603a2.45 2.45 0 00-.35.13c-.14.065-.27.143-.386.233-.377.292-.514.627-.514.909 0 .184.058.39.202.592.037.051.08.102.128.152z"
+              />
+              <path
+                clip-rule="evenodd"
+                d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-6a.75.75 0 01.75.75v.316a3.78 3.78 0 011.653.713c.426.33.744.74.925 1.2a.75.75 0 01-1.395.55 1.35 1.35 0 00-.447-.563 2.187 2.187 0 00-.736-.363V9.3c.698.093 1.383.32 1.959.696.787.514 1.29 1.27 1.29 2.13 0 .86-.504 1.616-1.29 2.13-.576.377-1.261.603-1.96.696v.299a.75.75 0 11-1.5 0v-.3c-.697-.092-1.382-.318-1.958-.695-.482-.315-.857-.717-1.078-1.188a.75.75 0 111.359-.636c.08.173.245.376.54.569.313.205.706.353 1.138.432v-2.748a3.782 3.782 0 01-1.653-.713C6.9 9.433 6.5 8.681 6.5 7.875c0-.805.4-1.558 1.097-2.096a3.78 3.78 0 011.653-.713V4.75A.75.75 0 0110 4z"
+                fill-rule="evenodd"
+              />
+            </svg>
+            $120k – $140k
+          </div>
+          <div
+            class="mt-2 flex items-center text-sm text-gray-500"
+          >
+            <svg
+              aria-hidden="true"
+              class="mr-1.5 h-5 w-5 flex-shrink-0 text-gray-400"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                clip-rule="evenodd"
+                d="M5.75 2a.75.75 0 01.75.75V4h7V2.75a.75.75 0 011.5 0V4h.25A2.75 2.75 0 0118 6.75v8.5A2.75 2.75 0 0115.25 18H4.75A2.75 2.75 0 012 15.25v-8.5A2.75 2.75 0 014.75 4H5V2.75A.75.75 0 015.75 2zm-1 5.5c-.69 0-1.25.56-1.25 1.25v6.5c0 .69.56 1.25 1.25 1.25h10.5c.69 0 1.25-.56 1.25-1.25v-6.5c0-.69-.56-1.25-1.25-1.25H4.75z"
+                fill-rule="evenodd"
+              />
+            </svg>
+            Closing on January 9, 2020
+          </div>
+        </div>
+      </div>
+      <div
+        class="mt-5 flex lg:ml-4 lg:mt-0"
+      >
+        <span
+          class="hidden sm:block"
+        >
+          <button
+            class="inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+            type="button"
+          >
+            <svg
+              aria-hidden="true"
+              class="-ml-0.5 mr-1.5 h-5 w-5 text-gray-400"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M2.695 14.763l-1.262 3.154a.5.5 0 00.65.65l3.155-1.262a4 4 0 001.343-.885L17.5 5.5a2.121 2.121 0 00-3-3L3.58 13.42a4 4 0 00-.885 1.343z"
+              />
+            </svg>
+            Editar
+          </button>
+        </span>
+        <span
+          class="ml-3 hidden sm:block"
+        >
+          <button
+            class="inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+            type="button"
+          >
+            <svg
+              aria-hidden="true"
+              class="-ml-0.5 mr-1.5 h-5 w-5 text-gray-400"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M12.232 4.232a2.5 2.5 0 013.536 3.536l-1.225 1.224a.75.75 0 001.061 1.06l1.224-1.224a4 4 0 00-5.656-5.656l-3 3a4 4 0 00.225 5.865.75.75 0 00.977-1.138 2.5 2.5 0 01-.142-3.667l3-3z"
+              />
+              <path
+                d="M11.603 7.963a.75.75 0 00-.977 1.138 2.5 2.5 0 01.142 3.667l-3 3a2.5 2.5 0 01-3.536-3.536l1.225-1.224a.75.75 0 00-1.061-1.06l-1.224 1.224a4 4 0 105.656 5.656l3-3a4 4 0 00-.225-5.865z"
+              />
+            </svg>
+            Ver
+          </button>
+        </span>
+        <div
+          class="relative ml-3 sm:hidden"
+          data-headlessui-state=""
+        >
+          <button
+            aria-expanded="false"
+            aria-haspopup="menu"
+            class="inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:ring-gray-400"
+            data-headlessui-state=""
+            id="headlessui-menu-button-:r6:"
+            type="button"
+          >
+            More
+            <svg
+              aria-hidden="true"
+              class="-mr-1 ml-1.5 h-5 w-5 text-gray-400"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                clip-rule="evenodd"
+                d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
+                fill-rule="evenodd"
+              />
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Home page SideBar renders correctly 1`] = `
+<div>
+  <div
+    class="bg-neutral-50 w-1/6"
+  >
+    <div
+      class="min-h-screen flex flex-col flex-auto flex-shrink-0 antialiased bg-neutral-50 text-gray-800"
+    >
+      <div
+        class="flex flex-col top-0 left-0 bg-neutral-50 h-full border-r"
+      >
+        <div
+          class="overflow-y-auto overflow-x-hidden flex-grow"
+        >
+          <ul
+            class="flex flex-col py-4 space-y-1"
+          >
+            <li
+              class="px-5"
+            >
+              <div
+                class="flex flex-row items-center h-8"
+              >
+                <div
+                  class="text-sm font-light tracking-wide text-gray-500"
+                >
+                  Menu
+                </div>
+              </div>
+            </li>
+            <li>
+              <a
+                class="flex items-center h-11 focus:outline-none hover:bg-gray-50 text-gray-600 hover:text-gray-800 border-l-4 border-transparent hover:border-indigo-500 pr-6"
+                href="#"
+              >
+                <span
+                  class="inline-flex justify-center items-center ml-4"
+                >
+                  <svg
+                    class="w-5 h-5"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                    />
+                  </svg>
+                </span>
+                <span
+                  class="ml-2 text-sm tracking-wide truncate"
+                >
+                  <a
+                    href="/project_list"
+                  >
+                    Proyectos
+                  </a>
+                </span>
+                <span
+                  class="px-2 py-0.5 ml-auto text-xs font-medium tracking-wide text-green-500 bg-green-50 rounded-full"
+                >
+                  3
+                </span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Home page TestcardItem renders correctly 1`] = `
+<div>
+  <ul
+    class="divide-y divide-gray-100"
+    role="list"
+  >
+    <div
+      class="flex min-w-0 gap-x-4"
+    >
+      <div
+        class="min-w-0 flex-auto"
+      >
+        <p
+          class="text-sm font-semibold leading-5 text-gray-900"
+        >
+          0
+          . 
+          Descripcion basica de mi primer proyecto
+        </p>
+        <p
+          class="mt-1 text-xs leading-5 text-gray-500"
+        >
+          - 
+          Opcion 1
+        </p>
+        <p
+          class="mt-1 text-xs leading-5 text-gray-500"
+        >
+          - 
+          Opcion 2
+        </p>
+      </div>
+    </div>
+  </ul>
 </div>
 `;
