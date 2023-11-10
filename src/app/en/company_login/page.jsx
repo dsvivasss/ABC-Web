@@ -1,6 +1,6 @@
 'use client';
 import Image from 'next/image'
-import styles from '../page.module.css'
+import styles from '../../page.module.css'
 import { Fragment, useState } from 'react'
 import { Listbox, Transition } from '@headlessui/react'
 import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid'
@@ -37,36 +37,36 @@ export default function CompanySignIn() {
       })
 
     if (request.status == 404) {
-      toast("Usuario no encontrado", { position: "bottom-left", theme: "dark" })
+      toast("User not found", { position: "bottom-left", theme: "dark" })
       return
     }
 
     if (request.status == 401) {
-      toast("Contraseña incorrecta", { position: "bottom-left", theme: "dark" })
+      toast("Wrong password", { position: "bottom-left", theme: "dark" })
       return
     }
 
     const response = await request.json()
     console.log({ request, response })
 
-    toast("Login exitoso!", { position: "bottom-left", theme: "dark" })
+    toast("Log in Succesful!", { position: "bottom-left", theme: "dark" })
     localStorage.setItem("company_id", response.id)
     router.refresh()
-    router.push("/project_list")
+    router.push("/en/project_list")
 
   }
 
   return (
     <main className={styles.main}>
-
+  
       <div className={styles.center}>
         <h1
           className="animate-fade-up from-black bg-clip-text text-center font-display text-4xl font-bold tracking-[-0.02em] [text-wrap:balance] md:text-7xl md:leading-[5rem]"
           style={{ animationDelay: "0.15s", animationFillMode: "forwards" }}>
-          Inicia sesión
+          Log in
         </h1>
       </div>
-
+  
       <div
         className="mx-auto mt-6 flex animate-fade-up items-center justify-center space-x-5 opacity-0 pb-6"
         style={{ animationDelay: "0.3s", animationFillMode: "forwards" }}
@@ -76,7 +76,7 @@ export default function CompanySignIn() {
           href="/"
           rel="noopener noreferrer"
         >
-          <p>Accede como aspirante</p>
+          <p>Access as applicant</p>
         </a>
         <a
           className="group flex max-w-fit items-center justify-center space-x-2 rounded-full border border-black bg-black px-5 py-2 text-sm text-white transition-colors hover:bg-white hover:text-black"
@@ -84,24 +84,24 @@ export default function CompanySignIn() {
           rel="noopener noreferrer"
         >
           <p>
-            <span className="hidden sm:inline-block">Accede como empresa</span>
+            <span className="hidden sm:inline-block">Access as a company</span>
           </p>
         </a>
       </div>
-
+  
       <div className={styles.card}>
         <div>
           <h2>
-            Conectamos profesionales de TI
+            Connects IT professionals
           </h2>
         </div>
-
+  
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
           <form className="space-y-6" action="#" method="POST" onSubmit={login}>
-
+  
             <div>
               <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">
-                Correo del representante
+                Representative's Email
               </label>
               <div className="mt-2">
                 <input
@@ -115,11 +115,11 @@ export default function CompanySignIn() {
                 />
               </div>
             </div>
-
+  
             <div>
               <div className="flex items-center justify-between">
                 <label htmlFor="password" className="block text-sm font-medium leading-6 text-gray-900">
-                  Contraseña
+                  Password
                 </label>
               </div>
               <div className="mt-2">
@@ -134,27 +134,28 @@ export default function CompanySignIn() {
                 />
               </div>
             </div>
-
+  
             <div className="pb-1">
               <button
                 type="submit"
                 className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
               >
-                Iniciar sesión
+                Log in
               </button>
             </div>
           </form>
-
+  
           <p className="mt-10 text-center text-sm text-gray-500 pt-4">
-            ¿Aún no tienes cuenta?{' '}
+            Don't have an account yet?{' '}
             <a href="http://localhost:3000/company" className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">
-              Regístrate
+              Sign up
             </a>
           </p>
         </div>
       </div>
       <ToastContainer />
     </main>
-  )
+  );
+  
 }
 

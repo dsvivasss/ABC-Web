@@ -59,33 +59,28 @@ const dificultad = [
   },
 ];
 
-const testData = [
-    {
-      pregunta: '1. ¿Qué es Python y cuál es su principal ventaja como lenguaje de programación?',
-      opcion1: 'a) Python es un lenguaje de programación de alto rendimiento.',
-      opcion2: 'b) Python es un lenguaje de programación interpretado con una sintaxis clara y legible.',
-      opcion3: 'c) Python es un lenguaje de programación diseñado exclusivamente para aplicaciones web.',
-    },
-    {
-        pregunta: '2. ¿Cuál es la diferencia entre Python 2 y Python 3? ¿Cuál se recomienda usar actualmente?',
-        opcion1: 'a) Python es un lenguaje de programación de alto rendimiento.',
-        opcion2: 'b) Python es un lenguaje de programación de alto rendimiento.',
-        opcion3: 'c) Python es un lenguaje de programación de alto rendimiento.',
-    },
-    {
-        pregunta: '3. ¿Qué es Python y cuál es su principal ventaja como lenguaje de programación?',
-        opcion1: 'a) Python es un lenguaje de programación de alto rendimiento.',
-        opcion2: 'b) Python es un lenguaje de programación de alto rendimiento.',
-        opcion3: 'c) Python es un lenguaje de programación de alto rendimiento.',
-    },
-    {
-        pregunta: '4. ¿Qué es Python y cuál es su principal ventaja como lenguaje de programación?',
-        opcion1: 'a) Python es un lenguaje de programación de alto rendimiento.',
-        opcion2: 'b) Python es un lenguaje de programación de alto rendimiento.',
-        opcion3: 'c) Python es un lenguaje de programación de alto rendimiento.',
-    },
-
-  ]
+const topics = [
+  {
+    id: 'python',
+    name: "Python",
+  },
+  {
+    id: 'javascript',
+    name: "Javascript",
+  },
+  {
+    id: 'java',
+    name: "Java",
+  },
+  {
+    id: 'oop',
+    name: "Programación orientada a objetos",
+  },
+  {
+    id: 'product_management',
+    name: "Product management",
+  },
+]
 
 const navigation = [{ name: "Dashboard", href: "#", current: true }];
 
@@ -97,6 +92,8 @@ export default function Project_create() {
   const [selected, setSelected] = useState(skills_soft[0]);
   const [selected2, setSelected2] = useState(type[0]);
   const [selected3, setSelected3] = useState(dificultad[0]);
+  const [selected4, setSelected4] = useState(topics[0]);
+  const [tests, setTests] = useState([]);
   var company_id = null
   var project_data = null
 
@@ -106,16 +103,17 @@ export default function Project_create() {
     const form = e.target;
     const formData = new FormData(form);
     const formJson = Object.fromEntries(formData.entries());
-    const soft_skills = selected.name.split(" ");
-    const hard_skills = selected2.name.split(" ");
-    const roles = selected3.name.split(" ");
     const body = {
       company_id: +company_id,
       project_id: project_data.id,
       title: formJson.test_title,
       type: selected2.id,
-      difficulty_level: selected3.id
+      difficulty_level: selected3.id,
+      hard_skills: [selected4.id],
+      questions: tests.map((test) => test.id),
     };
+
+    console.log({body});
     fetch(
       "https://fli2mqd2g8.execute-api.us-east-1.amazonaws.com/dev/tests/",
       {
@@ -126,16 +124,51 @@ export default function Project_create() {
         body: JSON.stringify(body),
       }
     ).then((response) => response.json())
-    .then(data => {
-      console.log(data)
-      toast("Prueba creada!", { position: "bottom-left", theme: "dark" });
-    });
+      .then(data => {
+        console.log(data)
+        toast("Prueba creada!", { position: "bottom-left", theme: "dark" });
+      });
+  }
+
+  async function getTests() {
+
+    const body = {
+      "topics": [selected4.id], // {#options: ["python", "javascript", "java", "oop", "product_management"]#}
+      "difficulty_level": selected3.id, // {#options: ["basic", "medium", "hard"]#}
+      "question_type": "multiple_choice",
+      "options": { // {#Optional field#}
+        "return_answers": true // {#Default is false#}
+      }
+    }
+
+    const request = await fetch('https://fli2mqd2g8.execute-api.us-east-1.amazonaws.com/dev/questions/',
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(body)
+      })
+
+    const response = await request.json()
+
+    setTests(response)
   }
 
   useEffect(() => {
     company_id = localStorage.getItem("company_id")
     project_data = JSON.parse(localStorage.getItem("project_selected"));
   })
+
+  useEffect(() => {
+
+    async function getTestsCall() {
+      await getTests()
+    }
+
+    getTestsCall()
+
+  }, [selected3, selected4])
 
   return (
     <>
@@ -416,6 +449,89 @@ export default function Project_create() {
                       )}
                     </Listbox>
 
+                    <Listbox value={selected4} onChange={setSelected4}>
+                      {({ open }) => (
+                        <>
+                          <Listbox.Label className="block text-sm font-medium leading-0 text-gray-900">
+                            Tópico
+                          </Listbox.Label>
+                          <div className="relative mt-0">
+                            <Listbox.Button className="relative w-full cursor-default rounded-md bg-white py-1.5 pr-10 text-left text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 sm:text-sm sm:leading-1">
+                              <span className="flex items-center">
+                                <span className="ml-1 block truncate">
+                                  {selected4.name}
+                                </span>
+                              </span>
+                              <span className="pointer-events-none absolute inset-y-0 right-0 ml-2 flex items-center pr-1.5 pt-2">
+                                <ChevronUpDownIcon
+                                  className="h-5 w-5 text-gray-900"
+                                  aria-hidden="true"
+                                />
+                              </span>
+                            </Listbox.Button>
+
+                            <Transition
+                              show={open}
+                              as={Fragment}
+                              leave="transition ease-in duration-100"
+                              leaveFrom="opacity-100"
+                              leaveTo="opacity-0"
+                            >
+                              <Listbox.Options className="absolute z-10 mt-1 max-h-56 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+                                {topics.map((topic) => (
+                                  <Listbox.Option
+                                    key={topic.id}
+                                    className={({ active }) =>
+                                      classNames(
+                                        active
+                                          ? "bg-indigo-600 text-white"
+                                          : "text-gray-900",
+                                        "relative cursor-default select-none py-2 pl-3 pr-9"
+                                      )
+                                    }
+                                    value={topic}
+                                  >
+                                    {({ selected, active }) => (
+                                      <>
+                                        <div className="flex items-center">
+                                          <span
+                                            className={classNames(
+                                              selected
+                                                ? "font-semibold"
+                                                : "font-normal",
+                                              "ml-3 block truncate"
+                                            )}
+                                          >
+                                            {topic.name}
+                                          </span>
+                                        </div>
+
+                                        {selected ? (
+                                          <span
+                                            className={classNames(
+                                              active
+                                                ? "text-white"
+                                                : "text-indigo-600",
+                                              "absolute inset-y-0 right-0 flex items-center pr-4"
+                                            )}
+                                          >
+                                            <CheckIcon
+                                              className="h-5 w-5"
+                                              aria-hidden="true"
+                                            />
+                                          </span>
+                                        ) : null}
+                                      </>
+                                    )}
+                                  </Listbox.Option>
+                                ))}
+                              </Listbox.Options>
+                            </Transition>
+                          </div>
+                        </>
+                      )}
+                    </Listbox>
+
                     <Listbox value={selected3} onChange={setSelected3}>
                       {({ open }) => (
                         <>
@@ -502,7 +618,7 @@ export default function Project_create() {
                     <div className="pb-1 pt-2">
                       <span className="hidden sm:block pr-5">
                         <button
-                          type="button"  
+                          type="button"
                           className="inline-flex items-center rounded-md px-3 py-2 text-sm font-semibold text-indigo-800 leading-6"
                         >
                           <Link href="/project_detail">Cancelar</Link>
@@ -526,20 +642,18 @@ export default function Project_create() {
               </h3>
 
               <div>
-                
-                  <TestcardItem />
+                {tests.map((test, index) => (
+                  <div>
+                    <TestcardItem
+                      key={index}
+                      index={index + 1}
+                      description={test.description}
+                      options={test.options}
+                    />
+                    <br/>
+                  </div>
+                ))}
               </div>
-
-              <div>
-            {testData.map((test) => (
-              <TestcardItem
-                pregunta={test.pregunta}
-                opcion1={test.opcion1}
-                opcion2={test.opcion2}
-                opcion3={test.opcion3}
-              />
-            ))}
-          </div>
 
             </div>
           </div>

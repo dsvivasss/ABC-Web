@@ -1,127 +1,109 @@
 'use client';
 import Image from 'next/image'
-import styles from './page.module.css'
+import styles from '../page.module.css'
 import { Fragment, useState } from 'react'
 import { Listbox, Transition } from '@headlessui/react'
 import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { useRouter } from 'next/navigation'
 
-const language = [
-  {
-    id: 'es',
-    name: 'Español',
-  },
-
-  {
-    id: 'en',
-    name: 'Inglés',
-  }
-]
-const paises = [
+const tamanio = [
   {
     id: 1,
-    name: 'Colombia',
+    name: '< 100 empleados',
   },
 
   {
     id: 2,
-    name: 'Mexico',
+    name: 'Entre 100 y 200 empleados',
   },
 
   {
     id: 3,
-    name: 'Peru',
+    name: '> 200 empleados',
   },
 
-]
+  ]
 
-const skills = [
-  {
-    id: 1,
-    name: 'python',
-  },
-  {
-    id: 2,
-    name: 'javascript',
-  },
-  {
-    id: 3,
-    name: 'java',
-  },
-  {
-    id: 4,
-    name: 'oop',
-  },
-  {
-    id: 5,
-    name: 'product_management',
-  },
-]
+  const ubicacion = [
+    {
+      id: 1,
+      name: 'Colombia',
+    },
+  
+    {
+      id: 2,
+      name: 'México',
+    },
+  
+    {
+      id: 3,
+      name: 'EEUU',
+    },
+  
+    ]
 
-// istanbul ignore next
-function classNames(...classes) {
-  return classes.filter(Boolean).join(' ')
-}
+    const sector = [
+      {
+        id: 1,
+        name: 'Tecnología',
+      },
+    
+      {
+        id: 2,
+        name: 'Financiero',
+      },
+    
+      {
+        id: 3,
+        name: 'Agricultura',
+      },
+    
+      ]
 
-export default function Home() {
-
-  const [selected, setSelected] = useState(language[0])
-  const [pais, setPais] = useState(paises[0])
-  const [skillsSelected, setSkillsSelected] = useState([])
-  const router = useRouter()
-
-  // TODO: Add validation
   // istanbul ignore next
-  function register(e) {
-    const body = {
-      name: e.target.name.value,
-      email: e.target.email.value,
-      password: e.target.password.value,
-      language: selected.id,
-      country: pais.name,
-      phone: +e.target.phone.value,
-      skills: skillsSelected.map(el => el.name),
-      personality: e.target.personality.value.split(" ")
-    }
+  function classNames(...classes) {
+    return classes.filter(Boolean).join(' ')
+  }
 
-    e.preventDefault()
-    fetch('https://fli2mqd2g8.execute-api.us-east-1.amazonaws.com/dev/users/', {
-      body: JSON.stringify(body),
+export default function Company() {
+
+  const router = useRouter()
+  const [selected, setSelected] = useState(tamanio[0])
+  const [selected2, setSelected2] = useState(ubicacion[0])
+  const [selected3, setSelected3] = useState(sector[0])
+
+  // istanbul ignore next
+  function register(e){
+    e.preventDefault();
+    const form = e.target;
+    const formData = new FormData(form);
+    const formJson = Object.fromEntries(formData.entries());
+    const body = {
+        name: formJson.company_name,
+        email: formJson.email,
+        password: formJson.password,
+        size: selected.name,
+        location: selected2.name,
+        website: formJson.website,
+        sector: selected3.name
+    }
+    fetch('https://fli2mqd2g8.execute-api.us-east-1.amazonaws.com/dev/companies/', 
+    { 
+      method: 'POST', 
       headers: {
         'Content-Type': 'application/json'
       },
-      method: 'POST'
+      body: JSON.stringify(body)
     })
-      .then(response => response.json())
-      .then((data) => {
-        console.log(data)
-        toast("Aspirante creado!", { position: "bottom-left", theme: "dark" })
-        //router.push('/dashboard', { scroll: false })
-      });
-  }
-
-  // istanbul ignore next
-  function handleSelectSkill(value) {
-    if (!isSelected(value)) {
-      const selectedSkillsUpdated = [
-        ...skillsSelected,
-        skills.find((el) => el === value)
-      ];
-      setSkillsSelected(selectedSkillsUpdated);
-    } else {
-      handleDeselect(value);
-    }
-  }
-
-  // istanbul ignore next
-  function isSelected(value) {
-    return skillsSelected.find((el) => el === value) ? true : false;
-  }
-
-  // istanbul ignore next
-  function handleDeselect(value) {
-    const selectedSkillsUpdated = skillsSelected.filter((el) => el !== value);
-    setSkillsSelected(selectedSkillsUpdated);
+    .then(response => response.json())
+    .then((data) =>{
+      toast("Empresa creada!", {position: "bottom-left",theme: "dark"})
+      localStorage.setItem("company_id", data.id)
+      router.refresh()
+      router.push("/project_list")
+    });
   }
 
   return (
@@ -136,25 +118,25 @@ export default function Home() {
       </div>
 
       <div
-        className="mx-auto mt-6 flex animate-fade-up items-center justify-center space-x-5 opacity-0 pb-6"
-        style={{ animationDelay: "0.3s", animationFillMode: "forwards" }}
-      >
-        <a
-          className="group flex max-w-fit items-center justify-center space-x-2 rounded-full border border-black bg-black px-5 py-2 text-sm text-white transition-colors hover:bg-white hover:text-black"
-          href="/"
-          rel="noopener noreferrer"
+          className="mx-auto mt-6 flex animate-fade-up items-center justify-center space-x-5 opacity-0 pb-6"
+          style={{ animationDelay: "0.3s", animationFillMode: "forwards" }}
         >
-          <p>Accede como aspirante</p>
-        </a>
-        <a
-          className="flex max-w-fit items-center justify-center space-x-2 rounded-full border border-gray-300 bg-white px-5 py-2 text-sm text-gray-600 shadow-md transition-colors hover:border-gray-800"
-          href="/company"
-          rel="noopener noreferrer"
-        >
-          <p>
-            <span className="hidden sm:inline-block">Accede como empresa</span>
-          </p>
-        </a>
+          <a
+            className="flex max-w-fit items-center justify-center space-x-2 rounded-full border border-gray-300 bg-white px-5 py-2 text-sm text-gray-600 shadow-md transition-colors hover:border-gray-800"
+            href="/"
+            rel="noopener noreferrer"
+          >
+            <p>Accede como aspirante</p>
+          </a>
+          <a
+            className="group flex max-w-fit items-center justify-center space-x-2 rounded-full border border-black bg-black px-5 py-2 text-sm text-white transition-colors hover:bg-white hover:text-black"
+            href="/company"
+            rel="noopener noreferrer"
+          >
+            <p>
+              <span className="hidden sm:inline-block">Accede como empresa</span>
+            </p>
+          </a>
       </div>
 
       <div className={styles.card}>
@@ -165,19 +147,19 @@ export default function Home() {
         </div>
 
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-          <form className="space-y-6" onSubmit={register}>
+          <form className="space-y-6" action="#" method="POST" onSubmit={register}>
 
-            <div>
-              <label htmlFor="name" className="block text-sm font-medium leading-6 text-gray-900">
-                Nombre
+          <div>
+              <label htmlFor="company_name" className="block text-sm font-medium leading-6 text-gray-900">
+                Nombre de la empresa
               </label>
               <div className="mt-2">
                 <input
-                  id="name"
-                  name="name"
-                  type="name"
-                  autoComplete="name"
-                  placeholder="  Mi nombre"
+                  id="company_name"
+                  name="company_name"
+                  type="company_name"
+                  autoComplete="company_name"
+                  placeholder="  Nombre de la empresa"
                   required
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
@@ -186,7 +168,7 @@ export default function Home() {
 
             <div>
               <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">
-                Correo
+                Correo del representante
               </label>
               <div className="mt-2">
                 <input
@@ -220,30 +202,10 @@ export default function Home() {
               </div>
             </div>
 
-            <div>
-              <div className="flex items-center justify-between">
-                <label htmlFor="phone" className="block text-sm font-medium leading-6 text-gray-900">
-                  Telefono Celular
-                </label>
-              </div>
-              <div className="mt-2">
-                <input
-                  id="phone"
-                  name="phone"
-                  type="number"
-                  autoComplete="phone"
-                  placeholder="+571112223333"
-                  required
-                  maxLength="10"
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                />
-              </div>
-            </div>
-
             <Listbox value={selected} onChange={setSelected}>
               {({ open }) => (
                 <>
-                  <Listbox.Label className="block text-sm font-medium leading-6 text-gray-900">Idioma</Listbox.Label>
+                  <Listbox.Label className="block text-sm font-medium leading-6 text-gray-900">Tamaño de la empresa</Listbox.Label>
                   <div className="relative mt-2">
                     <Listbox.Button className="relative w-full cursor-default rounded-md bg-white py-1.5 pr-10 text-left text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 sm:text-sm sm:leading-6">
                       <span className="flex items-center">
@@ -262,17 +224,14 @@ export default function Home() {
                       leaveTo="opacity-0"
                     >
                       <Listbox.Options className="absolute z-10 mt-1 max-h-56 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
-                        {language.map((person) => (
-                          // istanbul ignore next
+                        {tamanio.map((person) => (
                           <Listbox.Option
                             key={person.id}
-                            className={
-                              // istanbul ignore next
-                              ({ active }) =>
-                                classNames(
-                                  active ? 'bg-indigo-600 text-white' : 'text-gray-900',
-                                  'relative cursor-default select-none py-2 pl-3 pr-9'
-                                )
+                            className={({ active }) =>
+                              classNames(
+                                active ? 'bg-indigo-600 text-white' : 'text-gray-900',
+                                'relative cursor-default select-none py-2 pl-3 pr-9'
+                              )
                             }
                             value={person}
                           >
@@ -307,14 +266,14 @@ export default function Home() {
               )}
             </Listbox>
 
-            <Listbox value={pais} onChange={setPais}>
+            <Listbox value={selected2} onChange={setSelected2}>
               {({ open }) => (
                 <>
-                  <Listbox.Label className="block text-sm font-medium leading-6 text-gray-900">Pais</Listbox.Label>
+                  <Listbox.Label className="block text-sm font-medium leading-6 text-gray-900">Ubicación</Listbox.Label>
                   <div className="relative mt-2">
                     <Listbox.Button className="relative w-full cursor-default rounded-md bg-white py-1.5 pr-10 text-left text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 sm:text-sm sm:leading-6">
                       <span className="flex items-center">
-                        <span className="ml-3 block truncate">{pais.name}</span>
+                        <span className="ml-3 block truncate">{selected2.name}</span>
                       </span>
                       <span className="pointer-events-none absolute inset-y-0 right-0 ml-2 flex items-center pr-2 pt-2">
                         <ChevronUpDownIcon className="h-5 w-5 text-gray-900" aria-hidden="true" />
@@ -329,18 +288,16 @@ export default function Home() {
                       leaveTo="opacity-0"
                     >
                       <Listbox.Options className="absolute z-10 mt-1 max-h-56 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
-                        {paises.map((option) => (
+                        {ubicacion.map((person) => (
                           <Listbox.Option
-                            key={option.id}
-                            className={
-                              // istanbul ignore next
-                              ({ active }) =>
-                                classNames(
-                                  active ? 'bg-indigo-600 text-white' : 'text-gray-900',
-                                  'relative cursor-default select-none py-2 pl-3 pr-9'
-                                )
+                            key={person.id}
+                            className={({ active }) =>
+                              classNames(
+                                active ? 'bg-indigo-600 text-white' : 'text-gray-900',
+                                'relative cursor-default select-none py-2 pl-3 pr-9'
+                              )
                             }
-                            value={option}
+                            value={person}
                           >
                             {({ selected, active }) => (
                               <>
@@ -348,7 +305,7 @@ export default function Home() {
                                   <span
                                     className={classNames(selected ? 'font-semibold' : 'font-normal', 'ml-3 block truncate')}
                                   >
-                                    {option.name}
+                                    {person.name}
                                   </span>
                                 </div>
 
@@ -373,19 +330,14 @@ export default function Home() {
               )}
             </Listbox>
 
-            <Listbox value={skillsSelected} onChange={
-              // istanbul ignore next
-              (value) => handleSelectSkill(value)
-            }>
+            <Listbox value={selected3} onChange={setSelected3}>
               {({ open }) => (
                 <>
-                  <Listbox.Label className="block text-sm font-medium leading-6 text-gray-900">Habilidad</Listbox.Label>
+                  <Listbox.Label className="block text-sm font-medium leading-6 text-gray-900">Sector</Listbox.Label>
                   <div className="relative mt-2">
                     <Listbox.Button className="relative w-full cursor-default rounded-md bg-white py-1.5 pr-10 text-left text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 sm:text-sm sm:leading-6">
                       <span className="flex items-center">
-                        <span className="ml-3 block truncate">{skillsSelected.map(
-                          // istanbul ignore next
-                          el => el.name).join(", ")}</span>
+                        <span className="ml-3 block truncate">{selected3.name}</span>
                       </span>
                       <span className="pointer-events-none absolute inset-y-0 right-0 ml-2 flex items-center pr-2 pt-2">
                         <ChevronUpDownIcon className="h-5 w-5 text-gray-900" aria-hidden="true" />
@@ -400,18 +352,16 @@ export default function Home() {
                       leaveTo="opacity-0"
                     >
                       <Listbox.Options className="absolute z-10 mt-1 max-h-56 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
-                        {skills.map((option) => (
+                        {sector.map((person) => (
                           <Listbox.Option
-                            key={option.id}
-                            className={
-                              // istanbul ignore next
-                              ({ active }) =>
-                                classNames(
-                                  active ? 'bg-indigo-600 text-white' : 'text-gray-900',
-                                  'relative cursor-default select-none py-2 pl-3 pr-9'
-                                )
+                            key={person.id}
+                            className={({ active }) =>
+                              classNames(
+                                active ? 'bg-indigo-600 text-white' : 'text-gray-900',
+                                'relative cursor-default select-none py-2 pl-3 pr-9'
+                              )
                             }
-                            value={option}
+                            value={person}
                           >
                             {({ selected, active }) => (
                               <>
@@ -419,7 +369,7 @@ export default function Home() {
                                   <span
                                     className={classNames(selected ? 'font-semibold' : 'font-normal', 'ml-3 block truncate')}
                                   >
-                                    {option.name}
+                                    {person.name}
                                   </span>
                                 </div>
 
@@ -445,16 +395,16 @@ export default function Home() {
             </Listbox>
 
             <div>
-              <label htmlFor="personality" className="block text-sm font-medium leading-6 text-gray-900">
-                Personalidad
+              <label htmlFor="website" className="block text-sm font-medium leading-6 text-gray-900">
+                Sitio web
               </label>
-              <div className="mt-2 pb-2">
+              <div className="mt-2">
                 <input
-                  id="personality"
-                  name="personality"
-                  type="personality"
-                  autoComplete="personality"
-                  placeholder="  Selecciona tu personalidad"
+                  id="website"
+                  name="website"
+                  type="website"
+                  autoComplete="website"
+                  placeholder="  Ingresa el sitio web de la empresa"
                   required
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
@@ -464,7 +414,6 @@ export default function Home() {
             <div className="pb-1">
               <button
                 type="submit"
-                href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
                 className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
               >
                 Registrarse
@@ -474,13 +423,13 @@ export default function Home() {
 
           <p className="mt-10 text-center text-sm text-gray-500 pt-4">
             ¿Ya tienes una cuenta?{' '}
-            <a href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app" className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">
+            <a href="/company_login" className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">
               Iniciar sesión
             </a>
           </p>
         </div>
       </div>
-
+      <ToastContainer />
     </main>
   )
 }

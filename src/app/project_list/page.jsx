@@ -199,7 +199,7 @@ export default function Project() {
                         Proyectos
                       </span>
                       <span className="px-2 py-0.5 ml-auto text-xs font-medium tracking-wide text-green-500 bg-green-50 rounded-full">
-                        3
+                        {projects.length}
                       </span>
                     </a>
                   </li>
