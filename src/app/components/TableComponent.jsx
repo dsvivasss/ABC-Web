@@ -2,24 +2,24 @@ import React, { useEffect, useState } from "react";
 import { useTable, useFilters, useGlobalFilter } from "react-table";
 import Link from "next/link";
 
-let data = [
-];
-
-const columns = [
-
-    {
-        Header: "Nombre",
-        accessor: "name",
-    },
-  {
-    Header: "Hard Skills",
-    accessor: "habilidadesDuras",
-    //Filter: TextFilter,
-  },
-];
+// let data = [
+// ];
 
 const TableComponent = () => {
   const [filterInput, setFilterInput] = useState("");
+  const [data, setData] = useState([]);
+  const [columns, setColumns] = useState([
+
+    {
+      Header: "Nombre",
+      accessor: "name",
+    },
+    {
+      Header: "Hard Skills",
+      accessor: "skills",
+      //Filter: TextFilter,
+    },
+  ]);
 
   const {
     getTableProps,
@@ -41,18 +41,36 @@ const TableComponent = () => {
   // Obtiene el estado del filtro global
   const { globalFilter } = state;
 
-  useEffect(()=>{
-    fetch('https://fli2mqd2g8.execute-api.us-east-1.amazonaws.com/dev/users/', 
-    { 
-      method: 'GET', 
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    })
-    .then(response => response.json())
-    .then((users_array) => {
-      data = users_array.users
-    });
+  useEffect(() => {
+
+    const getUsers = async () => {
+      const request = await fetch('https://fli2mqd2g8.execute-api.us-east-1.amazonaws.com/dev/users/',
+        {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        })
+
+      const response = await request.json()
+
+      console.log({ users: response.users })
+
+      const users = response.users.map((user) => {
+        return {
+          name: user.name,
+          skills: user.skills.map((skill) => skill).join(", ")
+        }
+      })
+
+      setData(users)
+      // .then(response => response.json())
+      // .then((users_array) => {
+      //   data = users_array.users
+      // });
+    }
+
+    getUsers()
   }, [])
 
   return (
@@ -90,10 +108,10 @@ const TableComponent = () => {
                   );
                 })}
                 <td>
-                    <button className="inline-flex items-center rounded-md bg-indigo-50 px-2 py-1 text-xs font-medium text-indigo-700 ring-1 ring-inset ring-indigo-700/10 hover:bg-indigo-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600" onClick={() => console.log(`Detalles de ${row.original.rol}`)}>
-                      <Link href="/candidate_detail">Ver Detalle</Link>
-                    </button>
-                  </td>
+                  <button className="inline-flex items-center rounded-md bg-indigo-50 px-2 py-1 text-xs font-medium text-indigo-700 ring-1 ring-inset ring-indigo-700/10 hover:bg-indigo-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600" onClick={() => console.log(`Detalles de ${row.original.rol}`)}>
+                    <Link href="/candidate_detail">Ver Detalle</Link>
+                  </button>
+                </td>
               </tr>
             );
           })}
