@@ -8,40 +8,52 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useRouter } from 'next/navigation'
 
-  // istanbul ignore next
-  function classNames(...classes) {
-    return classes.filter(Boolean).join(' ')
-  }
+// istanbul ignore next
+function classNames(...classes) {
+  return classes.filter(Boolean).join(' ')
+}
 
 export default function CompanySignIn() {
 
   const router = useRouter()
 
   // istanbul ignore next
-  function login(e){
+  async function login(e) {
     e.preventDefault();
     const form = e.target;
     const formData = new FormData(form);
     const formJson = Object.fromEntries(formData.entries());
     const body = {
-        email: formJson.email,
-        password: formJson.password,
+      email: formJson.email,
+      password: formJson.password,
     }
-    fetch('https://fli2mqd2g8.execute-api.us-east-1.amazonaws.com/dev/companies/auth', 
-    { 
-      method: 'POST', 
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(body)
-    })
-    .then(response => response.json())
-    .then((data) =>{
-      toast("Login exitoso!", {position: "bottom-left",theme: "dark"})
-      localStorage.setItem("company_id", data.id)
-      router.refresh()
-      router.push("/project_list")
-    });
+    const request = await fetch('https://fli2mqd2g8.execute-api.us-east-1.amazonaws.com/dev/companies/auth',
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(body)
+      })
+
+    if (request.status == 404) {
+      toast("Usuario no encontrado", { position: "bottom-left", theme: "dark" })
+      return
+    }
+
+    if (request.status == 401) {
+      toast("Contraseña incorrecta", { position: "bottom-left", theme: "dark" })
+      return
+    }
+
+    const response = await request.json()
+    console.log({ request, response })
+
+    toast("Login exitoso!", { position: "bottom-left", theme: "dark" })
+    localStorage.setItem("company_id", response.id)
+    router.refresh()
+    router.push("/project_list")
+
   }
 
   return (
@@ -56,25 +68,25 @@ export default function CompanySignIn() {
       </div>
 
       <div
-          className="mx-auto mt-6 flex animate-fade-up items-center justify-center space-x-5 opacity-0 pb-6"
-          style={{ animationDelay: "0.3s", animationFillMode: "forwards" }}
+        className="mx-auto mt-6 flex animate-fade-up items-center justify-center space-x-5 opacity-0 pb-6"
+        style={{ animationDelay: "0.3s", animationFillMode: "forwards" }}
+      >
+        <a
+          className="flex max-w-fit items-center justify-center space-x-2 rounded-full border border-gray-300 bg-white px-5 py-2 text-sm text-gray-600 shadow-md transition-colors hover:border-gray-800"
+          href="/"
+          rel="noopener noreferrer"
         >
-          <a
-            className="flex max-w-fit items-center justify-center space-x-2 rounded-full border border-gray-300 bg-white px-5 py-2 text-sm text-gray-600 shadow-md transition-colors hover:border-gray-800"
-            href="/"
-            rel="noopener noreferrer"
-          >
-            <p>Accede como aspirante</p>
-          </a>
-          <a
-            className="group flex max-w-fit items-center justify-center space-x-2 rounded-full border border-black bg-black px-5 py-2 text-sm text-white transition-colors hover:bg-white hover:text-black"
-            href="/company"
-            rel="noopener noreferrer"
-          >
-            <p>
-              <span className="hidden sm:inline-block">Accede como empresa</span>
-            </p>
-          </a>
+          <p>Accede como aspirante</p>
+        </a>
+        <a
+          className="group flex max-w-fit items-center justify-center space-x-2 rounded-full border border-black bg-black px-5 py-2 text-sm text-white transition-colors hover:bg-white hover:text-black"
+          href="/company"
+          rel="noopener noreferrer"
+        >
+          <p>
+            <span className="hidden sm:inline-block">Accede como empresa</span>
+          </p>
+        </a>
       </div>
 
       <div className={styles.card}>
