@@ -15,25 +15,23 @@ import {
   PencilIcon,
 } from "@heroicons/react/20/solid";
 
-const TestcardItem = ({ pregunta, opcion1, opcion2, opcion3 }) => {
+const TestcardItem = ({ index, description, options }) => {
+
   return (
     <ul role="list" className="divide-y divide-gray-100">
-        <div className="flex min-w-0 gap-x-4">
-          <div className="min-w-0 flex-auto">
-            <p className="text-sm font-semibold leading-5 text-gray-900">
-              {pregunta}
-            </p>
+      <div className="flex min-w-0 gap-x-4">
+        <div className="min-w-0 flex-auto">
+          <p className="text-sm font-semibold leading-5 text-gray-900">
+            {index}. {description}
+          </p>
+          {options.map((option) => (
             <p className="mt-1 text-xs leading-5 text-gray-500">
-                {opcion1}
+              - {option.description}
             </p>
-            <p className="mt-1 text-xs leading-5 text-gray-500">
-              {opcion2}
-            </p>
-            <p className="mt-1 text-xs leading-5 text-gray-500">
-              {opcion3}
-            </p>
-          </div>
+          ))
+          }
         </div>
+      </div>
     </ul>
   );
 };
