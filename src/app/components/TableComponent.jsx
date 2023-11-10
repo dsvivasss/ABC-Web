@@ -1,45 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useTable, useFilters, useGlobalFilter } from "react-table";
 import Link from "next/link";
 
-const data = [
-  {
-    name: "Pedro Melenas",
-    rol: "Desarrollador",
-    habilidadesBlandas: "Comunicación",
-    habilidadesDuras: "JavaScript",
-  },
-  {
-    name: "Nino Bravo",
-    rol: "Backend Developer",
-    habilidadesBlandas: "Creatividad",
-    habilidadesDuras: "Python",
-  },
-  {
-    name: "Jesus Roman",
-    rol: "Senior Frontend Engineer",
-    habilidadesBlandas: "Creatividad",
-    habilidadesDuras: "SQL",
-  },
-  {
-    name: "Jack Morrison",
-    rol: "Software Architect",
-    habilidadesBlandas: "Creatividad",
-    habilidadesDuras: "TypeScript",
-  },
-  {
-    name: "Mick Jager",
-    rol: "Diseñador",
-    habilidadesBlandas: "Creatividad",
-    habilidadesDuras: "AWS",
-  },
-  {
-    name: "Nick Meadow",
-    rol: "Diseñador",
-    habilidadesBlandas: "Creatividad",
-    habilidadesDuras: "GraphQl",
-  },
-
+let data = [
 ];
 
 const columns = [
@@ -77,6 +40,20 @@ const TableComponent = () => {
 
   // Obtiene el estado del filtro global
   const { globalFilter } = state;
+
+  useEffect(()=>{
+    fetch('https://fli2mqd2g8.execute-api.us-east-1.amazonaws.com/dev/users/', 
+    { 
+      method: 'GET', 
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+    .then(response => response.json())
+    .then((users_array) => {
+      data = users_array.users
+    });
+  }, [])
 
   return (
     <div className="pt-2">
