@@ -134,7 +134,6 @@ export default function Home() {
 
   return (
     <main className={styles.main}>
-
       <div className={styles.center}>
         <h1
           className="animate-fade-up from-black bg-clip-text text-center font-display text-4xl font-bold tracking-[-0.02em] [text-wrap:balance] md:text-7xl md:leading-[5rem]"
@@ -153,7 +152,7 @@ export default function Home() {
           href="/"
           rel="noopener noreferrer"
         >
-          <p>Accede como aspirante</p>
+          <p>{t("candidateSignup")}</p>
         </a>
         <a
           className="flex max-w-fit items-center justify-center space-x-2 rounded-full border border-gray-300 bg-white px-5 py-2 text-sm text-gray-600 shadow-md transition-colors hover:border-gray-800"
@@ -161,14 +160,14 @@ export default function Home() {
           rel="noopener noreferrer"
         >
           <p>
-            <span className="hidden sm:inline-block">Accede como empresa</span>
+            <span className="hidden sm:inline-block">{t("companySignup")}</span>
           </p>
         </a>
       </div>
 
       <div className={styles.card}>
         <div>
-          <h2>Conectamos profesionales de TI</h2>
+          <h2 className="text-center">{t("slogan")}</h2>
         </div>
 
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
@@ -178,7 +177,7 @@ export default function Home() {
                 htmlFor="name"
                 className="block text-sm font-medium leading-6 text-gray-900"
               >
-                Nombre
+                {t("name")}
               </label>
               <div className="mt-2">
                 <input
@@ -186,7 +185,7 @@ export default function Home() {
                   name="name"
                   type="name"
                   autoComplete="name"
-                  placeholder="  Mi nombre"
+                  placeholder={t("namePlaceholder")}
                   required
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
@@ -198,7 +197,7 @@ export default function Home() {
                 htmlFor="email"
                 className="block text-sm font-medium leading-6 text-gray-900"
               >
-                Correo
+                {t("email")}
               </label>
               <div className="mt-2">
                 <input
@@ -219,7 +218,7 @@ export default function Home() {
                   htmlFor="password"
                   className="block text-sm font-medium leading-6 text-gray-900"
                 >
-                  Contraseña
+                  {t("password")}
                 </label>
               </div>
               <div className="mt-2">
@@ -241,7 +240,7 @@ export default function Home() {
                   htmlFor="phone"
                   className="block text-sm font-medium leading-6 text-gray-900"
                 >
-                  Telefono Celular
+                  {t("cellphone")}
                 </label>
               </div>
               <div className="mt-2">
@@ -262,7 +261,7 @@ export default function Home() {
               {({ open }) => (
                 <>
                   <Listbox.Label className="block text-sm font-medium leading-6 text-gray-900">
-                    Idioma
+                    {t("dialect")}
                   </Listbox.Label>
                   <div className="relative mt-2">
                     <Listbox.Button className="relative w-full cursor-default rounded-md bg-white py-1.5 pr-10 text-left text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 sm:text-sm sm:leading-6">
@@ -346,7 +345,7 @@ export default function Home() {
               {({ open }) => (
                 <>
                   <Listbox.Label className="block text-sm font-medium leading-6 text-gray-900">
-                    Pais
+                    {t("country")}
                   </Listbox.Label>
                   <div className="relative mt-2">
                     <Listbox.Button className="relative w-full cursor-default rounded-md bg-white py-1.5 pr-10 text-left text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 sm:text-sm sm:leading-6">
@@ -433,7 +432,7 @@ export default function Home() {
               {({ open }) => (
                 <>
                   <Listbox.Label className="block text-sm font-medium leading-6 text-gray-900">
-                    Habilidad
+                    {t("skill")}
                   </Listbox.Label>
                   <div className="relative mt-2">
                     <Listbox.Button className="relative w-full cursor-default rounded-md bg-white py-1.5 pr-10 text-left text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 sm:text-sm sm:leading-6">
@@ -522,7 +521,7 @@ export default function Home() {
                 htmlFor="personality"
                 className="block text-sm font-medium leading-6 text-gray-900"
               >
-                Personalidad
+                {t("personality")}
               </label>
               <div className="mt-2 pb-2">
                 <input
@@ -530,7 +529,7 @@ export default function Home() {
                   name="personality"
                   type="personality"
                   autoComplete="personality"
-                  placeholder="  Selecciona tu personalidad"
+                  placeholder={t("personalityPlaceholder")}
                   required
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
@@ -543,18 +542,18 @@ export default function Home() {
                 href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
                 className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
               >
-                Registrarse
+                {t("signupButton")}
               </button>
             </div>
           </form>
 
           <p className="mt-10 text-center text-sm text-gray-500 pt-4">
-            ¿Ya tienes una cuenta?{" "}
+            {t("account")}{" "}
             <a
               href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
               className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
             >
-              Iniciar sesión
+              {t("login")}
             </a>
           </p>
         </div>
