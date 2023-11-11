@@ -1,74 +1,82 @@
-'use client';
-import Image from 'next/image'
-import styles from './page.module.css'
-import { Fragment, useState } from 'react'
-import { Listbox, Transition } from '@headlessui/react'
-import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid'
-import { useRouter } from 'next/navigation'
+"use client";
+import Image from "next/image";
+import styles from "./page.module.css";
+import { Fragment, useState, useEffect } from "react";
+import { Listbox, Transition } from "@headlessui/react";
+import { CheckIcon, ChevronUpDownIcon } from "@heroicons/react/20/solid";
+import { useRouter } from "next/navigation";
+import "./i18n";
+import { useTranslation, Trans } from "react-i18next";
+import i18next from "i18next";
+import LanguageFlag from "./components/LanguageFlag";
 
 const language = [
   {
-    id: 'es',
-    name: 'Español',
+    id: "es",
+    name: "Español",
   },
 
   {
-    id: 'en',
-    name: 'Inglés',
-  }
-]
+    id: "en",
+    name: "Inglés",
+  },
+];
 const paises = [
   {
     id: 1,
-    name: 'Colombia',
+    name: "Colombia",
   },
 
   {
     id: 2,
-    name: 'Mexico',
+    name: "Mexico",
   },
 
   {
     id: 3,
-    name: 'Peru',
+    name: "Peru",
   },
-
-]
+];
 
 const skills = [
   {
     id: 1,
-    name: 'python',
+    name: "python",
   },
   {
     id: 2,
-    name: 'javascript',
+    name: "javascript",
   },
   {
     id: 3,
-    name: 'java',
+    name: "java",
   },
   {
     id: 4,
-    name: 'oop',
+    name: "oop",
   },
   {
     id: 5,
-    name: 'product_management',
+    name: "product_management",
   },
-]
+];
+
+const lngs = {
+  es: { nativeName: "Español" },
+  en: { nativeName: "English" },
+};
 
 // istanbul ignore next
 function classNames(...classes) {
-  return classes.filter(Boolean).join(' ')
+  return classes.filter(Boolean).join(" ");
 }
 
 export default function Home() {
-
-  const [selected, setSelected] = useState(language[0])
-  const [pais, setPais] = useState(paises[0])
-  const [skillsSelected, setSkillsSelected] = useState([])
-  const router = useRouter()
+  const [selected, setSelected] = useState(language[0]);
+  const [pais, setPais] = useState(paises[0]);
+  const [skillsSelected, setSkillsSelected] = useState([]);
+  const router = useRouter();
+  const { t, i18n } = useTranslation();
 
   // TODO: Add validation
   // istanbul ignore next
@@ -80,22 +88,22 @@ export default function Home() {
       language: selected.id,
       country: pais.name,
       phone: +e.target.phone.value,
-      skills: skillsSelected.map(el => el.name),
-      personality: e.target.personality.value.split(" ")
-    }
+      skills: skillsSelected.map((el) => el.name),
+      personality: e.target.personality.value.split(" "),
+    };
 
-    e.preventDefault()
-    fetch('https://fli2mqd2g8.execute-api.us-east-1.amazonaws.com/dev/users/', {
+    e.preventDefault();
+    fetch("https://fli2mqd2g8.execute-api.us-east-1.amazonaws.com/dev/users/", {
       body: JSON.stringify(body),
       headers: {
-        'Content-Type': 'application/json'
+        "Content-Type": "application/json",
       },
-      method: 'POST'
+      method: "POST",
     })
-      .then(response => response.json())
+      .then((response) => response.json())
       .then((data) => {
-        console.log(data)
-        toast("Aspirante creado!", { position: "bottom-left", theme: "dark" })
+        console.log(data);
+        toast("Aspirante creado!", { position: "bottom-left", theme: "dark" });
         //router.push('/dashboard', { scroll: false })
       });
   }
@@ -105,7 +113,7 @@ export default function Home() {
     if (!isSelected(value)) {
       const selectedSkillsUpdated = [
         ...skillsSelected,
-        skills.find((el) => el === value)
+        skills.find((el) => el === value),
       ];
       setSkillsSelected(selectedSkillsUpdated);
     } else {
@@ -130,8 +138,9 @@ export default function Home() {
       <div className={styles.center}>
         <h1
           className="animate-fade-up from-black bg-clip-text text-center font-display text-4xl font-bold tracking-[-0.02em] [text-wrap:balance] md:text-7xl md:leading-[5rem]"
-          style={{ animationDelay: "0.15s", animationFillMode: "forwards" }}>
-          Registro
+          style={{ animationDelay: "0.15s", animationFillMode: "forwards" }}
+        >
+          {t("registrationTitle")}
         </h1>
       </div>
 
@@ -159,16 +168,16 @@ export default function Home() {
 
       <div className={styles.card}>
         <div>
-          <h2>
-            Conectamos profesionales de TI
-          </h2>
+          <h2>Conectamos profesionales de TI</h2>
         </div>
 
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
           <form className="space-y-6" onSubmit={register}>
-
             <div>
-              <label htmlFor="name" className="block text-sm font-medium leading-6 text-gray-900">
+              <label
+                htmlFor="name"
+                className="block text-sm font-medium leading-6 text-gray-900"
+              >
                 Nombre
               </label>
               <div className="mt-2">
@@ -185,7 +194,10 @@ export default function Home() {
             </div>
 
             <div>
-              <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">
+              <label
+                htmlFor="email"
+                className="block text-sm font-medium leading-6 text-gray-900"
+              >
                 Correo
               </label>
               <div className="mt-2">
@@ -203,7 +215,10 @@ export default function Home() {
 
             <div>
               <div className="flex items-center justify-between">
-                <label htmlFor="password" className="block text-sm font-medium leading-6 text-gray-900">
+                <label
+                  htmlFor="password"
+                  className="block text-sm font-medium leading-6 text-gray-900"
+                >
                   Contraseña
                 </label>
               </div>
@@ -222,7 +237,10 @@ export default function Home() {
 
             <div>
               <div className="flex items-center justify-between">
-                <label htmlFor="phone" className="block text-sm font-medium leading-6 text-gray-900">
+                <label
+                  htmlFor="phone"
+                  className="block text-sm font-medium leading-6 text-gray-900"
+                >
                   Telefono Celular
                 </label>
               </div>
@@ -243,14 +261,21 @@ export default function Home() {
             <Listbox value={selected} onChange={setSelected}>
               {({ open }) => (
                 <>
-                  <Listbox.Label className="block text-sm font-medium leading-6 text-gray-900">Idioma</Listbox.Label>
+                  <Listbox.Label className="block text-sm font-medium leading-6 text-gray-900">
+                    Idioma
+                  </Listbox.Label>
                   <div className="relative mt-2">
                     <Listbox.Button className="relative w-full cursor-default rounded-md bg-white py-1.5 pr-10 text-left text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 sm:text-sm sm:leading-6">
                       <span className="flex items-center">
-                        <span className="ml-3 block truncate">{selected.name}</span>
+                        <span className="ml-3 block truncate">
+                          {selected.name}
+                        </span>
                       </span>
                       <span className="pointer-events-none absolute inset-y-0 right-0 ml-2 flex items-center pr-2 pt-2">
-                        <ChevronUpDownIcon className="h-5 w-5 text-gray-900" aria-hidden="true" />
+                        <ChevronUpDownIcon
+                          className="h-5 w-5 text-gray-900"
+                          aria-hidden="true"
+                        />
                       </span>
                     </Listbox.Button>
 
@@ -270,8 +295,10 @@ export default function Home() {
                               // istanbul ignore next
                               ({ active }) =>
                                 classNames(
-                                  active ? 'bg-indigo-600 text-white' : 'text-gray-900',
-                                  'relative cursor-default select-none py-2 pl-3 pr-9'
+                                  active
+                                    ? "bg-indigo-600 text-white"
+                                    : "text-gray-900",
+                                  "relative cursor-default select-none py-2 pl-3 pr-9"
                                 )
                             }
                             value={person}
@@ -280,7 +307,12 @@ export default function Home() {
                               <>
                                 <div className="flex items-center">
                                   <span
-                                    className={classNames(selected ? 'font-semibold' : 'font-normal', 'ml-3 block truncate')}
+                                    className={classNames(
+                                      selected
+                                        ? "font-semibold"
+                                        : "font-normal",
+                                      "ml-3 block truncate"
+                                    )}
                                   >
                                     {person.name}
                                   </span>
@@ -289,11 +321,14 @@ export default function Home() {
                                 {selected ? (
                                   <span
                                     className={classNames(
-                                      active ? 'text-white' : 'text-indigo-600',
-                                      'absolute inset-y-0 right-0 flex items-center pr-4'
+                                      active ? "text-white" : "text-indigo-600",
+                                      "absolute inset-y-0 right-0 flex items-center pr-4"
                                     )}
                                   >
-                                    <CheckIcon className="h-5 w-5" aria-hidden="true" />
+                                    <CheckIcon
+                                      className="h-5 w-5"
+                                      aria-hidden="true"
+                                    />
                                   </span>
                                 ) : null}
                               </>
@@ -310,14 +345,19 @@ export default function Home() {
             <Listbox value={pais} onChange={setPais}>
               {({ open }) => (
                 <>
-                  <Listbox.Label className="block text-sm font-medium leading-6 text-gray-900">Pais</Listbox.Label>
+                  <Listbox.Label className="block text-sm font-medium leading-6 text-gray-900">
+                    Pais
+                  </Listbox.Label>
                   <div className="relative mt-2">
                     <Listbox.Button className="relative w-full cursor-default rounded-md bg-white py-1.5 pr-10 text-left text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 sm:text-sm sm:leading-6">
                       <span className="flex items-center">
                         <span className="ml-3 block truncate">{pais.name}</span>
                       </span>
                       <span className="pointer-events-none absolute inset-y-0 right-0 ml-2 flex items-center pr-2 pt-2">
-                        <ChevronUpDownIcon className="h-5 w-5 text-gray-900" aria-hidden="true" />
+                        <ChevronUpDownIcon
+                          className="h-5 w-5 text-gray-900"
+                          aria-hidden="true"
+                        />
                       </span>
                     </Listbox.Button>
 
@@ -336,8 +376,10 @@ export default function Home() {
                               // istanbul ignore next
                               ({ active }) =>
                                 classNames(
-                                  active ? 'bg-indigo-600 text-white' : 'text-gray-900',
-                                  'relative cursor-default select-none py-2 pl-3 pr-9'
+                                  active
+                                    ? "bg-indigo-600 text-white"
+                                    : "text-gray-900",
+                                  "relative cursor-default select-none py-2 pl-3 pr-9"
                                 )
                             }
                             value={option}
@@ -346,7 +388,12 @@ export default function Home() {
                               <>
                                 <div className="flex items-center">
                                   <span
-                                    className={classNames(selected ? 'font-semibold' : 'font-normal', 'ml-3 block truncate')}
+                                    className={classNames(
+                                      selected
+                                        ? "font-semibold"
+                                        : "font-normal",
+                                      "ml-3 block truncate"
+                                    )}
                                   >
                                     {option.name}
                                   </span>
@@ -355,11 +402,14 @@ export default function Home() {
                                 {selected ? (
                                   <span
                                     className={classNames(
-                                      active ? 'text-white' : 'text-indigo-600',
-                                      'absolute inset-y-0 right-0 flex items-center pr-4'
+                                      active ? "text-white" : "text-indigo-600",
+                                      "absolute inset-y-0 right-0 flex items-center pr-4"
                                     )}
                                   >
-                                    <CheckIcon className="h-5 w-5" aria-hidden="true" />
+                                    <CheckIcon
+                                      className="h-5 w-5"
+                                      aria-hidden="true"
+                                    />
                                   </span>
                                 ) : null}
                               </>
@@ -373,22 +423,35 @@ export default function Home() {
               )}
             </Listbox>
 
-            <Listbox value={skillsSelected} onChange={
-              // istanbul ignore next
-              (value) => handleSelectSkill(value)
-            }>
+            <Listbox
+              value={skillsSelected}
+              onChange={
+                // istanbul ignore next
+                (value) => handleSelectSkill(value)
+              }
+            >
               {({ open }) => (
                 <>
-                  <Listbox.Label className="block text-sm font-medium leading-6 text-gray-900">Habilidad</Listbox.Label>
+                  <Listbox.Label className="block text-sm font-medium leading-6 text-gray-900">
+                    Habilidad
+                  </Listbox.Label>
                   <div className="relative mt-2">
                     <Listbox.Button className="relative w-full cursor-default rounded-md bg-white py-1.5 pr-10 text-left text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 sm:text-sm sm:leading-6">
                       <span className="flex items-center">
-                        <span className="ml-3 block truncate">{skillsSelected.map(
-                          // istanbul ignore next
-                          el => el.name).join(", ")}</span>
+                        <span className="ml-3 block truncate">
+                          {skillsSelected
+                            .map(
+                              // istanbul ignore next
+                              (el) => el.name
+                            )
+                            .join(", ")}
+                        </span>
                       </span>
                       <span className="pointer-events-none absolute inset-y-0 right-0 ml-2 flex items-center pr-2 pt-2">
-                        <ChevronUpDownIcon className="h-5 w-5 text-gray-900" aria-hidden="true" />
+                        <ChevronUpDownIcon
+                          className="h-5 w-5 text-gray-900"
+                          aria-hidden="true"
+                        />
                       </span>
                     </Listbox.Button>
 
@@ -407,8 +470,10 @@ export default function Home() {
                               // istanbul ignore next
                               ({ active }) =>
                                 classNames(
-                                  active ? 'bg-indigo-600 text-white' : 'text-gray-900',
-                                  'relative cursor-default select-none py-2 pl-3 pr-9'
+                                  active
+                                    ? "bg-indigo-600 text-white"
+                                    : "text-gray-900",
+                                  "relative cursor-default select-none py-2 pl-3 pr-9"
                                 )
                             }
                             value={option}
@@ -417,7 +482,12 @@ export default function Home() {
                               <>
                                 <div className="flex items-center">
                                   <span
-                                    className={classNames(selected ? 'font-semibold' : 'font-normal', 'ml-3 block truncate')}
+                                    className={classNames(
+                                      selected
+                                        ? "font-semibold"
+                                        : "font-normal",
+                                      "ml-3 block truncate"
+                                    )}
                                   >
                                     {option.name}
                                   </span>
@@ -426,11 +496,14 @@ export default function Home() {
                                 {selected ? (
                                   <span
                                     className={classNames(
-                                      active ? 'text-white' : 'text-indigo-600',
-                                      'absolute inset-y-0 right-0 flex items-center pr-4'
+                                      active ? "text-white" : "text-indigo-600",
+                                      "absolute inset-y-0 right-0 flex items-center pr-4"
                                     )}
                                   >
-                                    <CheckIcon className="h-5 w-5" aria-hidden="true" />
+                                    <CheckIcon
+                                      className="h-5 w-5"
+                                      aria-hidden="true"
+                                    />
                                   </span>
                                 ) : null}
                               </>
@@ -445,7 +518,10 @@ export default function Home() {
             </Listbox>
 
             <div>
-              <label htmlFor="personality" className="block text-sm font-medium leading-6 text-gray-900">
+              <label
+                htmlFor="personality"
+                className="block text-sm font-medium leading-6 text-gray-900"
+              >
                 Personalidad
               </label>
               <div className="mt-2 pb-2">
@@ -473,14 +549,17 @@ export default function Home() {
           </form>
 
           <p className="mt-10 text-center text-sm text-gray-500 pt-4">
-            ¿Ya tienes una cuenta?{' '}
-            <a href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app" className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">
+            ¿Ya tienes una cuenta?{" "}
+            <a
+              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
+              className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
+            >
               Iniciar sesión
             </a>
           </p>
         </div>
       </div>
-
+      <LanguageFlag></LanguageFlag>
     </main>
-  )
+  );
 }
