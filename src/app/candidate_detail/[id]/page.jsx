@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import styles from "../page.module.css";
+import styles from "../../page.module.css";
 import { Fragment, useState } from "react";
 import { Listbox, Transition } from "@headlessui/react";
 import { Disclosure, Menu } from "@headlessui/react";
@@ -10,16 +10,40 @@ import { useCallback, useEffect } from "react";
 import { CheckIcon } from "@heroicons/react/20/solid";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import TestcardItem from "../components/TestcardItem";
+import TestcardItem from "../../components/TestcardItem";
 import { Container } from "postcss";
-import TableComponent from "../components/TableComponent";
+import TableComponent from "../../components/TableComponent";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useSearchParams } from 'next/navigation'
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-export default function CandidateItem() {
+export default function CandidateItem({params}) {
+
+  const router = useRouter();
+
+  const user_id = params.id;
+  const project_data = JSON.parse(localStorage.getItem("project_selected"))
+
+  const handleSelectCandidate = async () => {
+
+    const request = await fetch(`https://fli2mqd2g8.execute-api.us-east-1.amazonaws.com/dev/projects/${project_data.id}/selectcandidates/${user_id}`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+
+    const response = await request.json()
+
+    toast.success(response.message);
+    router.push("/project_detail");
+  }
+
   return (
     <>
       <div className="">
@@ -270,10 +294,12 @@ export default function CandidateItem() {
                   </dl>
                 </div>
                 <button
-                  type="submit"
+                  // type="submit"
+                  onClick={() => handleSelectCandidate()}
                   className="flex justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                 >
-                  <Link href="/project_detail">Seleccionar candidato</Link>
+                  Seleccionar candidato
+                  {/* <Link href="/project_detail">Seleccionar candidato</Link> */}
                 </button>
               </div>
               <div className={styles.card}>

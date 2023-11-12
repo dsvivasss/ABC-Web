@@ -19,7 +19,7 @@ const TableComponent = () => {
       Header: "Hard Skills",
       accessor: "skills",
       //Filter: TextFilter,
-    },
+    }
   ]);
 
   const {
@@ -61,15 +61,12 @@ const TableComponent = () => {
       const users = response.users.map((user) => {
         return {
           name: user.name,
-          skills: user.skills.map((skill) => skill).join(", ")
+          skills: user.skills.map((skill) => skill).join(", "),
+          id: user.id
         }
       })
 
       setData(users)
-      // .then(response => response.json())
-      // .then((users_array) => {
-      //   data = users_array.users
-      // });
     }
     // istanbul ignore next
     getUsers()
@@ -101,6 +98,7 @@ const TableComponent = () => {
         </thead>
         <tbody {...getTableBodyProps()} className="divide-y divide-gray-300 py-2">
           {rows.map((row) => {
+            console.log({row});
             prepareRow(row);
             return (
               <tr {...row.getRowProps()}>
@@ -111,7 +109,7 @@ const TableComponent = () => {
                 })}
                 <td>
                   <button className="inline-flex items-center rounded-md bg-indigo-50 px-2 py-1 text-xs font-medium text-indigo-700 ring-1 ring-inset ring-indigo-700/10 hover:bg-indigo-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600" onClick={() => console.log(`Detalles de ${row.original.rol}`)}>
-                    <Link href="/candidate_detail">Ver Detalle</Link>
+                    <Link href={`/candidate_detail/${row.original.id}`}>Ver Detalle</Link>
                   </button>
                 </td>
               </tr>
