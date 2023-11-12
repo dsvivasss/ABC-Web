@@ -7,21 +7,23 @@ import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useRouter } from 'next/navigation'
+import LanguageFlag from '../components/LanguageFlag'
+import { useTranslation, Trans } from "react-i18next"
 
 const tamanio = [
   {
     id: 1,
-    name: '< 100 empleados',
+    name: '< 100',
   },
 
   {
     id: 2,
-    name: 'Entre 100 y 200 empleados',
+    name: '> 100 < 200',
   },
 
   {
     id: 3,
-    name: '> 200 empleados',
+    name: '> 200',
   },
 
   ]
@@ -73,6 +75,7 @@ export default function Company() {
   const [selected, setSelected] = useState(tamanio[0])
   const [selected2, setSelected2] = useState(ubicacion[0])
   const [selected3, setSelected3] = useState(sector[0])
+  const { t, i18n } = useTranslation()
 
   // istanbul ignore next
   function register(e){
@@ -113,7 +116,7 @@ export default function Company() {
         <h1
           className="animate-fade-up from-black bg-clip-text text-center font-display text-4xl font-bold tracking-[-0.02em] [text-wrap:balance] md:text-7xl md:leading-[5rem]"
           style={{ animationDelay: "0.15s", animationFillMode: "forwards" }}>
-          Registro
+          {t("registrationTitle")}
         </h1>
       </div>
 
@@ -126,7 +129,7 @@ export default function Company() {
             href="/"
             rel="noopener noreferrer"
           >
-            <p>Accede como aspirante</p>
+            <p>{t("candidateSignup")}</p>
           </a>
           <a
             className="group flex max-w-fit items-center justify-center space-x-2 rounded-full border border-black bg-black px-5 py-2 text-sm text-white transition-colors hover:bg-white hover:text-black"
@@ -134,7 +137,7 @@ export default function Company() {
             rel="noopener noreferrer"
           >
             <p>
-              <span className="hidden sm:inline-block">Accede como empresa</span>
+              <span className="hidden sm:inline-block">{t("companySignup")}</span>
             </p>
           </a>
       </div>
@@ -142,7 +145,7 @@ export default function Company() {
       <div className={styles.card}>
         <div>
           <h2>
-            Conectamos profesionales de TI
+            {t("slogan")}
           </h2>
         </div>
 
@@ -151,7 +154,7 @@ export default function Company() {
 
           <div>
               <label htmlFor="company_name" className="block text-sm font-medium leading-6 text-gray-900">
-                Nombre de la empresa
+                {t("companyName")}
               </label>
               <div className="mt-2">
                 <input
@@ -159,7 +162,7 @@ export default function Company() {
                   name="company_name"
                   type="company_name"
                   autoComplete="company_name"
-                  placeholder="  Nombre de la empresa"
+                  placeholder={t("companyNamePlaceholder")}
                   required
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
@@ -168,7 +171,7 @@ export default function Company() {
 
             <div>
               <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">
-                Correo del representante
+                {t("companyEmail")}
               </label>
               <div className="mt-2">
                 <input
@@ -186,7 +189,7 @@ export default function Company() {
             <div>
               <div className="flex items-center justify-between">
                 <label htmlFor="password" className="block text-sm font-medium leading-6 text-gray-900">
-                  Contraseña
+                  {t("password")}
                 </label>
               </div>
               <div className="mt-2">
@@ -205,7 +208,7 @@ export default function Company() {
             <Listbox value={selected} onChange={setSelected}>
               {({ open }) => (
                 <>
-                  <Listbox.Label className="block text-sm font-medium leading-6 text-gray-900">Tamaño de la empresa</Listbox.Label>
+                  <Listbox.Label className="block text-sm font-medium leading-6 text-gray-900">{t("companySize")}</Listbox.Label>
                   <div className="relative mt-2">
                     <Listbox.Button className="relative w-full cursor-default rounded-md bg-white py-1.5 pr-10 text-left text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 sm:text-sm sm:leading-6">
                       <span className="flex items-center">
@@ -269,7 +272,7 @@ export default function Company() {
             <Listbox value={selected2} onChange={setSelected2}>
               {({ open }) => (
                 <>
-                  <Listbox.Label className="block text-sm font-medium leading-6 text-gray-900">Ubicación</Listbox.Label>
+                  <Listbox.Label className="block text-sm font-medium leading-6 text-gray-900">{t("location")}</Listbox.Label>
                   <div className="relative mt-2">
                     <Listbox.Button className="relative w-full cursor-default rounded-md bg-white py-1.5 pr-10 text-left text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 sm:text-sm sm:leading-6">
                       <span className="flex items-center">
@@ -396,7 +399,7 @@ export default function Company() {
 
             <div>
               <label htmlFor="website" className="block text-sm font-medium leading-6 text-gray-900">
-                Sitio web
+                {t("webPage")}
               </label>
               <div className="mt-2">
                 <input
@@ -404,7 +407,7 @@ export default function Company() {
                   name="website"
                   type="website"
                   autoComplete="website"
-                  placeholder="  Ingresa el sitio web de la empresa"
+                  placeholder={t("webPagePlaceholder")}
                   required
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
@@ -416,20 +419,23 @@ export default function Company() {
                 type="submit"
                 className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
               >
-                Registrarse
+                {t("signupButton")}
               </button>
             </div>
           </form>
 
           <p className="mt-10 text-center text-sm text-gray-500 pt-4">
-            ¿Ya tienes una cuenta?{' '}
+            {t("account")}{' '}
             <a href="/company_login" className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">
-              Iniciar sesión
+              {t("login")}
             </a>
           </p>
         </div>
       </div>
-      <ToastContainer />
+      <LanguageFlag></LanguageFlag>
+      <div>
+      <ToastContainer/>
+      </div>
     </main>
   )
 }
