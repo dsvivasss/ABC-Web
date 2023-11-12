@@ -38,6 +38,13 @@ i18next
           signupButton: "Sign Up",
           namePlaceholder: "My name",
           personalityPlaceholder: "Tell us your personality",
+          companyName: "Company Name",
+          companyEmail: "Corporate Email",
+          companyNamePlaceholder: "Name of the company",
+          companySize:"Number of employees",
+          location: "Company headquarters location",
+          webPage: "Web Page",
+          webPagePlaceholder: "  Web site of the company",
         }
       },
       es: {
@@ -61,6 +68,13 @@ i18next
           signupButton: "Registrarse",
           namePlaceholder: "Mi nombre",
           personalityPlaceholder: "Selecciona tu personalidad",
+          companyName: "Nombre de la empresa",
+          companyEmail: "Correo corporativo",
+          companyNamePlaceholder: "Nombre de la empresa",
+          companySize:"Tamaño de la empresa",
+          location: "Ubicación",
+          webPage: "Sitio web",
+          webPagePlaceholder: "  Ingresa el sitio web de la empresa",
         }
       }
     }
