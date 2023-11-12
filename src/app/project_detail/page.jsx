@@ -73,19 +73,44 @@ function classNames(...classes) {
 }
 
 export default function Project_create() {
-  let project_data = {soft_skills: [], hard_skills:[], roles:[]}
+  let project_data = { soft_skills: [], hard_skills: [], roles: [] }
   if (typeof window !== 'undefined') {
     // Perform localStorage action
     project_data = JSON.parse(localStorage.getItem("project_selected"))
   }
-  
 
+  const [selectedCandidate, setSelectedCandidate] = useState({
+    users: []
+  });
   const [selected, setSelected] = useState(skills_soft[0]);
   const [selected2, setSelected2] = useState(skills_hard[0]);
   const [selected3, setSelected3] = useState(dificultad[0]);
+
+  async function obtainSelectedCandidates() {
+    const response = await fetch(`https://fli2mqd2g8.execute-api.us-east-1.amazonaws.com/dev/projects/${project_data.id}/selectedcandidates`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+    const data = await response.json();
+
+    if (data.message) {
+      return;
+    }
+
+    await setSelectedCandidate(data);
+  }
+
+  useEffect(() => {
+    obtainSelectedCandidates();
+  }, []);
+
   return (
     <>
-    <Header></Header>
+      <Header></Header>
       <div className="flex">
         <SideBar></SideBar>
         <div className="w-5/6 p-4">
@@ -226,6 +251,45 @@ export default function Project_create() {
                         </span>
                       </td>
                     </tr>
+                  </tbody>
+                </table>
+
+                <br />
+                <h1 className="animate-fade-up text-2xl from-black bg-clip-text  font-bold leading-7 text-gray-900 sm:truncate sm:tracking-tight py-2">
+                  Lista de Candidatos Seleccionados
+                </h1>
+                <br />
+
+                <table className="table-auto divide-y divide-gray-300 py-3">
+                  <thead className="">
+                    <tr>
+                      <th className="text-lg from-black font-bold leading-2 text-gray-900 sm:truncate sm:tracking-tight py-1">
+                        Nombre
+                      </th>
+                      <th className="text-lg from-black font-bold leading-2 text-gray-900 sm:truncate sm:tracking-tight py-1">
+                        Habilidades
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-gray-300 py-2">
+                    {
+                      selectedCandidate.users.map((candidate) => (
+                        <tr>
+                          <td className="text-sm font-medium leading-6 text-gray-700 sm:px-3 py-1">
+                            {candidate.name}
+                          </td>
+                          <td className="text-sm font-medium leading-6 text-gray-700 sm:px-3 py-1">
+                            {
+                              candidate.skills.map((test) => (
+                                <span className="inline-flex items-center rounded-md bg-blue-50 px-2 py-1 text-xs font-medium text-blue-700 ring-1 ring-inset ring-blue-700/10">
+                                  {test}
+                                </span>
+                              ))
+                            }
+                          </td>
+                        </tr>
+                      ))
+                    }
                   </tbody>
                 </table>
               </div>
