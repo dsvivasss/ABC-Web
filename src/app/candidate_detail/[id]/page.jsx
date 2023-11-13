@@ -21,12 +21,38 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-export default function CandidateItem({params}) {
+export default function CandidateItem({ params }) {
 
   const router = useRouter();
 
   const user_id = params.id;
   const project_data = JSON.parse(localStorage.getItem("project_selected"))
+
+  const [user, setUser] = useState({
+    users: []
+  });
+
+  const getCandidateDetail = async () => {
+    const request = await fetch(`https://fli2mqd2g8.execute-api.us-east-1.amazonaws.com/dev/users/findmany`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          "ids": [
+            user_id
+          ]
+        })
+      })
+
+    const response = await request.json()
+
+    await setUser(response)
+
+    console.log({ user: response, length: response.users.length })
+
+  }
 
   const handleSelectCandidate = async () => {
 
@@ -43,6 +69,10 @@ export default function CandidateItem({params}) {
     toast.success(response.message);
     router.push("/project_detail");
   }
+
+  useEffect(() => {
+    getCandidateDetail()
+  }, []);
 
   return (
     <>
@@ -217,82 +247,73 @@ export default function CandidateItem({params}) {
           <div className={styles.center2}>
             <div className={styles.grid3}>
               <div className={styles.card}>
-                <h1 className="animate-fade-up text-2xl from-black bg-clip-text  font-bold leading-7 text-gray-900 sm:truncate sm:tracking-tight py-2">
-                  Pedro Melenas
-                </h1>
-                <h1 className="animate-fade-up text-xl from-black bg-clip-text  font-bold leading-7 text-gray-900 sm:truncate sm:tracking-tight py-2">
-                  Descripción
-                </h1>
-                <p>
-                  Pedro Melenas es un distinguido ingeniero de software,
-                  destacado por sus contrubuciones a a la computación cuántica.
-                </p>
-                <h1 className="animate-fade-up text-xl from-black bg-clip-text  font-bold leading-7 text-gray-900 sm:truncate sm:tracking-tight py-2">
-                  Soft skills
-                </h1>
-                <span className="inline-flex items-center rounded-md bg-indigo-50 px-2 py-1 text-xs font-medium text-indigo-700 ring-1 ring-inset ring-indigo-700/10">
-                  Comunicación estratégica
-                </span>
-                <span className="inline-flex items-center rounded-md bg-indigo-50 px-2 py-1 text-xs font-medium text-indigo-700 ring-1 ring-inset ring-indigo-700/10">
-                  Trabajo en equipo
-                </span>
-                <span className="inline-flex items-center rounded-md bg-indigo-50 px-2 py-1 text-xs font-medium text-indigo-700 ring-1 ring-inset ring-indigo-700/10">
-                  Solución de problemas
-                </span>
-                <span className="inline-flex items-center rounded-md bg-indigo-50 px-2 py-1 text-xs font-medium text-indigo-700 ring-1 ring-inset ring-indigo-700/10">
-                  Creatividad
-                </span>
-                <span className="inline-flex items-center rounded-md bg-indigo-50 px-2 py-1 text-xs font-medium text-indigo-700 ring-1 ring-inset ring-indigo-700/10">
-                  Empatía
-                </span>
-                <h1 className="animate-fade-up text-xl from-black bg-clip-text  font-bold leading-7 text-gray-900 sm:truncate sm:tracking-tight py-2">
-                  Hard skills
-                </h1>
-                <span className="inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20">
-                  Python
-                </span>
-                <span className="inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20">
-                  Typescript
-                </span>
-                <span className="inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20">
-                  DevOps
-                </span>
-                <span className="inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20">
-                  Security
-                </span>
-                <span className="inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20">
-                  Software Architecture
-                </span>
-                <span className="inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20">
-                  Next Js
-                </span>
-                <h1 className="animate-fade-up text-xl from-black bg-clip-text  font-bold leading-7 text-gray-900 sm:truncate sm:tracking-tight py-2">
-                  Experiencia
-                </h1>
-                <div className="pb-2">
-                  <dl className="divide-y divide-gray-100">
-                    <div className="px-4 py-2 sm:grid sm:grid-cols-1 sm:gap-4 sm:px-0">
-                      <dd className="text-sm font-medium leading-6 text-gray-700 sm:px-0">
-                        Backend Developer
-                      </dd>
+                {
+                  user.users.length > 0 ? (
+
+                    <div>
+                      <h1 className="animate-fade-up text-2xl from-black bg-clip-text  font-bold leading-7 text-gray-900 sm:truncate sm:tracking-tight pb-2">
+                        {user.users[0].name}
+                      </h1>
+                      <p className="pb-2">
+                        {user.users[0].name} es un candidato con experiencia en {
+                          user.users[0].skills.map((skill) => (
+                            <span >
+                              {skill},
+                            </span>
+                          ))
+
+                        } y con habilidades blandas en {
+                          user.users[0].personality.map((skill) => (
+                            <span >
+                              {skill},
+                            </span>
+                          ))
+
+                        }
+                        que vive en {user.users[0].country} y tiene ganas de iniciar laboralmente en este proyecto.
+                      </p>
+                      <h2 className="animate-fade-up text-xl from-black bg-clip-text  font-bold leading-7 text-gray-900 sm:truncate sm:tracking-tight pt-1">
+                        Habilidades Blandas
+                      </h2>
+                      {
+                        user.users[0].personality.map((skill) => (
+                          <span className="inline-flex items-center rounded-md bg-indigo-50 px-2 text-xs font-medium text-indigo-700 ring-1 ring-inset ring-indigo-700/10">
+                            {skill}
+                          </span>
+                        ))
+                      }
+
+                      <h2 className="animate-fade-up text-xl from-black bg-clip-text  font-bold leading-7 text-gray-900 sm:truncate sm:tracking-tight pt-1">
+                        Habilidades Duras
+                      </h2>
+                      {
+                        user.users[0].skills.map((skill) => (
+                          <span className="inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20">
+                            {skill}
+                          </span>
+                        ))
+                      }
+
+                      <h2 className="animate-fade-up text-xl from-black bg-clip-text  font-bold leading-7 text-gray-900 sm:truncate sm:tracking-tight pt-1">
+                        País
+                      </h2>
+
+                      <p>
+                        {user.users[0].country}
+                      </p>
+
+                      <h2 className="animate-fade-up text-xl from-black bg-clip-text  font-bold leading-7 text-gray-900 sm:truncate sm:tracking-tight pt-1">
+                        Teléfono
+                      </h2>
+
+                      <p className="pb-2">
+                        {user.users[0].phone}
+                      </p>
+
                     </div>
-                    <div className="px-4 py-2 sm:grid sm:grid-cols-1 sm:gap-4 sm:px-0">
-                      <dd className="text-sm font-medium leading-6 text-gray-700 sm:px-0">
-                        Senior Frontend Engineer
-                      </dd>
-                    </div>
-                    <div className="px-4 py-2 sm:grid sm:grid-cols-1 sm:gap-4 sm:px-0">
-                      <dd className="text-sm font-medium leading-6 text-gray-700 sm:px-0">
-                        Software Architect
-                      </dd>
-                    </div>
-                    <div className="px-4 py-2 sm:grid sm:grid-cols-1 sm:gap-4 sm:px-0">
-                      <dd className="text-sm font-medium leading-6 text-gray-700 sm:px-0">
-                        Backend Developer
-                      </dd>
-                    </div>
-                  </dl>
-                </div>
+                  ) : null
+                }
+
                 <button
                   // type="submit"
                   onClick={() => handleSelectCandidate()}
@@ -334,9 +355,9 @@ export default function CandidateItem({params}) {
                       <td>
                         <button
                           className="inline-flex items-center rounded-md bg-indigo-50 px-2 py-1 text-xs font-medium text-indigo-700 ring-1 ring-inset ring-indigo-700/10 hover:bg-indigo-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                          //onClick={() =>
-                          //console.log(`Detalles de ${row.original.rol}`)
-                          //}
+                        //onClick={() =>
+                        //console.log(`Detalles de ${row.original.rol}`)
+                        //}
                         >
                           Modificar
                         </button>
@@ -354,9 +375,9 @@ export default function CandidateItem({params}) {
                       <td>
                         <button
                           className="inline-flex items-center rounded-md bg-indigo-50 px-2 py-1 text-xs font-medium text-indigo-700 ring-1 ring-inset ring-indigo-700/10 hover:bg-indigo-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                          //onClick={() =>
-                          //console.log(`Detalles de ${row.original.rol}`)
-                          //}
+                        //onClick={() =>
+                        //console.log(`Detalles de ${row.original.rol}`)
+                        //}
                         >
                           Modificar
                         </button>
@@ -374,9 +395,9 @@ export default function CandidateItem({params}) {
                       <td>
                         <button
                           className="inline-flex items-center rounded-md bg-indigo-50 px-2 py-1 text-xs font-medium text-indigo-700 ring-1 ring-inset ring-indigo-700/10 hover:bg-indigo-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                          //onClick={() =>
-                          //console.log(`Detalles de ${row.original.rol}`)
-                          //}
+                        //onClick={() =>
+                        //console.log(`Detalles de ${row.original.rol}`)
+                        //}
                         >
                           Modificar
                         </button>
@@ -416,9 +437,9 @@ export default function CandidateItem({params}) {
                       <td>
                         <button
                           className="inline-flex items-center rounded-md bg-indigo-50 px-2 py-1 text-xs font-medium text-indigo-700 ring-1 ring-inset ring-indigo-700/10 hover:bg-indigo-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                          //onClick={() =>
-                          //console.log(`Detalles de ${row.original.rol}`)
-                          //}
+                        //onClick={() =>
+                        //console.log(`Detalles de ${row.original.rol}`)
+                        //}
                         >
                           Modificar
                         </button>
@@ -436,9 +457,9 @@ export default function CandidateItem({params}) {
                       <td>
                         <button
                           className="inline-flex items-center rounded-md bg-indigo-50 px-2 py-1 text-xs font-medium text-indigo-700 ring-1 ring-inset ring-indigo-700/10 hover:bg-indigo-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                          //onClick={() =>
-                          //console.log(`Detalles de ${row.original.rol}`)
-                          //}
+                        //onClick={() =>
+                        //console.log(`Detalles de ${row.original.rol}`)
+                        //}
                         >
                           Modificar
                         </button>
@@ -456,9 +477,9 @@ export default function CandidateItem({params}) {
                       <td>
                         <button
                           className="inline-flex items-center rounded-md bg-indigo-50 px-2 py-1 text-xs font-medium text-indigo-700 ring-1 ring-inset ring-indigo-700/10 hover:bg-indigo-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                          //onClick={() =>
-                          //console.log(`Detalles de ${row.original.rol}`)
-                          //}
+                        //onClick={() =>
+                        //console.log(`Detalles de ${row.original.rol}`)
+                        //}
                         >
                           Modificar
                         </button>
@@ -476,9 +497,9 @@ export default function CandidateItem({params}) {
                       <td>
                         <button
                           className="inline-flex items-center rounded-md bg-indigo-50 px-2 py-1 text-xs font-medium text-indigo-700 ring-1 ring-inset ring-indigo-700/10 hover:bg-indigo-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                          //onClick={() =>
-                          //console.log(`Detalles de ${row.original.rol}`)
-                          //}
+                        //onClick={() =>
+                        //console.log(`Detalles de ${row.original.rol}`)
+                        //}
                         >
                           Modificar
                         </button>
