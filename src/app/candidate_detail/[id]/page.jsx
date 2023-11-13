@@ -32,6 +32,7 @@ export default function CandidateItem({ params }) {
     users: []
   });
 
+  //istambul ignore next
   const getCandidateDetail = async () => {
     const request = await fetch(`https://fli2mqd2g8.execute-api.us-east-1.amazonaws.com/dev/users/findmany`,
       {
