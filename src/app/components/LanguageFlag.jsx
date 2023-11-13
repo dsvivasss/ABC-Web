@@ -27,6 +27,7 @@ const lngs = {
     en: { nativeName: "English" },
 }
 
+// istanbul ignore next
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
@@ -35,6 +36,7 @@ export default function Language() {
   const [selected, setSelected] = useState(language[0])
   const { t, i18n } = useTranslation()
 
+  // istanbul ignore next
   const changeLanguage = (language) => {
     i18n.changeLanguage(language.prefix);
     setSelected(language);

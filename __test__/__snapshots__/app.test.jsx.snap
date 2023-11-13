@@ -22,7 +22,7 @@ exports[`Home page Header renders correctly 1`] = `
               aria-expanded="false"
               class="relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
               data-headlessui-state=""
-              id="headlessui-disclosure-button-:r7:"
+              id="headlessui-disclosure-button-:r8:"
               type="button"
             >
               <span
@@ -98,7 +98,7 @@ exports[`Home page Header renders correctly 1`] = `
                   aria-haspopup="menu"
                   class="relative flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
                   data-headlessui-state=""
-                  id="headlessui-menu-button-:r8:"
+                  id="headlessui-menu-button-:r9:"
                   type="button"
                 >
                   <span
@@ -137,7 +137,7 @@ exports[`Home page Home page renders correctly 1`] = `
         class="animate-fade-up from-black bg-clip-text text-center font-display text-4xl font-bold tracking-[-0.02em] [text-wrap:balance] md:text-7xl md:leading-[5rem]"
         style="animation-delay: 0.15s; animation-fill-mode: forwards;"
       >
-        Registro
+        Sign up
       </h1>
     </div>
     <div
@@ -150,7 +150,7 @@ exports[`Home page Home page renders correctly 1`] = `
         rel="noopener noreferrer"
       >
         <p>
-          Accede como aspirante
+          Sign up as candidate
         </p>
       </a>
       <a
@@ -162,7 +162,7 @@ exports[`Home page Home page renders correctly 1`] = `
           <span
             class="hidden sm:inline-block"
           >
-            Accede como empresa
+            Sign up as company
           </span>
         </p>
       </a>
@@ -171,8 +171,10 @@ exports[`Home page Home page renders correctly 1`] = `
       class="card"
     >
       <div>
-        <h2>
-          Conectamos profesionales de TI
+        <h2
+          class="text-center"
+        >
+          We connect IT professionals now
         </h2>
       </div>
       <div
@@ -186,7 +188,7 @@ exports[`Home page Home page renders correctly 1`] = `
               class="block text-sm font-medium leading-6 text-gray-900"
               for="name"
             >
-              Nombre
+              Name
             </label>
             <div
               class="mt-2"
@@ -196,7 +198,7 @@ exports[`Home page Home page renders correctly 1`] = `
                 class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 id="name"
                 name="name"
-                placeholder="  Mi nombre"
+                placeholder="My name"
                 required=""
                 type="name"
               />
@@ -207,7 +209,7 @@ exports[`Home page Home page renders correctly 1`] = `
               class="block text-sm font-medium leading-6 text-gray-900"
               for="email"
             >
-              Correo
+              Email
             </label>
             <div
               class="mt-2"
@@ -231,7 +233,7 @@ exports[`Home page Home page renders correctly 1`] = `
                 class="block text-sm font-medium leading-6 text-gray-900"
                 for="password"
               >
-                Contraseña
+                Password
               </label>
             </div>
             <div
@@ -256,7 +258,7 @@ exports[`Home page Home page renders correctly 1`] = `
                 class="block text-sm font-medium leading-6 text-gray-900"
                 for="phone"
               >
-                Telefono Celular
+                Cellphone number
               </label>
             </div>
             <div
@@ -279,7 +281,7 @@ exports[`Home page Home page renders correctly 1`] = `
             data-headlessui-state=""
             id="headlessui-listbox-label-:r0:"
           >
-            Idioma
+            Language
           </label>
           <div
             class="relative mt-2"
@@ -326,7 +328,7 @@ exports[`Home page Home page renders correctly 1`] = `
             data-headlessui-state=""
             id="headlessui-listbox-label-:r2:"
           >
-            Pais
+            Country
           </label>
           <div
             class="relative mt-2"
@@ -373,7 +375,7 @@ exports[`Home page Home page renders correctly 1`] = `
             data-headlessui-state=""
             id="headlessui-listbox-label-:r4:"
           >
-            Habilidad
+            Skill
           </label>
           <div
             class="relative mt-2"
@@ -418,7 +420,7 @@ exports[`Home page Home page renders correctly 1`] = `
               class="block text-sm font-medium leading-6 text-gray-900"
               for="personality"
             >
-              Personalidad
+              Personality
             </label>
             <div
               class="mt-2 pb-2"
@@ -428,7 +430,7 @@ exports[`Home page Home page renders correctly 1`] = `
                 class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 id="personality"
                 name="personality"
-                placeholder="  Selecciona tu personalidad"
+                placeholder="Tell us your personality"
                 required=""
                 type="personality"
               />
@@ -442,23 +444,67 @@ exports[`Home page Home page renders correctly 1`] = `
               href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
               type="submit"
             >
-              Registrarse
+              Sign Up
             </button>
           </div>
         </form>
         <p
           class="mt-10 text-center text-sm text-gray-500 pt-4"
         >
-          ¿Ya tienes una cuenta?
+          Do you have an account?
            
           <a
             class="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
             href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
           >
-            Iniciar sesión
+            Log In
           </a>
         </p>
       </div>
+    </div>
+    <div
+      class="relative mt-2"
+    >
+      <button
+        aria-expanded="false"
+        aria-haspopup="listbox"
+        class="relative w-full cursor-default rounded-md bg-white py-1.5 pl-3 pr-10 text-left text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 sm:text-sm sm:leading-6"
+        data-headlessui-state=""
+        id="headlessui-listbox-button-:r6:"
+        type="button"
+      >
+        <span
+          class="flex items-center"
+        >
+          <img
+            alt=""
+            class="h-5 w-5 flex-shrink-0 rounded-full"
+            src="https://cdn-icons-png.flaticon.com/512/323/323365.png"
+          />
+          <span
+            class="ml-3 block truncate"
+          >
+            Español
+          </span>
+        </span>
+        <span
+          class="pointer-events-none absolute inset-y-0 right-0 ml-3 flex items-center pr-2"
+        >
+          <svg
+            aria-hidden="true"
+            class="h-5 w-5 text-gray-400"
+            fill="currentColor"
+            viewBox="0 0 20 20"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              clip-rule="evenodd"
+              d="M10 3a.75.75 0 01.55.24l3.25 3.5a.75.75 0 11-1.1 1.02L10 4.852 7.3 7.76a.75.75 0 01-1.1-1.02l3.25-3.5A.75.75 0 0110 3zm-3.76 9.2a.75.75 0 011.06.04l2.7 2.908 2.7-2.908a.75.75 0 111.1 1.02l-3.25 3.5a.75.75 0 01-1.1 0l-3.25-3.5a.75.75 0 01.04-1.06z"
+              fill-rule="evenodd"
+            />
+          </svg>
+        </span>
+      </button>
     </div>
   </main>
 </div>
@@ -620,7 +666,7 @@ exports[`Home page ProjectcardItem renders correctly 1`] = `
             aria-haspopup="menu"
             class="inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:ring-gray-400"
             data-headlessui-state=""
-            id="headlessui-menu-button-:r6:"
+            id="headlessui-menu-button-:r7:"
             type="button"
           >
             More
