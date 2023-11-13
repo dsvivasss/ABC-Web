@@ -1,4 +1,19 @@
 import React from "react";
+import styles from "../page.module.css";
+import { Fragment, useState } from "react";
+import { Disclosure, Menu } from "@headlessui/react";
+import { Listbox, Transition } from "@headlessui/react";
+import { ChevronUpDownIcon } from "@heroicons/react/20/solid";
+import {
+  BriefcaseIcon,
+  CalendarIcon,
+  CheckIcon,
+  ChevronDownIcon,
+  CurrencyDollarIcon,
+  LinkIcon,
+  MapPinIcon,
+  PencilIcon,
+} from "@heroicons/react/20/solid";
 
 const TimePicker = ({ index, description, options }) => {
   return (
@@ -56,5 +71,5 @@ const TimePicker = ({ index, description, options }) => {
     </div>
   );
 };
- 
+
 export default TimePicker;

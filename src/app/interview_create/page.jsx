@@ -6,7 +6,8 @@ import { Listbox, Transition } from "@headlessui/react";
 import { Disclosure, Menu } from "@headlessui/react";
 import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { PaperClipIcon, ChevronUpDownIcon } from "@heroicons/react/20/solid";
-import { useEffect } from "react";
+import { useCallback, useEffect } from "react";
+import { CheckIcon } from "@heroicons/react/20/solid";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import TestcardItem from "../components/TestcardItem";
@@ -14,52 +15,61 @@ import Link from "next/link";
 import Datepicker from "react-tailwindcss-datepicker";
 import TimePicker from "../components/TimePicker";
  
+
 const skills_soft = [
   {
     id: 1,
     name: "Comunicación estratégica",
   },
  
+
   {
     id: 2,
     name: "Pensamiento sistémico",
   },
  
+
   {
     id: 3,
     name: "Creatividad",
   },
 ];
  
+
 const type = [
   {
     id: "technical",
     name: "Tecnica",
   },
  
+
   {
     id: "psychology",
     name: "Pisicolgia",
   },
 ];
  
+
 const dificultad = [
   {
     id: "hard",
     name: "Alta",
   },
  
+
   {
     id: "medium",
     name: "Media",
   },
  
+
   {
     id: "basic",
     name: "Baja",
   },
 ];
  
+
 const topics = [
   {
     id: "python",
@@ -82,14 +92,15 @@ const topics = [
     name: "Product management",
   },
 ];
- 
+
 const navigation = [{ name: "Dashboard", href: "#", current: true }];
- 
+
 // istanbul ignore next
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
  
+
 export default function Interview_create() {
   const [selected, setSelected] = useState(skills_soft[0]);
   const [selected2, setSelected2] = useState(type[0]);
@@ -99,16 +110,19 @@ export default function Interview_create() {
   var company_id = null;
   var project_data = null;
  
+
   const [value, setValue] = useState({
     startDate: new Date(),
     endDate: new Date().setMonth(11),
   });
  
+
   const handleValueChange = (newValue) => {
     console.log("newValue:", newValue);
     setValue(newValue);
   };
  
+
   // istanbul ignore next
   function register(e) {
     const company = 1;
@@ -126,6 +140,7 @@ export default function Interview_create() {
       questions: tests.map((test) => test.id),
     };
  
+
     // istanbul ignore next
     fetch("https://fli2mqd2g8.execute-api.us-east-1.amazonaws.com/dev/tests/", {
       method: "POST",
@@ -141,6 +156,7 @@ export default function Interview_create() {
       });
   }
  
+
   // istanbul ignore next
   async function getTests() {
     const body = {
@@ -153,6 +169,7 @@ export default function Interview_create() {
       },
     };
  
+
     const request = await fetch(
       "https://fli2mqd2g8.execute-api.us-east-1.amazonaws.com/dev/questions/",
       {
@@ -163,25 +180,26 @@ export default function Interview_create() {
         body: JSON.stringify(body),
       }
     );
- 
+
     const response = await request.json();
- 
+
     setTests(response);
   }
- 
+
   useEffect(() => {
     company_id = localStorage.getItem("company_id");
     project_data = JSON.parse(localStorage.getItem("project_selected"));
   });
  
+
   useEffect(() => {
     async function getTestsCall() {
       await getTests();
     }
- 
+
     getTestsCall();
   }, [selected3, selected4]);
- 
+
   return (
     <>
       <div className="">
@@ -221,6 +239,7 @@ export default function Interview_create() {
                       <BellIcon className="h-6 w-6" aria-hidden="true" />
                     </button>
  
+
                     {/* Profile dropdown */}
                     <Menu as="div" className="relative ml-3">
                       <div>
@@ -306,6 +325,7 @@ export default function Interview_create() {
                     </div>
                   </li>
  
+
                   <li>
                     <a
                       href="/project_list"
@@ -341,6 +361,7 @@ export default function Interview_create() {
           </div>
         </div>
  
+
         <div className="w-5/6 p-4">
           <div className="lg:flex lg:items-center lg:justify-between">
             <div className="min-w-0 flex-1 pl-6 pb-4">
@@ -351,6 +372,7 @@ export default function Interview_create() {
             </div>
           </div>
  
+
           <div className={styles.grid2}>
             <div className={styles.card}>
               <div className="lg:flex lg:items-center lg:justify-between pb-2">
@@ -383,9 +405,9 @@ export default function Interview_create() {
                       <div>
                       <TimePicker></TimePicker>
                       </div>
- 
+
                     </div>
- 
+
                     <div className="pb-1 pt-2">
                       <span className="hidden sm:block pr-5">
                         <button
