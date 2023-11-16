@@ -31,6 +31,9 @@ export default function CandidateItem({ params }) {
   const [user, setUser] = useState({
     users: []
   });
+  const [isUserInTest, setIsUserInTest] = useState(false);
+
+  const [tests, setTests] = useState([]);
 
   //istambul ignore next
   const getCandidateDetail = async () => {
@@ -50,8 +53,25 @@ export default function CandidateItem({ params }) {
     const response = await request.json()
 
     await setUser(response)
+  }
 
-    console.log({ user: response, length: response.users.length })
+  const getTests = async () => {
+    const request = await fetch(`https://fli2mqd2g8.execute-api.us-east-1.amazonaws.com/dev/tests/projects/${project_data.id}`,
+      {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+
+    const response = await request.json()
+
+    const isUserWithinTest = response[0]?.users?.some((user) => String(user.id) === String(user_id))
+
+    if (isUserWithinTest) {
+      await setIsUserInTest(true)
+      await setTests(response)
+    }
 
   }
 
@@ -73,6 +93,7 @@ export default function CandidateItem({ params }) {
 
   useEffect(() => {
     getCandidateDetail()
+    getTests()
   }, []);
 
   return (
@@ -315,199 +336,194 @@ export default function CandidateItem({ params }) {
                   ) : null
                 }
 
-                <button
-                  // type="submit"
-                  onClick={() => handleSelectCandidate()}
-                  className="flex justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                >
-                  Seleccionar candidato
-                  {/* <Link href="/project_detail">Seleccionar candidato</Link> */}
-                </button>
+                {
+                  !isUserInTest ? (
+                    <button
+                      // type="submit"
+                      onClick={() => handleSelectCandidate()}
+                      className="flex justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                    >
+                      Seleccionar candidato
+                      {/* <Link href="/project_detail">Seleccionar candidato</Link> */}
+                    </button>
+                  ) : null
+                }
               </div>
               <div className={styles.card}>
                 <h1 className="animate-fade-up text-2xl from-black bg-clip-text  font-bold leading-7 text-gray-900 sm:truncate sm:tracking-tight py-2">
                   Pruebas de selección
                 </h1>
-                <p>
-                  Este es un resumen de las pruebas que ha realizado el
-                  candidato.
-                </p>
-                <table className="table-auto divide-y divide-gray-300 py-3">
-                  <thead className="">
-                    <tr>
-                      <th className="text-lg from-black font-bold leading-2 text-gray-900 sm:truncate sm:tracking-tight py-1">
-                        Prueba
-                      </th>
-                      <th className="text-lg from-black font-bold leading-2 text-gray-900 sm:truncate sm:tracking-tight py-1">
-                        Resultado
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y divide-gray-300 py-2">
-                    <tr>
-                      <td className="text-sm font-medium leading-6 text-gray-700 sm:px-3 py-1">
-                        Psicológica
-                      </td>
-                      <td className="pl-5">
-                        <span className="inline-flex items-center rounded-md bg-blue-50 px-2 py-1 text-xs font-medium text-blue-700 ring-1 ring-inset ring-blue-700/10">
-                          50%
-                        </span>
-                      </td>
-                      <td>
-                        <button
-                          className="inline-flex items-center rounded-md bg-indigo-50 px-2 py-1 text-xs font-medium text-indigo-700 ring-1 ring-inset ring-indigo-700/10 hover:bg-indigo-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                        //onClick={() =>
-                        //console.log(`Detalles de ${row.original.rol}`)
-                        //}
-                        >
-                          Modificar
-                        </button>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="text-sm font-medium leading-6 text-gray-700 sm:px-3 py-1">
-                        Idiomas
-                      </td>
-                      <td className="pl-5">
-                        <span className="inline-flex items-center rounded-md bg-blue-50 px-2 py-1 text-xs font-medium text-blue-700 ring-1 ring-inset ring-blue-700/10">
-                          90%
-                        </span>
-                      </td>
-                      <td>
-                        <button
-                          className="inline-flex items-center rounded-md bg-indigo-50 px-2 py-1 text-xs font-medium text-indigo-700 ring-1 ring-inset ring-indigo-700/10 hover:bg-indigo-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                        //onClick={() =>
-                        //console.log(`Detalles de ${row.original.rol}`)
-                        //}
-                        >
-                          Modificar
-                        </button>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="text-sm font-medium leading-6 text-gray-700 sm:px-3 py-1">
-                        Python
-                      </td>
-                      <td className="pl-5">
-                        <span className="inline-flex items-center rounded-md bg-blue-50 px-2 py-1 text-xs font-medium text-blue-700 ring-1 ring-inset ring-blue-700/10">
-                          80%
-                        </span>
-                      </td>
-                      <td>
-                        <button
-                          className="inline-flex items-center rounded-md bg-indigo-50 px-2 py-1 text-xs font-medium text-indigo-700 ring-1 ring-inset ring-indigo-700/10 hover:bg-indigo-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                        //onClick={() =>
-                        //console.log(`Detalles de ${row.original.rol}`)
-                        //}
-                        >
-                          Modificar
-                        </button>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
+
+                {
+                  isUserInTest ? (
+                    <p>
+                      Este es un resumen de las pruebas que ha realizado el
+                      candidato.
+                    </p>
+                  ) : (
+                    <p>
+                      Este candidato aún no ha sido seleccionado para realizar
+                      pruebas.
+                    </p>
+                  )
+                }
+
+                {isUserInTest ? (
+                  <table className="table-auto divide-y divide-gray-300 py-3">
+                    <thead className="">
+                      <tr>
+                        <th className="text-lg from-black font-bold leading-2 text-gray-900 sm:truncate sm:tracking-tight py-1">
+                          Prueba
+                        </th>
+                        <th className="text-lg from-black font-bold leading-2 text-gray-900 sm:truncate sm:tracking-tight py-1">
+                          Resultado
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-gray-300 py-2">
+                      {
+                        tests.map((test) => (
+                          <tr>
+                            <td className="text-sm font-medium leading-6 text-gray-700 sm:px-3 py-1">
+                              {test.type === "technical" ? test.title : test.type}
+                            </td>
+                            <td className="pl-5">
+                              <span className="inline-flex items-center rounded-md bg-blue-50 px-2 py-1 text-xs font-medium text-blue-700 ring-1 ring-inset ring-blue-700/10">
+                                50%
+                              </span>
+                            </td>
+                            <td>
+                              <button
+                                className="inline-flex items-center rounded-md bg-indigo-50 px-2 py-1 text-xs font-medium text-indigo-700 ring-1 ring-inset ring-indigo-700/10 hover:bg-indigo-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                              //onClick={() =>
+                              //console.log(`Detalles de ${row.original.rol}`)
+                              //}
+                              >
+                                Modificar
+                              </button>
+                            </td>
+                          </tr>
+                        ))
+                      }
+                    </tbody>
+                  </table>
+                ) : null}
+
               </div>
               <div className={styles.card}>
                 <h1 className="animate-fade-up text-2xl from-black bg-clip-text  font-bold leading-7 text-gray-900 sm:truncate sm:tracking-tight py-2">
                   Entrevistas
                 </h1>
-                <p className="pb-1">
-                  Verifica las entrevistas realizadas al candidato.
-                </p>
-                <table className="table-auto divide-y divide-gray-300 py-3">
-                  <thead className="">
-                    <tr>
-                      <th className="text-lg from-black font-bold leading-2 text-gray-900 sm:truncate sm:tracking-tight py-1">
-                        Fecha y hora
-                      </th>
-                      <th className="text-lg from-black font-bold leading-2 text-gray-900 sm:truncate sm:tracking-tight py-1">
-                        Resultado
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y divide-gray-300 py-2">
-                    <tr>
-                      <td className="text-sm font-medium leading-6 text-gray-700 sm:px-3 py-1">
-                        10 de Oct 2023
-                      </td>
-                      <td className="pl-5">
-                        <span className="inline-flex items-center rounded-md bg-blue-50 px-2 py-1 text-xs font-medium text-blue-700 ring-1 ring-inset ring-blue-700/10">
-                          50%
-                        </span>
-                      </td>
-                      <td>
-                        <button
-                          className="inline-flex items-center rounded-md bg-indigo-50 px-2 py-1 text-xs font-medium text-indigo-700 ring-1 ring-inset ring-indigo-700/10 hover:bg-indigo-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                        //onClick={() =>
-                        //console.log(`Detalles de ${row.original.rol}`)
-                        //}
-                        >
-                          Modificar
-                        </button>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="text-sm font-medium leading-6 text-gray-700 sm:px-3 py-1">
-                        20 de Oct 2023
-                      </td>
-                      <td className="pl-5">
-                        <span className="inline-flex items-center rounded-md bg-blue-50 px-2 py-1 text-xs font-medium text-blue-700 ring-1 ring-inset ring-blue-700/10">
-                          90%
-                        </span>
-                      </td>
-                      <td>
-                        <button
-                          className="inline-flex items-center rounded-md bg-indigo-50 px-2 py-1 text-xs font-medium text-indigo-700 ring-1 ring-inset ring-indigo-700/10 hover:bg-indigo-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                        //onClick={() =>
-                        //console.log(`Detalles de ${row.original.rol}`)
-                        //}
-                        >
-                          Modificar
-                        </button>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="text-sm font-medium leading-6 text-gray-700 sm:px-3 py-1">
-                        3 de Ago 2022
-                      </td>
-                      <td className="pl-5">
-                        <span className="inline-flex items-center rounded-md bg-blue-50 px-2 py-1 text-xs font-medium text-blue-700 ring-1 ring-inset ring-blue-700/10">
-                          80%
-                        </span>
-                      </td>
-                      <td>
-                        <button
-                          className="inline-flex items-center rounded-md bg-indigo-50 px-2 py-1 text-xs font-medium text-indigo-700 ring-1 ring-inset ring-indigo-700/10 hover:bg-indigo-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                        //onClick={() =>
-                        //console.log(`Detalles de ${row.original.rol}`)
-                        //}
-                        >
-                          Modificar
-                        </button>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="text-sm font-medium leading-6 text-gray-700 sm:px-3 py-1">
-                        1 Feb de 2023
-                      </td>
-                      <td className="pl-5">
-                        <span className="inline-flex items-center rounded-md bg-blue-50 px-2 py-1 text-xs font-medium text-blue-700 ring-1 ring-inset ring-blue-700/10">
-                          20%
-                        </span>
-                      </td>
-                      <td>
-                        <button
-                          className="inline-flex items-center rounded-md bg-indigo-50 px-2 py-1 text-xs font-medium text-indigo-700 ring-1 ring-inset ring-indigo-700/10 hover:bg-indigo-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                        //onClick={() =>
-                        //console.log(`Detalles de ${row.original.rol}`)
-                        //}
-                        >
-                          Modificar
-                        </button>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
+                {
+                  isUserInTest ? (
+                    <p>
+                      Este es un resumen de las entrevistas del candidato.
+                    </p>
+                  ) : (
+                    <p>
+                      Este candidato aún no ha sido seleccionado para realizar
+                      pruebas.
+                    </p>
+                  )
+                }
+                {
+                  isUserInTest ? (
+                    <table className="table-auto divide-y divide-gray-300 py-3">
+                      <thead className="">
+                        <tr>
+                          <th className="text-lg from-black font-bold leading-2 text-gray-900 sm:truncate sm:tracking-tight py-1">
+                            Fecha y hora
+                          </th>
+                          <th className="text-lg from-black font-bold leading-2 text-gray-900 sm:truncate sm:tracking-tight py-1">
+                            Resultado
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody className="divide-y divide-gray-300 py-2">
+                        <tr>
+                          <td className="text-sm font-medium leading-6 text-gray-700 sm:px-3 py-1">
+                            10 de Oct 2023
+                          </td>
+                          <td className="pl-5">
+                            <span className="inline-flex items-center rounded-md bg-blue-50 px-2 py-1 text-xs font-medium text-blue-700 ring-1 ring-inset ring-blue-700/10">
+                              50%
+                            </span>
+                          </td>
+                          <td>
+                            <button
+                              className="inline-flex items-center rounded-md bg-indigo-50 px-2 py-1 text-xs font-medium text-indigo-700 ring-1 ring-inset ring-indigo-700/10 hover:bg-indigo-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                            //onClick={() =>
+                            //console.log(`Detalles de ${row.original.rol}`)
+                            //}
+                            >
+                              Modificar
+                            </button>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td className="text-sm font-medium leading-6 text-gray-700 sm:px-3 py-1">
+                            20 de Oct 2023
+                          </td>
+                          <td className="pl-5">
+                            <span className="inline-flex items-center rounded-md bg-blue-50 px-2 py-1 text-xs font-medium text-blue-700 ring-1 ring-inset ring-blue-700/10">
+                              90%
+                            </span>
+                          </td>
+                          <td>
+                            <button
+                              className="inline-flex items-center rounded-md bg-indigo-50 px-2 py-1 text-xs font-medium text-indigo-700 ring-1 ring-inset ring-indigo-700/10 hover:bg-indigo-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                            //onClick={() =>
+                            //console.log(`Detalles de ${row.original.rol}`)
+                            //}
+                            >
+                              Modificar
+                            </button>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td className="text-sm font-medium leading-6 text-gray-700 sm:px-3 py-1">
+                            3 de Ago 2022
+                          </td>
+                          <td className="pl-5">
+                            <span className="inline-flex items-center rounded-md bg-blue-50 px-2 py-1 text-xs font-medium text-blue-700 ring-1 ring-inset ring-blue-700/10">
+                              80%
+                            </span>
+                          </td>
+                          <td>
+                            <button
+                              className="inline-flex items-center rounded-md bg-indigo-50 px-2 py-1 text-xs font-medium text-indigo-700 ring-1 ring-inset ring-indigo-700/10 hover:bg-indigo-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                            //onClick={() =>
+                            //console.log(`Detalles de ${row.original.rol}`)
+                            //}
+                            >
+                              Modificar
+                            </button>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td className="text-sm font-medium leading-6 text-gray-700 sm:px-3 py-1">
+                            1 Feb de 2023
+                          </td>
+                          <td className="pl-5">
+                            <span className="inline-flex items-center rounded-md bg-blue-50 px-2 py-1 text-xs font-medium text-blue-700 ring-1 ring-inset ring-blue-700/10">
+                              20%
+                            </span>
+                          </td>
+                          <td>
+                            <button
+                              className="inline-flex items-center rounded-md bg-indigo-50 px-2 py-1 text-xs font-medium text-indigo-700 ring-1 ring-inset ring-indigo-700/10 hover:bg-indigo-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                            //onClick={() =>
+                            //console.log(`Detalles de ${row.original.rol}`)
+                            //}
+                            >
+                              Modificar
+                            </button>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  ) : null
+                }
               </div>
             </div>
           </div>
