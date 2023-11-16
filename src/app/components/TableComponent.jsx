@@ -56,8 +56,6 @@ const TableComponent = () => {
 
       const response = await request.json()
 
-      console.log({ users: response.users })
-
       const users = response.users.map((user) => {
         return {
           name: user.name,
@@ -98,7 +96,6 @@ const TableComponent = () => {
         </thead>
         <tbody {...getTableBodyProps()} className="divide-y divide-gray-300 py-2">
           {rows.map((row) => {
-            console.log({row});
             prepareRow(row);
             return (
               <tr {...row.getRowProps()}>
