@@ -13,7 +13,7 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 
-export default function CompanySignIn() {
+export default function CandidateSignIn() {
 
   const router = useRouter()
 
@@ -27,7 +27,7 @@ export default function CompanySignIn() {
       email: formJson.email,
       password: formJson.password,
     }
-    const request = await fetch('https://fli2mqd2g8.execute-api.us-east-1.amazonaws.com/dev/companies/auth',
+    const request = await fetch('https://fli2mqd2g8.execute-api.us-east-1.amazonaws.com/dev/users/auth',
       {
         method: 'POST',
         headers: {
@@ -52,7 +52,7 @@ export default function CompanySignIn() {
     toast("Login exitoso!", { position: "bottom-left", theme: "dark" })
     localStorage.setItem("company_id", response.id)
     router.refresh()
-    router.push("/project_list")
+    router.push("/candidate_home/")
 
   }
 
@@ -72,15 +72,15 @@ export default function CompanySignIn() {
         style={{ animationDelay: "0.3s", animationFillMode: "forwards" }}
       >
         <a
-          className="flex max-w-fit items-center justify-center space-x-2 rounded-full border border-gray-300 bg-white px-5 py-2 text-sm text-gray-600 shadow-md transition-colors hover:border-gray-800"
-          href="http://localhost:3000/candidate_login"
+          className="group flex max-w-fit items-center justify-center space-x-2 rounded-full border border-black bg-black px-5 py-2 text-sm text-white transition-colors hover:bg-white hover:text-black"
+          href="/candidate_login"
           rel="noopener noreferrer"
         >
           <p>Accede como aspirante</p>
         </a>
         <a
-          className="group flex max-w-fit items-center justify-center space-x-2 rounded-full border border-black bg-black px-5 py-2 text-sm text-white transition-colors hover:bg-white hover:text-black"
-          href="/company"
+          className="flex max-w-fit items-center justify-center space-x-2 rounded-full border border-gray-300 bg-white px-5 py-2 text-sm text-gray-600 shadow-md transition-colors hover:border-gray-800"
+          href="/company_login"
           rel="noopener noreferrer"
         >
           <p>
@@ -101,7 +101,7 @@ export default function CompanySignIn() {
 
             <div>
               <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">
-                Correo del representante
+                Correo del candidato
               </label>
               <div className="mt-2">
                 <input
@@ -147,7 +147,7 @@ export default function CompanySignIn() {
 
           <p className="mt-10 text-center text-sm text-gray-500 pt-4">
             ¿Aún no tienes cuenta?{' '}
-            <a href="http://localhost:3000/company" className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">
+            <a href="http://localhost:3000/" className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">
               Regístrate
             </a>
           </p>
