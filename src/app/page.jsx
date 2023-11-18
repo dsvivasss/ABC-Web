@@ -9,6 +9,8 @@ import "./i18n";
 import { useTranslation, Trans } from "react-i18next";
 import i18next from "i18next";
 import LanguageFlag from "./components/LanguageFlag";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const language = [
   {
@@ -80,32 +82,36 @@ export default function Home() {
 
   // TODO: Add validation
   // istanbul ignore next
-  function register(e) {
-    const body = {
-      name: e.target.name.value,
-      email: e.target.email.value,
-      password: e.target.password.value,
-      language: selected.id,
-      country: pais.name,
-      phone: +e.target.phone.value,
-      skills: skillsSelected.map((el) => el.name),
-      personality: e.target.personality.value.split(" "),
-    };
-
+  function register(e){
     e.preventDefault();
-    fetch("https://fli2mqd2g8.execute-api.us-east-1.amazonaws.com/dev/users/", {
-      body: JSON.stringify(body),
+    const form = e.target;
+    const formData = new FormData(form);
+    const formJson = Object.fromEntries(formData.entries());
+    const body = {
+        name: formJson.name,
+        email: formJson.email,
+        password: formJson.password,
+        cellphone: formJson.phone,
+        language: selected.id,
+        country: pais.name,
+        skill: skillsSelected.name,
+        personality: formJson.personality,
+    }
+    fetch('https://fli2mqd2g8.execute-api.us-east-1.amazonaws.com/dev/users/', 
+    { 
+      method: 'POST', 
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json'
       },
-      method: "POST",
+      body: JSON.stringify(body)
     })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(data);
-        toast("Aspirante creado!", { position: "bottom-left", theme: "dark" });
-        //router.push('/dashboard', { scroll: false })
-      });
+    .then(response => response.json())
+    .then((data) =>{
+      toast("Candidato creado!", {position: "bottom-left",theme: "dark"})
+      localStorage.setItem("candidate_id", data.id)
+      router.refresh()
+      router.push("/candidate_home")
+    });
   }
 
   // istanbul ignore next
@@ -247,7 +253,7 @@ export default function Home() {
                 <input
                   id="phone"
                   name="phone"
-                  type="number"
+                  type="phone"
                   autoComplete="phone"
                   placeholder="+571112223333"
                   required
@@ -550,7 +556,7 @@ export default function Home() {
           <p className="mt-10 text-center text-sm text-gray-500 pt-4">
             {t("account")}{" "}
             <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
+              href="http://localhost:3000/candidate_login"
               className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
             >
               {t("login")}
