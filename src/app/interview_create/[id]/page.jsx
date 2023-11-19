@@ -1,145 +1,58 @@
 "use client";
-import Image from "next/image";
-import styles from "../page.module.css";
+import styles from "../../page.module.css";
 import { Fragment, useState } from "react";
-import { Listbox, Transition } from "@headlessui/react";
+import { Transition } from "@headlessui/react";
 import { Disclosure, Menu } from "@headlessui/react";
 import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
-import { PaperClipIcon, ChevronUpDownIcon } from "@heroicons/react/20/solid";
-import { useCallback, useEffect } from "react";
-import { CheckIcon } from "@heroicons/react/20/solid";
+import { useEffect } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import TestcardItem from "../components/TestcardItem";
 import Link from "next/link";
 import Datepicker from "react-tailwindcss-datepicker";
-import TimePicker from "../components/TimePicker";
- 
-
-const skills_soft = [
-  {
-    id: 1,
-    name: "Comunicación estratégica",
-  },
- 
-
-  {
-    id: 2,
-    name: "Pensamiento sistémico",
-  },
- 
-
-  {
-    id: 3,
-    name: "Creatividad",
-  },
-];
- 
-
-const type = [
-  {
-    id: "technical",
-    name: "Tecnica",
-  },
- 
-
-  {
-    id: "psychology",
-    name: "Pisicolgia",
-  },
-];
- 
-
-const dificultad = [
-  {
-    id: "hard",
-    name: "Alta",
-  },
- 
-
-  {
-    id: "medium",
-    name: "Media",
-  },
- 
-
-  {
-    id: "basic",
-    name: "Baja",
-  },
-];
- 
-
-const topics = [
-  {
-    id: "python",
-    name: "Python",
-  },
-  {
-    id: "javascript",
-    name: "Javascript",
-  },
-  {
-    id: "java",
-    name: "Java",
-  },
-  {
-    id: "oop",
-    name: "Programación orientada a objetos",
-  },
-  {
-    id: "product_management",
-    name: "Product management",
-  },
-];
-
-const navigation = [{ name: "Dashboard", href: "#", current: true }];
+import TimePicker from "../../components/TimePicker";
+import { useRouter } from "next/navigation";
 
 // istanbul ignore next
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
- 
 
-export default function Interview_create() {
-  const [selected, setSelected] = useState(skills_soft[0]);
-  const [selected2, setSelected2] = useState(type[0]);
-  const [selected3, setSelected3] = useState(dificultad[0]);
-  const [selected4, setSelected4] = useState(topics[0]);
-  const [tests, setTests] = useState([]);
+export default function Interview_create({ params }) {
+
+  const user_id = params.id;
+  const router = useRouter();
+
   var company_id = null;
   var project_data = null;
- 
 
-  const [value, setValue] = useState({
-    startDate: new Date(),
-    endDate: new Date().setMonth(11),
+  const [date, setDate] = useState({
+    startDate: new Date().toISOString().split("T")[0],
+    endDate: new Date().toISOString().split("T")[0],
   });
- 
+  
+  const [time, setTime] = useState();
+
 
   const handleValueChange = (newValue) => {
-    console.log("newValue:", newValue);
-    setValue(newValue);
+    setDate(newValue);
   };
- 
+
 
   // istanbul ignore next
-  function register(e) {
-    const company = 1;
+  function handleCeateInterview(e) {
     e.preventDefault();
-    const form = e.target;
-    const formData = new FormData(form);
-    const formJson = Object.fromEntries(formData.entries());
+    const interviewDateString = `${date.startDate}T${time}`;
+
     const body = {
       company_id: +company_id,
       project_id: project_data.id,
-      title: formJson.test_title,
-      type: selected2.id,
-      difficulty_level: selected3.id,
-      hard_skills: [selected4.id],
-      questions: tests.map((test) => test.id),
+      title: 'Entrevista',
+      type: 'interview',
+      difficulty_level: interviewDateString,
+      hard_skills: [user_id],
+      questions: [],
     };
- 
+
 
     // istanbul ignore next
     fetch("https://fli2mqd2g8.execute-api.us-east-1.amazonaws.com/dev/tests/", {
@@ -151,54 +64,15 @@ export default function Interview_create() {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
-        toast("Prueba creada!", { position: "bottom-left", theme: "dark" });
+        toast("Entrevista creada!", { position: "top-right" });
+        router.push(`/candidate_detail/${user_id}`);
       });
-  }
- 
-
-  // istanbul ignore next
-  async function getTests() {
-    const body = {
-      topics: [selected4.id], // {#options: ["python", "javascript", "java", "oop", "product_management"]#}
-      difficulty_level: selected3.id, // {#options: ["basic", "medium", "hard"]#}
-      question_type: "multiple_choice",
-      options: {
-        // {#Optional field#}
-        return_answers: true, // {#Default is false#}
-      },
-    };
- 
-
-    const request = await fetch(
-      "https://fli2mqd2g8.execute-api.us-east-1.amazonaws.com/dev/questions/",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(body),
-      }
-    );
-
-    const response = await request.json();
-
-    setTests(response);
   }
 
   useEffect(() => {
     company_id = localStorage.getItem("company_id");
     project_data = JSON.parse(localStorage.getItem("project_selected"));
   });
- 
-
-  useEffect(() => {
-    async function getTestsCall() {
-      await getTests();
-    }
-
-    getTestsCall();
-  }, [selected3, selected4]);
 
   return (
     <>
@@ -238,7 +112,7 @@ export default function Interview_create() {
                       <span className="sr-only">Ver notifications</span>
                       <BellIcon className="h-6 w-6" aria-hidden="true" />
                     </button>
- 
+
 
                     {/* Profile dropdown */}
                     <Menu as="div" className="relative ml-3">
@@ -324,7 +198,7 @@ export default function Interview_create() {
                       </div>
                     </div>
                   </li>
- 
+
 
                   <li>
                     <a
@@ -360,7 +234,7 @@ export default function Interview_create() {
             </div>
           </div>
         </div>
- 
+
 
         <div className="w-5/6 p-4">
           <div className="lg:flex lg:items-center lg:justify-between">
@@ -371,13 +245,13 @@ export default function Interview_create() {
               <p>Estas a muy pocos pasos de conocer a tu candidato</p>
             </div>
           </div>
- 
+
 
           <div className={styles.grid2}>
             <div className={styles.card}>
               <div className="lg:flex lg:items-center lg:justify-between pb-2">
                 <div className="min-w-0 flex-1">
-                  <form className="space-y-6" onSubmit={register}>
+                  <form className="space-y-6" onSubmit={handleCeateInterview}>
                     <div>
                       <label
                         htmlFor="test_title"
@@ -386,15 +260,15 @@ export default function Interview_create() {
                         Fecha
                       </label>
                       <div className="mt-2">
-                      <div>
-                        <Datepicker
-                          value={value}
-                          onChange={handleValueChange}
-                          asSingle={true}
-                          useRange={false}
-                          primaryColor={"indigo"}
-                        />
-                      </div>  
+                        <div>
+                          <Datepicker
+                            value={date}
+                            onChange={handleValueChange}
+                            asSingle={true}
+                            useRange={false}
+                            primaryColor={"indigo"}
+                          />
+                        </div>
                       </div>
                       <label
                         htmlFor="test_title"
@@ -403,7 +277,10 @@ export default function Interview_create() {
                         Hora
                       </label>
                       <div>
-                      <TimePicker></TimePicker>
+                        <TimePicker
+                          value={time}
+                          onChange={(time) => setTime(time)}
+                        />
                       </div>
 
                     </div>
@@ -414,11 +291,11 @@ export default function Interview_create() {
                           type="button"
                           className="inline-flex items-center rounded-md px-3 py-2 text-sm font-semibold text-indigo-800 leading-6"
                         >
-                          <Link href="/project_detail">Cancelar</Link>
+                          <Link href={`/candidate_detail/${user_id}`}>Cancelar</Link>
                         </button>
                       </span>
                       <button
-                        type="submit"
+                        onClick={(e) => handleCeateInterview(e)}
                         className="justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                       >
                         Citar entrevista

@@ -34,6 +34,7 @@ export default function CandidateItem({ params }) {
   const [isUserInTest, setIsUserInTest] = useState(false);
 
   const [tests, setTests] = useState([]);
+  const [interviews, setInterviews] = useState([]);
 
   //istambul ignore next
   const getCandidateDetail = async () => {
@@ -70,7 +71,14 @@ export default function CandidateItem({ params }) {
 
     if (isUserWithinTest) {
       await setIsUserInTest(true)
-      await setTests(response)
+      const testsFiltered = response.filter((test) => test.type === "technical")
+
+      console.log({response})
+
+      const interviewsFiltered = response.filter((test) => test.type === "interview" && test.hard_skills[0] === String(user_id))
+
+      await setTests(testsFiltered)
+      await setInterviews(interviewsFiltered)
     }
 
   }
@@ -368,7 +376,7 @@ export default function CandidateItem({ params }) {
                   )
                 }
 
-                {isUserInTest ? (
+                {isUserInTest && tests.length > 0 ? (
                   <table className="table-auto divide-y divide-gray-300 py-3">
                     <thead className="">
                       <tr>
@@ -416,23 +424,37 @@ export default function CandidateItem({ params }) {
                 </h1>
                 {
                   isUserInTest ? (
-                    <p>
-                      Este es un resumen de las entrevistas del candidato.
-                    </p>
+                    <div>
+                      <p>
+                        Este es un resumen de las entrevistas del candidato.
+                      </p>
+                      <span className="sm:ml-3 py-2">
+                        <button
+                          type="button"
+                          className="inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                        >
+                          <CheckIcon
+                            className="-ml-0.5 mr-1.5 h-5 w-5"
+                            aria-hidden="true"
+                          />
+                          <Link href={`/interview_create/${user_id}`}>Crear nueva entrevista</Link>
+                        </button>
+                      </span>
+                    </div>
                   ) : (
                     <p>
                       Este candidato aún no ha sido seleccionado para realizar
-                      pruebas.
+                      entrevistas.
                     </p>
                   )
                 }
                 {
-                  isUserInTest ? (
+                  isUserInTest && interviews.length > 0 ? (
                     <table className="table-auto divide-y divide-gray-300 py-3">
                       <thead className="">
                         <tr>
                           <th className="text-lg from-black font-bold leading-2 text-gray-900 sm:truncate sm:tracking-tight py-1">
-                            Fecha y hora
+                            Fecha
                           </th>
                           <th className="text-lg from-black font-bold leading-2 text-gray-900 sm:truncate sm:tracking-tight py-1">
                             Resultado
@@ -440,86 +462,29 @@ export default function CandidateItem({ params }) {
                         </tr>
                       </thead>
                       <tbody className="divide-y divide-gray-300 py-2">
-                        <tr>
-                          <td className="text-sm font-medium leading-6 text-gray-700 sm:px-3 py-1">
-                            10 de Oct 2023
-                          </td>
-                          <td className="pl-5">
-                            <span className="inline-flex items-center rounded-md bg-blue-50 px-2 py-1 text-xs font-medium text-blue-700 ring-1 ring-inset ring-blue-700/10">
-                              50%
-                            </span>
-                          </td>
-                          <td>
-                            <button
-                              className="inline-flex items-center rounded-md bg-indigo-50 px-2 py-1 text-xs font-medium text-indigo-700 ring-1 ring-inset ring-indigo-700/10 hover:bg-indigo-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                            //onClick={() =>
-                            //console.log(`Detalles de ${row.original.rol}`)
-                            //}
-                            >
-                              Modificar
-                            </button>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td className="text-sm font-medium leading-6 text-gray-700 sm:px-3 py-1">
-                            20 de Oct 2023
-                          </td>
-                          <td className="pl-5">
-                            <span className="inline-flex items-center rounded-md bg-blue-50 px-2 py-1 text-xs font-medium text-blue-700 ring-1 ring-inset ring-blue-700/10">
-                              90%
-                            </span>
-                          </td>
-                          <td>
-                            <button
-                              className="inline-flex items-center rounded-md bg-indigo-50 px-2 py-1 text-xs font-medium text-indigo-700 ring-1 ring-inset ring-indigo-700/10 hover:bg-indigo-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                            //onClick={() =>
-                            //console.log(`Detalles de ${row.original.rol}`)
-                            //}
-                            >
-                              Modificar
-                            </button>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td className="text-sm font-medium leading-6 text-gray-700 sm:px-3 py-1">
-                            3 de Ago 2022
-                          </td>
-                          <td className="pl-5">
-                            <span className="inline-flex items-center rounded-md bg-blue-50 px-2 py-1 text-xs font-medium text-blue-700 ring-1 ring-inset ring-blue-700/10">
-                              80%
-                            </span>
-                          </td>
-                          <td>
-                            <button
-                              className="inline-flex items-center rounded-md bg-indigo-50 px-2 py-1 text-xs font-medium text-indigo-700 ring-1 ring-inset ring-indigo-700/10 hover:bg-indigo-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                            //onClick={() =>
-                            //console.log(`Detalles de ${row.original.rol}`)
-                            //}
-                            >
-                              Modificar
-                            </button>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td className="text-sm font-medium leading-6 text-gray-700 sm:px-3 py-1">
-                            1 Feb de 2023
-                          </td>
-                          <td className="pl-5">
-                            <span className="inline-flex items-center rounded-md bg-blue-50 px-2 py-1 text-xs font-medium text-blue-700 ring-1 ring-inset ring-blue-700/10">
-                              20%
-                            </span>
-                          </td>
-                          <td>
-                            <button
-                              className="inline-flex items-center rounded-md bg-indigo-50 px-2 py-1 text-xs font-medium text-indigo-700 ring-1 ring-inset ring-indigo-700/10 hover:bg-indigo-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                            //onClick={() =>
-                            //console.log(`Detalles de ${row.original.rol}`)
-                            //}
-                            >
-                              Modificar
-                            </button>
-                          </td>
-                        </tr>
+                        {
+                          interviews.map((interview) => (
+                            <tr>
+                              <td className="text-sm font-medium leading-6 text-gray-700 sm:px-3 py-1">
+                                {
+                                  new Date(interview.difficulty_level).toLocaleDateString('es-co',
+                                    {
+                                      weekday: "long", year: "numeric", month: "short", day: "numeric", hour: "numeric", minute: "numeric"
+                                    })}
+                              </td>
+                              <td>
+                                <button
+                                  className="inline-flex items-center rounded-md bg-indigo-50 px-2 py-1 text-xs font-medium text-indigo-700 ring-1 ring-inset ring-indigo-700/10 hover:bg-indigo-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                                  onClick={() => {
+                                      window.open('https://youtu.be/V8DGdPkBBxg?si=ucGakOvvh9bl892e&t=50', "_blank")
+                                  }}
+                                >
+                                  Ver entrevista
+                                </button>
+                              </td>
+                            </tr>
+                          ))
+                        }
                       </tbody>
                     </table>
                   ) : null

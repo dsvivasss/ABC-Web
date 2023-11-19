@@ -141,7 +141,8 @@ export default function Project_create() {
 
     const response = await request.json()
 
-    await setTests(response)
+    const testsFiltered = response.filter((test) => test.type === "technical")
+    await setTests(testsFiltered)
   }
 
   const handleAssignCandidate = async (candidate_id) => {
