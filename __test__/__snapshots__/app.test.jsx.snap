@@ -272,7 +272,7 @@ exports[`Home page Home page renders correctly 1`] = `
                 name="phone"
                 placeholder="+571112223333"
                 required=""
-                type="number"
+                type="phone"
               />
             </div>
           </div>
@@ -455,7 +455,7 @@ exports[`Home page Home page renders correctly 1`] = `
            
           <a
             class="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
-            href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
+            href="http://localhost:3000/candidate_login"
           >
             Log In
           </a>
