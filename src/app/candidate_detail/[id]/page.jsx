@@ -16,6 +16,7 @@ import TableComponent from "../../components/TableComponent";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useSearchParams } from 'next/navigation'
+import { t } from "i18next";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -67,13 +68,12 @@ export default function CandidateItem({ params }) {
 
     const response = await request.json()
 
-    const isUserWithinTest = response[0]?.users?.some((user) => String(user.id) === String(user_id))
+    let isUserWithinTest = response[0]?.users?.some((user) => String(user.id) === String(user_id))
+    if (response.length === 0) isUserWithinTest = true
 
     if (isUserWithinTest) {
       await setIsUserInTest(true)
       const testsFiltered = response.filter((test) => test.type === "technical")
-
-      console.log({response})
 
       const interviewsFiltered = response.filter((test) => test.type === "interview" && test.hard_skills[0] === String(user_id))
 
