@@ -1,6 +1,6 @@
 'use client';
 import Image from 'next/image'
-import styles from '../page.module.css'
+import styles from '../../page.module.css'
 import { Fragment, useState } from 'react'
 import { Listbox, Transition } from '@headlessui/react'
 import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid'
