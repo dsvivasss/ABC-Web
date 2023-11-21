@@ -15,7 +15,7 @@ import {
   } from "@heroicons/react/20/solid";
   import { useRouter } from 'next/navigation'
 
-const ProjectcardItem = ({project_data}) => {
+const ProjectcardItem = ({project_data, origin='project'}) => {
   // istanbul ignore next
   const router = useRouter() 
 
@@ -30,7 +30,7 @@ const ProjectcardItem = ({project_data}) => {
   function editProject(project){
     localStorage.setItem("project_selected", JSON.stringify(project))
     router.refresh()
-    router.push("/project_detail")
+    origin === 'project' ? router.push("/project_detail") : router.push("/project_user_detail")
   }
   return (
     <div className={styles.card}>
