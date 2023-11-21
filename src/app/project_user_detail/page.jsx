@@ -242,7 +242,7 @@ export default function Project_create() {
                   <tbody className="divide-y divide-gray-300 py-2">
                     {
                       tests.map((test) => (
-                        <tr>
+                        <tr style={{cursor: "pointer"}} key={test.id} onClick={() => router.push(`/test/${test.id}`)}>
                           <td className="text-sm font-medium leading-6 text-gray-700 sm:px-3 py-1">
                             {test.type === "technical" ? test.title : test.type}
                           </td>
