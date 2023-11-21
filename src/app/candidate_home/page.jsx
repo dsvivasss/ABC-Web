@@ -1,21 +1,12 @@
 "use client";
-import Image from "next/image";
-import styles from "../page.module.css";
 import { Fragment, useState } from "react";
-import { Listbox, Transition } from "@headlessui/react";
+import {Transition } from "@headlessui/react";
 import { Disclosure, Menu } from "@headlessui/react";
-import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
-import { PaperClipIcon } from "@heroicons/react/20/solid";
-import { useCallback, useEffect } from "react";
+import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline"
+import { useEffect } from "react";
 import {
-  BriefcaseIcon,
-  CalendarIcon,
   CheckIcon,
   ChevronDownIcon,
-  CurrencyDollarIcon,
-  LinkIcon,
-  MapPinIcon,
-  PencilIcon,
 } from "@heroicons/react/20/solid";
 
 import ProjectcardItem from "../components/ProjectcardItem";
@@ -32,13 +23,14 @@ export default function Project() {
   var company_id = null
   useEffect(() => {
     company_id = localStorage.getItem("company_id")
-    // ListProject()
+    console.log({company_id})
+    ListProject()
   }, []);
 
   function ListProject() {
     
     fetch(
-      `https://fli2mqd2g8.execute-api.us-east-1.amazonaws.com/dev/projects/companies/${company_id}`,
+      `https://fli2mqd2g8.execute-api.us-east-1.amazonaws.com/dev/projects/users/${company_id}`,
       {
         method: "GET",
         headers: {
@@ -196,7 +188,7 @@ export default function Project() {
                         </svg>
                       </span>
                       <span className="ml-2 text-sm tracking-wide truncate">
-                        pruebas
+                        Proyectos
                       </span>
                       <span className="px-2 py-0.5 ml-auto text-xs font-medium tracking-wide text-green-500 bg-green-50 rounded-full">
                         {projects.length}
@@ -213,10 +205,10 @@ export default function Project() {
           <div className="lg:flex lg:items-center lg:justify-between">
             <div className="min-w-0 flex-1 pl-6 pb-4">
               <h2 className="animate-fade-up from-black bg-clip-text text-2xl font-bold leading-7 text-gray-900 sm:truncate sm:text-3xl sm:tracking-tight py-2">
-                Mis pruebas
+                Proyectos de interés
               </h2>
               <p>
-                A continuación podrás ver el listado de tus pruebas en curso.
+                A continuación podrás ver el listado de los proyectos donde has sido seleccionado o asignado
               </p>
             </div>
             <div className="mt-5 flex lg:ml-4 lg:mt-0">
@@ -276,6 +268,7 @@ export default function Project() {
             {projects.map((project, index) => (
               <ProjectcardItem 
               project_data={project}
+              origin="candidate"
               />
             ))}
           </div>
