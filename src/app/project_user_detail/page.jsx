@@ -11,63 +11,13 @@ import Header from "../components/Header";
 import SideBar from "../components/SideBar";
 import { useRouter } from "next/navigation";
 
-const skills_soft = [
-  {
-    id: 1,
-    name: "Comunicación estratégica",
-  },
-
-  {
-    id: 2,
-    name: "Pensamiento sistémico",
-  },
-
-  {
-    id: 3,
-    name: "Creatividad",
-  },
-];
-
-const skills_hard = [
-  {
-    id: 1,
-    name: "Python",
-  },
-
-  {
-    id: 2,
-    name: "Typescript",
-  },
-
-  {
-    id: 3,
-    name: "Cálculo multivariable",
-  },
-];
-
-const dificultad = [
-  {
-    id: 1,
-    name: "Alta",
-  },
-
-  {
-    id: 2,
-    name: "Media",
-  },
-
-  {
-    id: 3,
-    name: "Baja",
-  },
-];
-
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
 export default function Project_create() {
   let project_data = { soft_skills: [], hard_skills: [], roles: [] };
+  const user_id = localStorage.getItem("company_id")
   if (typeof window !== "undefined") {
     // Perform localStorage action
     project_data = JSON.parse(localStorage.getItem("project_selected"));
@@ -228,34 +178,39 @@ export default function Project_create() {
                   Conoce el listado de pruebas que debes realizar para aplicar al proyecto
                 </p>
 
-                <table className="table-auto divide-y divide-gray-300 py-3">
-                  <thead className="">
-                    <tr>
-                      <th className="text-lg from-black font-bold leading-2 text-gray-900 sm:truncate sm:tracking-tight py-1">
-                        Nombre
-                      </th>
-                      <th className="text-lg from-black font-bold leading-2 text-gray-900 sm:truncate sm:tracking-tight py-1">
-                        Tema
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y divide-gray-300 py-2">
-                    {
-                      tests.map((test) => (
-                        <tr style={{cursor: "pointer"}} key={test.id} onClick={() => router.push(`/test/${test.id}`)}>
-                          <td className="text-sm font-medium leading-6 text-gray-700 sm:px-3 py-1">
-                            {test.type === "technical" ? test.title : test.type}
-                          </td>
-                          <td className="text-sm font-medium leading-6 text-gray-700 sm:px-3 py-1">
-                            <span className="inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20">
-                              {test.hard_skills}
-                            </span>
-                          </td>
+                {
+                  tests.length > 0 ?
+
+                    <table className="table-auto divide-y divide-gray-300 py-3">
+                      <thead className="">
+                        <tr>
+                          <th className="text-lg from-black font-bold leading-2 text-gray-900 sm:truncate sm:tracking-tight py-1">
+                            Nombre
+                          </th>
+                          <th className="text-lg from-black font-bold leading-2 text-gray-900 sm:truncate sm:tracking-tight py-1">
+                            Tema
+                          </th>
                         </tr>
-                      ))
-                    }
-                  </tbody>
-                </table>
+                      </thead>
+                      <tbody className="divide-y divide-gray-300 py-2">
+                        {
+                          tests.map((test) => (
+                            <tr style={{ cursor: "pointer" }} key={test.id} onClick={() => router.push(`/test/${test.id}/?user_id=${user_id}`)}>
+                              <td className="text-sm font-medium leading-6 text-gray-700 sm:px-3 py-1">
+                                {test.type === "technical" ? test.title : test.type}
+                              </td>
+                              <td className="text-sm font-medium leading-6 text-gray-700 sm:px-3 py-1">
+                                <span className="inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20">
+                                  {test.hard_skills}
+                                </span>
+                              </td>
+                            </tr>
+                          ))
+                        }
+                      </tbody>
+                    </table>
+                    : null
+                }
               </div>
 
             </div>
