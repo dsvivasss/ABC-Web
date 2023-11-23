@@ -2,10 +2,12 @@
 import React, { useEffect, useState } from 'react'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import {useRouter} from 'next/navigation'
 
 function page({ params, searchParams }) {
     const { id: test_id } = params
     const { user_id } = searchParams
+    const router = useRouter()
 
     const project_data = JSON.parse(localStorage.getItem("project_selected"));
 
@@ -65,9 +67,11 @@ function page({ params, searchParams }) {
             return
         }
 
-        if (request.status === 200) {
+        if (request.status === 201) {
             toast.success("Test realizado correctamente")
-            return
+            setTimeout(() => {
+                router.push("/project_user_detail")
+            }, 2000)
         }
     }
 

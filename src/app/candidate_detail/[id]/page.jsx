@@ -77,6 +77,11 @@ export default function CandidateItem({ params }) {
 
       const interviewsFiltered = response.filter((test) => test.type === "interview" && test.hard_skills[0] === String(user_id))
 
+      for (const test of testsFiltered) {
+        const submissionsFromUser = test.submissions?.filter((submission) => String(submission.user_id) === String(user_id))
+        test.submissions = submissionsFromUser
+      }
+
       await setTests(testsFiltered)
       await setInterviews(interviewsFiltered)
     }
@@ -397,7 +402,8 @@ export default function CandidateItem({ params }) {
                             </td>
                             <td className="pl-5">
                               <span className="inline-flex items-center rounded-md bg-blue-50 px-2 py-1 text-xs font-medium text-blue-700 ring-1 ring-inset ring-blue-700/10">
-                                50%
+                                {/* {submissions.length > 0 ? submissions.filter((submission) => submission.test_id === test.id)[0]?.score : "Sin realizar"} */}
+                                {test.submissions.length > 0 ? test.submissions[0].score : "Sin realizar"}
                               </span>
                             </td>
                             <td>
@@ -476,7 +482,7 @@ export default function CandidateItem({ params }) {
                                 <button
                                   className="inline-flex items-center rounded-md bg-indigo-50 px-2 py-1 text-xs font-medium text-indigo-700 ring-1 ring-inset ring-indigo-700/10 hover:bg-indigo-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                                   onClick={() => {
-                                      window.open('https://youtu.be/V8DGdPkBBxg?si=ucGakOvvh9bl892e&t=50', "_blank")
+                                    window.open('https://youtu.be/V8DGdPkBBxg?si=ucGakOvvh9bl892e&t=50', "_blank")
                                   }}
                                 >
                                   Ver entrevista
