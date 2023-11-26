@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import Header from "../../components/Header";
 import SideBar from "../../components/SideBar";
 import styles from "../../page.module.css";
+import Link from "next/link";
 
 function page({ params, searchParams }) {
   const { id: test_id } = params;
@@ -102,34 +103,35 @@ function page({ params, searchParams }) {
           <div className={styles.center2}>
             <div className={styles.grid3}>
               <div>
-
                 <div className={styles.card}>
                   <h1 className="animate-fade-up text-2xl from-black bg-clip-text  font-bold leading-7 text-gray-900 sm:truncate sm:tracking-tight py-2">
                     Prueba
                   </h1>
                   <p>
-                    A continuación encontrarás el cuestionario con las diferentes opciones de respuesta.
+                    A continuación encontrarás el cuestionario con las
+                    diferentes opciones de respuesta.
                   </p>
 
                   <div>
-                    <br />
-
                     {tests.map((test) => (
                       <div key={test.id}>
-                        <h1>{test.title}</h1>
-                        <h3>{test.type}</h3>
-                        <h4>{test.difficulty_level}</h4>
+                        <h1 className="animate-fade-up text-2xl from-black bg-clip-text  font-bold leading-7 text-gray-900 sm:truncate sm:tracking-tight py-2">
+                          {test.title}
+                        </h1>
+                        <p>Tipo de prueba: {test.type}</p>
+                        <p>Nivel de dificultad: {test.difficulty_level}</p>
                       </div>
                     ))}
 
                     {questions.map((question, index) => (
-                      <div key={question.id}>
-                        <h4>
+                      <div key={question.id} className="pt-2">
+                        <h1 className="animate-fade-up text-1xl from-black bg-clip-text  font-bold leading-7 text-gray-900 sm:truncate sm:tracking-tight py-2">
                           {index + 1}. {question.description}
-                        </h4>
+                        </h1>
                         {question.options.map((option) => (
-                          <div key={option.id}>
+                          <p key={option.id} className="px-2">
                             <input
+                              className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
                               type="radio"
                               id={option.id}
                               name={question.id}
@@ -140,16 +142,24 @@ function page({ params, searchParams }) {
                                 setQuestions(newQuestions);
                               }}
                             />
-                            <label htmlFor={option.id}>
+                            <label htmlFor={option.id} className="px-2">
                               {option.description}
                             </label>
-                          </div>
+                          </p>
                         ))}
                       </div>
                     ))}
 
                     {questions.length > 0 && (
-                      <button onClick={() => handleSubmit()}>Submit</button>
+                      <span className="sm:ml-3 py-2 pt-5">
+                        <button
+                          type="button"
+                          className="inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                          onClick={() => handleSubmit()}
+                        >
+                          Finalizar prueba
+                        </button>
+                      </span>
                     )}
                   </div>
                 </div>
