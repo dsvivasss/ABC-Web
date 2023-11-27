@@ -19,7 +19,10 @@ export default function Project_create() {
   const [projects, setProjects] = useState([]);
   var company_id = null;
   useEffect(() => {
-    company_id = localStorage.getItem("company_id");
+    if (typeof window !== "undefined") {
+      // Perform localStorage action
+      company_id = localStorage.getItem("company_id");
+    }
     console.log({ company_id });
     ListProject();
   }, []);
