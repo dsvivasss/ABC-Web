@@ -46,9 +46,10 @@ export default function Project_create() {
   }
 
   let project_data = { soft_skills: [], hard_skills: [], roles: [] };
-  const user_id = localStorage.getItem("company_id");
+  let user_id = 0
   if (typeof window !== "undefined") {
     // Perform localStorage action
+    user_id = localStorage.getItem("company_id");
     project_data = JSON.parse(localStorage.getItem("project_selected"));
   }
 
