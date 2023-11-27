@@ -8,10 +8,11 @@ import {
     CalendarIcon,
     CheckIcon,
     ChevronDownIcon,
-    CurrencyDollarIcon,
+    EyeIcon,
     LinkIcon,
-    MapPinIcon,
+    UserGroupIcon,
     PencilIcon,
+    UsersIcon,
   } from "@heroicons/react/20/solid";
   import { useRouter } from 'next/navigation'
 
@@ -41,37 +42,30 @@ const ProjectcardItem = ({project_data, origin='project'}) => {
           </h2>
           <div className="mt-1 flex flex-col sm:mt-0 sm:flex-row sm:flex-wrap sm:space-x-6">
             <div className="mt-2 flex items-center text-sm text-gray-500">
-              <BriefcaseIcon
+              <UserGroupIcon
                 className="mr-1.5 h-5 w-5 flex-shrink-0 text-gray-400"
                 aria-hidden="true"
               />
-              Full-time
+              Miembros del proyecto: {project_data.users_assigned}
             </div>
             <div className="mt-2 flex items-center text-sm text-gray-500">
-              <MapPinIcon
+              <UsersIcon
                 className="mr-1.5 h-5 w-5 flex-shrink-0 text-gray-400"
                 aria-hidden="true"
               />
-              Remote
-            </div>
-            <div className="mt-2 flex items-center text-sm text-gray-500">
-              <CurrencyDollarIcon
-                className="mr-1.5 h-5 w-5 flex-shrink-0 text-gray-400"
-                aria-hidden="true"
-              />
-              $120k &ndash; $140k
+              Candidatos: {project_data.users_selected}
             </div>
             <div className="mt-2 flex items-center text-sm text-gray-500">
               <CalendarIcon
                 className="mr-1.5 h-5 w-5 flex-shrink-0 text-gray-400"
                 aria-hidden="true"
               />
-              Closing on January 9, 2020
+              Creado: {project_data.createdAt}
             </div>
           </div>
         </div>
         <div className="mt-5 flex lg:ml-4 lg:mt-0">
-          <span className="hidden sm:block">
+          {/* <span className="hidden sm:block">
             <button
             onClick={
               // istanbul ignore next
@@ -85,7 +79,7 @@ const ProjectcardItem = ({project_data, origin='project'}) => {
               />
               Editar
             </button>
-          </span>
+          </span> */}
 
           <span className="ml-3 hidden sm:block">
             <button
@@ -95,7 +89,7 @@ const ProjectcardItem = ({project_data, origin='project'}) => {
               type="button"
               className="inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
             >
-              <LinkIcon
+              <EyeIcon
                 className="-ml-0.5 mr-1.5 h-5 w-5 text-gray-400"
                 aria-hidden="true"
               />

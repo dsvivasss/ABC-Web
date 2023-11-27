@@ -6,6 +6,7 @@ import Header from '../src/app/components/Header';
 import SideBar from '../src/app/components/SideBar';
 import TestcardItem from '../src/app/components/TestcardItem';
 import '@testing-library/jest-dom';
+import fetch from "node-fetch";
 
 jest.mock("next/navigation", () => ({
   useRouter() {

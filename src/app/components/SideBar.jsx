@@ -1,6 +1,32 @@
-import Link from "next/link"
+import Link from "next/link";
+import { useState, useEffect } from "react";
+import fetch from "node-fetch";
 
 const SideBar = () => {
+  const [projects, setProjects] = useState([]);
+  var company_id = null;
+  useEffect(() => {
+    company_id = localStorage.getItem("company_id");
+    ListProject();
+  }, []);
+
+  // istanbul ignore next
+  function ListProject() {
+    fetch(
+      `https://fli2mqd2g8.execute-api.us-east-1.amazonaws.com/dev/projects/companies/${company_id}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    )
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        setProjects(data.projects);
+      });
+  }
   return (
     <div className="bg-neutral-50 w-1/6">
       <div className="min-h-screen flex flex-col flex-auto flex-shrink-0 antialiased bg-neutral-50 text-gray-800">
@@ -37,11 +63,10 @@ const SideBar = () => {
                     </svg>
                   </span>
                   <span className="ml-2 text-sm tracking-wide truncate">
-
                     <Link href="/project_list">Proyectos</Link>
                   </span>
                   <span className="px-2 py-0.5 ml-auto text-xs font-medium tracking-wide text-green-500 bg-green-50 rounded-full">
-                    3
+                    {projects.length}
                   </span>
                 </a>
               </li>
@@ -50,6 +75,6 @@ const SideBar = () => {
         </div>
       </div>
     </div>
-  )
-}
-export default SideBar
+  );
+};
+export default SideBar;

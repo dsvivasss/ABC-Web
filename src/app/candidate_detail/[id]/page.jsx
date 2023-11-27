@@ -17,6 +17,8 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useSearchParams } from 'next/navigation'
 import { t } from "i18next";
+import SideBar from "../../components/SideBar";
+import fetch from "node-fetch";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -27,7 +29,7 @@ export default function CandidateItem({ params }) {
   const router = useRouter();
 
   const user_id = params.id;
-  const project_data = JSON.parse(localStorage.getItem("project_selected"))
+  let project_data = JSON.parse(localStorage.getItem("project_selected"))
 
   const [user, setUser] = useState({
     users: []
@@ -57,6 +59,7 @@ export default function CandidateItem({ params }) {
     await setUser(response)
   }
 
+  //istambul ignore next
   const getTests = async () => {
     const request = await fetch(`https://fli2mqd2g8.execute-api.us-east-1.amazonaws.com/dev/tests/projects/${project_data.id}`,
       {
@@ -77,12 +80,18 @@ export default function CandidateItem({ params }) {
 
       const interviewsFiltered = response.filter((test) => test.type === "interview" && test.hard_skills[0] === String(user_id))
 
+      for (const test of testsFiltered) {
+        const submissionsFromUser = test.submissions?.filter((submission) => String(submission.user_id) === String(user_id))
+        test.submissions = submissionsFromUser
+      }
+
       await setTests(testsFiltered)
       await setInterviews(interviewsFiltered)
     }
 
   }
 
+  //istambul ignore next
   const handleSelectCandidate = async () => {
 
     const request = await fetch(`https://fli2mqd2g8.execute-api.us-east-1.amazonaws.com/dev/projects/${project_data.id}/selectcandidates/${user_id}`,
@@ -99,6 +108,7 @@ export default function CandidateItem({ params }) {
     router.push("/project_detail");
   }
 
+  // istanbul ignore next
   useEffect(() => {
     getCandidateDetail()
     getTests()
@@ -215,53 +225,7 @@ export default function CandidateItem({ params }) {
         </Disclosure>
       </div>
       <div className="flex">
-        <div className="bg-neutral-50 w-1/6">
-          <div className="min-h-screen flex flex-col flex-auto flex-shrink-0 antialiased bg-neutral-50 text-gray-800">
-            <div className="flex flex-col top-0 left-0 bg-neutral-50 h-full border-r">
-              <div className="overflow-y-auto overflow-x-hidden flex-grow">
-                <ul className="flex flex-col py-4 space-y-1">
-                  <li className="px-5">
-                    <div className="flex flex-row items-center h-8">
-                      <div className="text-sm font-light tracking-wide text-gray-500">
-                        Menu
-                      </div>
-                    </div>
-                  </li>
-
-                  <li>
-                    <a
-                      href="http://localhost:3000/project_list"
-                      className="flex items-center h-11 focus:outline-none hover:bg-gray-50 text-gray-600 hover:text-gray-800 border-l-4 border-transparent hover:border-indigo-500 pr-6"
-                    >
-                      <span className="inline-flex justify-center items-center ml-4">
-                        <svg
-                          className="w-5 h-5"
-                          fill="none"
-                          stroke="currentColor"
-                          viewBox="0 0 24 24"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth="2"
-                            d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
-                          ></path>
-                        </svg>
-                      </span>
-                      <span className="ml-2 text-sm tracking-wide truncate">
-                        Proyectos
-                      </span>
-                      <span className="px-2 py-0.5 ml-auto text-xs font-medium tracking-wide text-green-500 bg-green-50 rounded-full">
-                        3
-                      </span>
-                    </a>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
+      <SideBar></SideBar>
 
         <div className="w-5/6 p-4">
           <div className={styles.center2}>
@@ -397,7 +361,8 @@ export default function CandidateItem({ params }) {
                             </td>
                             <td className="pl-5">
                               <span className="inline-flex items-center rounded-md bg-blue-50 px-2 py-1 text-xs font-medium text-blue-700 ring-1 ring-inset ring-blue-700/10">
-                                50%
+                                {/* {submissions.length > 0 ? submissions.filter((submission) => submission.test_id === test.id)[0]?.score : "Sin realizar"} */}
+                                {test.submissions.length > 0 ? test.submissions[0].score : "Sin realizar"}
                               </span>
                             </td>
                             <td>
@@ -476,7 +441,7 @@ export default function CandidateItem({ params }) {
                                 <button
                                   className="inline-flex items-center rounded-md bg-indigo-50 px-2 py-1 text-xs font-medium text-indigo-700 ring-1 ring-inset ring-indigo-700/10 hover:bg-indigo-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                                   onClick={() => {
-                                      window.open('https://youtu.be/V8DGdPkBBxg?si=ucGakOvvh9bl892e&t=50', "_blank")
+                                    window.open('https://youtu.be/V8DGdPkBBxg?si=ucGakOvvh9bl892e&t=50', "_blank")
                                   }}
                                 >
                                   Ver entrevista
