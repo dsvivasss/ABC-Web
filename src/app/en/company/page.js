@@ -1,11 +1,12 @@
 'use client';
 import Image from 'next/image'
-import styles from '../page.module.css'
+import styles from '../../page.module.css'
 import { Fragment, useState } from 'react'
 import { Listbox, Transition } from '@headlessui/react'
 import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useRouter } from 'next/navigation'
 
 const tamanio = [
   {
@@ -61,16 +62,19 @@ const tamanio = [
     
       ]
 
+  // istanbul ignore next
   function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
   }
 
 export default function Company() {
 
+  const router = useRouter()
   const [selected, setSelected] = useState(tamanio[0])
   const [selected2, setSelected2] = useState(ubicacion[0])
   const [selected3, setSelected3] = useState(sector[0])
 
+  // istanbul ignore next
   function register(e){
     e.preventDefault();
     const form = e.target;
@@ -93,9 +97,12 @@ export default function Company() {
       },
       body: JSON.stringify(body)
     })
-    .then(response => {
-      console.log(response.json())
+    .then(response => response.json())
+    .then((data) =>{
       toast("Empresa creada!", {position: "bottom-left",theme: "dark"})
+      localStorage.setItem("company_id", data.id)
+      router.refresh()
+      router.push("/project_list")
     });
   }
 
@@ -407,7 +414,6 @@ export default function Company() {
             <div className="pb-1">
               <button
                 type="submit"
-                href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
                 className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
               >
                 Registrarse
@@ -417,7 +423,7 @@ export default function Company() {
 
           <p className="mt-10 text-center text-sm text-gray-500 pt-4">
             ¿Ya tienes una cuenta?{' '}
-            <a href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app" className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">
+            <a href="/company_login" className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">
               Iniciar sesión
             </a>
           </p>

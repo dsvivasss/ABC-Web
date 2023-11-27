@@ -10,9 +10,10 @@ import { useCallback, useEffect } from "react";
 import { CheckIcon } from "@heroicons/react/20/solid";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useRouter } from "next/navigation";
+import TestcardItem from "../components/TestcardItem";
 import Link from "next/link";
 import SideBar from "../components/SideBar";
+import fetch from "node-fetch";
 
 const skills_soft = [
   {
@@ -31,37 +32,55 @@ const skills_soft = [
   },
 ];
 
-const skills_hard = [
+const type = [
   {
-    id: 1,
-    name: "Python",
+    id: "technical",
+    name: "Tecnica",
   },
 
   {
-    id: 2,
-    name: "Typescript",
-  },
-
-  {
-    id: 3,
-    name: "Cálculo multivariable",
+    id: "psychology",
+    name: "Pisicolgia",
   },
 ];
 
-const roles = [
+const dificultad = [
   {
-    id: 1,
-    name: "Backend Developer",
+    id: "hard",
+    name: "Alta",
   },
 
   {
-    id: 2,
-    name: "Lider técnico",
+    id: "medium",
+    name: "Media",
   },
 
   {
-    id: 3,
-    name: "Arquitecto de software",
+    id: "basic",
+    name: "Baja",
+  },
+];
+
+const topics = [
+  {
+    id: "python",
+    name: "Python",
+  },
+  {
+    id: "javascript",
+    name: "Javascript",
+  },
+  {
+    id: "java",
+    name: "Java",
+  },
+  {
+    id: "oop",
+    name: "Programación orientada a objetos",
+  },
+  {
+    id: "product_management",
+    name: "Product management",
   },
 ];
 
@@ -73,11 +92,13 @@ function classNames(...classes) {
 }
 
 export default function Project_create() {
-  const router = useRouter();
   const [selected, setSelected] = useState(skills_soft[0]);
-  const [selected2, setSelected2] = useState(skills_hard[0]);
-  const [selected3, setSelected3] = useState(roles[0]);
+  const [selected2, setSelected2] = useState(type[0]);
+  const [selected3, setSelected3] = useState(dificultad[0]);
+  const [selected4, setSelected4] = useState(topics[0]);
+  const [tests, setTests] = useState([]);
   var company_id = null;
+  var project_data = null;
 
   // istanbul ignore next
   function register(e) {
@@ -86,19 +107,45 @@ export default function Project_create() {
     const form = e.target;
     const formData = new FormData(form);
     const formJson = Object.fromEntries(formData.entries());
-    const soft_skills = selected.name.split(" ");
-    const hard_skills = selected2.name.split(" ");
-    const roles = selected3.name.split(" ");
     const body = {
-      company_id: company_id,
-      title: formJson.project_title,
-      description: formJson.project_description,
-      soft_skills: soft_skills,
-      hard_skills: hard_skills,
-      roles: roles,
+      company_id: +company_id,
+      project_id: project_data.id,
+      title: formJson.test_title,
+      type: selected2.id,
+      difficulty_level: selected3.id,
+      hard_skills: [selected4.id],
+      questions: tests.map((test) => test.id),
     };
-    fetch(
-      "https://fli2mqd2g8.execute-api.us-east-1.amazonaws.com/dev/projects/",
+
+    // istanbul ignore next
+    fetch("https://fli2mqd2g8.execute-api.us-east-1.amazonaws.com/dev/tests/", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(body),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        toast("Prueba creada!", { position: "bottom-left", theme: "dark" });
+      });
+  }
+
+  // istanbul ignore next
+  async function getTests() {
+    const body = {
+      topics: [selected4.id], // {#options: ["python", "javascript", "java", "oop", "product_management"]#}
+      difficulty_level: selected3.id, // {#options: ["basic", "medium", "hard"]#}
+      question_type: "multiple_choice",
+      options: {
+        // {#Optional field#}
+        return_answers: true, // {#Default is false#}
+      },
+    };
+
+    const request = await fetch(
+      "https://fli2mqd2g8.execute-api.us-east-1.amazonaws.com/dev/questions/",
       {
         method: "POST",
         headers: {
@@ -106,19 +153,25 @@ export default function Project_create() {
         },
         body: JSON.stringify(body),
       }
-    )
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(data);
-        toast("Proyecto creado!", { position: "bottom-left", theme: "dark" });
-        router.refresh();
-        router.push("/project_list");
-      });
+    );
+
+    const response = await request.json();
+
+    setTests(response);
   }
 
   useEffect(() => {
     company_id = localStorage.getItem("company_id");
+    project_data = JSON.parse(localStorage.getItem("project_selected"));
   });
+
+  useEffect(() => {
+    async function getTestsCall() {
+      await getTests();
+    }
+
+    getTestsCall();
+  }, [selected3, selected4]);
 
   return (
     <>
@@ -237,7 +290,7 @@ export default function Project_create() {
           <div className="lg:flex lg:items-center lg:justify-between">
             <div className="min-w-0 flex-1 pl-6 pb-4">
               <h2 className="animate-fade-up from-black bg-clip-text text-2xl font-bold leading-7 text-gray-900 sm:truncate sm:text-3xl sm:tracking-tight py-2">
-                Crea un nuevo proyecto
+                Crea un nuevo test para los aspirantes
               </h2>
               <p>
                 Estas a muy pocos pasos de crear algo que cambiará el mundo.
@@ -252,55 +305,35 @@ export default function Project_create() {
                   <form className="space-y-6" onSubmit={register}>
                     <div>
                       <label
-                        htmlFor="project_title"
+                        htmlFor="test_title"
                         className="block text-sm font-medium leading-6 text-gray-900"
                       >
-                        Nombre del proyecto
+                        Título de la prueba
                       </label>
                       <div className="mt-2">
                         <input
-                          id="project_title"
-                          name="project_title"
-                          type="project_title"
+                          id="test_title"
+                          name="test_title"
+                          type="test_title"
                           autoComplete="name"
-                          placeholder="  Mi proyecto exitoso"
+                          placeholder="  Python for senior software engineers"
                           required
                           className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                         />
                       </div>
                     </div>
 
-                    <div>
-                      <label
-                        htmlFor="description"
-                        className="block text-sm font-medium leading-6 text-gray-900"
-                      >
-                        Descripción
-                      </label>
-                      <div className="mt-2">
-                        <input
-                          id="description"
-                          name="project_description"
-                          type="project_description"
-                          autoComplete="project_description"
-                          placeholder="  Comparte tu objetivo ambicioso en 250 caracteres"
-                          required
-                          className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                        />
-                      </div>
-                    </div>
-
-                    <Listbox value={selected} onChange={setSelected}>
+                    <Listbox value={selected2} onChange={setSelected2}>
                       {({ open }) => (
                         <>
                           <Listbox.Label className="block text-sm font-medium leading-0 text-gray-900">
-                            Habilidades blandas
+                            Temática a evaluar
                           </Listbox.Label>
                           <div className="relative mt-0">
                             <Listbox.Button className="relative w-full cursor-default rounded-md bg-white py-1.5 pr-10 text-left text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 sm:text-sm sm:leading-1">
                               <span className="flex items-center">
                                 <span className="ml-1 block truncate">
-                                  {selected.name}
+                                  {selected2.name}
                                 </span>
                               </span>
                               <span className="pointer-events-none absolute inset-y-0 right-0 ml-2 flex items-center pr-1.5 pt-2">
@@ -319,7 +352,7 @@ export default function Project_create() {
                               leaveTo="opacity-0"
                             >
                               <Listbox.Options className="absolute z-10 mt-1 max-h-56 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
-                                {skills_soft.map((person) => (
+                                {type.map((person) => (
                                   <Listbox.Option
                                     key={person.id}
                                     className={({ active }) =>
@@ -373,17 +406,17 @@ export default function Project_create() {
                       )}
                     </Listbox>
 
-                    <Listbox value={selected2} onChange={setSelected2}>
+                    <Listbox value={selected4} onChange={setSelected4}>
                       {({ open }) => (
                         <>
                           <Listbox.Label className="block text-sm font-medium leading-0 text-gray-900">
-                            Habilidades duras
+                            Tópico
                           </Listbox.Label>
                           <div className="relative mt-0">
                             <Listbox.Button className="relative w-full cursor-default rounded-md bg-white py-1.5 pr-10 text-left text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 sm:text-sm sm:leading-1">
                               <span className="flex items-center">
                                 <span className="ml-1 block truncate">
-                                  {selected2.name}
+                                  {selected4.name}
                                 </span>
                               </span>
                               <span className="pointer-events-none absolute inset-y-0 right-0 ml-2 flex items-center pr-1.5 pt-2">
@@ -402,9 +435,9 @@ export default function Project_create() {
                               leaveTo="opacity-0"
                             >
                               <Listbox.Options className="absolute z-10 mt-1 max-h-56 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
-                                {skills_hard.map((person) => (
+                                {topics.map((topic) => (
                                   <Listbox.Option
-                                    key={person.id}
+                                    key={topic.id}
                                     className={({ active }) =>
                                       classNames(
                                         active
@@ -413,7 +446,7 @@ export default function Project_create() {
                                         "relative cursor-default select-none py-2 pl-3 pr-9"
                                       )
                                     }
-                                    value={person}
+                                    value={topic}
                                   >
                                     {({ selected, active }) => (
                                       <>
@@ -426,7 +459,7 @@ export default function Project_create() {
                                               "ml-3 block truncate"
                                             )}
                                           >
-                                            {person.name}
+                                            {topic.name}
                                           </span>
                                         </div>
 
@@ -460,7 +493,7 @@ export default function Project_create() {
                       {({ open }) => (
                         <>
                           <Listbox.Label className="block text-sm font-medium leading-0 text-gray-900">
-                            Roles necesarios
+                            Dificultad de la prueba
                           </Listbox.Label>
                           <div className="relative mt-0">
                             <Listbox.Button className="relative w-full cursor-default rounded-md bg-white py-1.5 pr-10 text-left text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 sm:text-sm sm:leading-1">
@@ -485,7 +518,7 @@ export default function Project_create() {
                               leaveTo="opacity-0"
                             >
                               <Listbox.Options className="absolute z-10 mt-1 max-h-56 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
-                                {roles.map((person) => (
+                                {dificultad.map((person) => (
                                   <Listbox.Option
                                     key={person.id}
                                     className={({ active }) =>
@@ -545,22 +578,40 @@ export default function Project_create() {
                           type="button"
                           className="inline-flex items-center rounded-md px-3 py-2 text-sm font-semibold text-indigo-800 leading-6"
                         >
-                          <Link href="/project_list">Cancelar</Link>
+                          <Link href="/project_detail">Cancelar</Link>
                         </button>
                       </span>
                       <button
                         type="submit"
-                        href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
                         className="justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                       >
-                        Crear nuevo proyecto
+                        Crear test
                       </button>
                     </div>
                   </form>
                 </div>
               </div>
             </div>
-            <img href="https://w7.pngwing.com/pngs/458/672/png-transparent-abstract-flowing-lines-purple-line-abstract-lines-elegant-lines.png"></img>
+
+            <div className={styles.card}>
+              <h3 className="animate-fade-up from-black bg-clip-text text-2xl font-bold leading-7 text-gray-900 sm:truncate sm:text-2xl sm:tracking-tight py-2">
+                Vista previa del test
+              </h3>
+
+              <div>
+                {tests.map((test, index) => (
+                  <div>
+                    <TestcardItem
+                      key={index}
+                      index={index + 1}
+                      description={test.description}
+                      options={test.options}
+                    />
+                    <br />
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
       </div>

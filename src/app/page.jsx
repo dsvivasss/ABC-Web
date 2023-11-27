@@ -1,70 +1,151 @@
-'use client';
-import Image from 'next/image'
-import styles from './page.module.css'
-import { Fragment, useState } from 'react'
-import { Listbox, Transition } from '@headlessui/react'
-import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid'
+"use client";
+import Image from "next/image";
+import styles from "./page.module.css";
+import { Fragment, useState, useEffect } from "react";
+import { Listbox, Transition } from "@headlessui/react";
+import { CheckIcon, ChevronUpDownIcon } from "@heroicons/react/20/solid";
+import { useRouter } from "next/navigation";
+import "./i18n";
+import { useTranslation, Trans } from "react-i18next";
+import i18next from "i18next";
+import LanguageFlag from "./components/LanguageFlag";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const language = [
   {
+    id: "es",
+    name: "Español",
+  },
+
+  {
+    id: "en",
+    name: "Inglés",
+  },
+];
+const paises = [
+  {
     id: 1,
-    name: 'Español',
+    name: "Colombia",
   },
 
   {
     id: 2,
-    name: 'Inglés',
+    name: "Mexico",
   },
 
   {
     id: 3,
-    name: 'Alemán',
+    name: "Peru",
   },
+];
 
-]
+const skills = [
+  {
+    id: 1,
+    name: "python",
+  },
+  {
+    id: 2,
+    name: "javascript",
+  },
+  {
+    id: 3,
+    name: "java",
+  },
+  {
+    id: 4,
+    name: "oop",
+  },
+  {
+    id: 5,
+    name: "product_management",
+  },
+];
 
+const lngs = {
+  es: { nativeName: "Español" },
+  en: { nativeName: "English" },
+};
+
+// istanbul ignore next
 function classNames(...classes) {
-  return classes.filter(Boolean).join(' ')
+  return classes.filter(Boolean).join(" ");
 }
 
 export default function Home() {
-
-  const [selected, setSelected] = useState(language[0])
+  const [selected, setSelected] = useState(language[0]);
+  const [pais, setPais] = useState(paises[0]);
+  const [skillsSelected, setSkillsSelected] = useState([]);
+  const router = useRouter();
+  const { t, i18n } = useTranslation();
 
   // TODO: Add validation
-  function register(e) {
-
+  // istanbul ignore next
+  function register(e){
+    e.preventDefault();
+    const form = e.target;
+    const formData = new FormData(form);
+    const formJson = Object.fromEntries(formData.entries());
     const body = {
-      username: e.target.name.value,
-      email: e.target.email.value,
-      password: e.target.password.value,
-      language: selected.name,
-      skill: e.target.skill.value,
-      personality: e.target.personality.value
+        name: formJson.name,
+        email: formJson.email,
+        password: formJson.password,
+        cellphone: formJson.phone,
+        language: selected.id,
+        country: pais.name,
+        skill: skillsSelected.name,
+        personality: formJson.personality,
     }
-
-    e.preventDefault()
-    fetch('https://fli2mqd2g8.execute-api.us-east-1.amazonaws.com/dev/users/', {
-      body: JSON.stringify(body),
+    fetch('https://fli2mqd2g8.execute-api.us-east-1.amazonaws.com/dev/users/', 
+    { 
+      method: 'POST', 
       headers: {
         'Content-Type': 'application/json'
       },
-      method: 'POST'
+      body: JSON.stringify(body)
     })
-    .then(response => {
-      console.log(response.json())
-      toast("Aspirante creado!", {position: "bottom-left",theme: "dark"})
+    .then(response => response.json())
+    .then((data) =>{
+      toast("Candidato creado!", {position: "bottom-left",theme: "dark"})
+      localStorage.setItem("candidate_id", data.id)
+      router.refresh()
+      router.push("/candidate_home")
     });
+  }
+
+  // istanbul ignore next
+  function handleSelectSkill(value) {
+    if (!isSelected(value)) {
+      const selectedSkillsUpdated = [
+        ...skillsSelected,
+        skills.find((el) => el === value),
+      ];
+      setSkillsSelected(selectedSkillsUpdated);
+    } else {
+      handleDeselect(value);
+    }
+  }
+
+  // istanbul ignore next
+  function isSelected(value) {
+    return skillsSelected.find((el) => el === value) ? true : false;
+  }
+
+  // istanbul ignore next
+  function handleDeselect(value) {
+    const selectedSkillsUpdated = skillsSelected.filter((el) => el !== value);
+    setSkillsSelected(selectedSkillsUpdated);
   }
 
   return (
     <main className={styles.main}>
-
       <div className={styles.center}>
         <h1
           className="animate-fade-up from-black bg-clip-text text-center font-display text-4xl font-bold tracking-[-0.02em] [text-wrap:balance] md:text-7xl md:leading-[5rem]"
-          style={{ animationDelay: "0.15s", animationFillMode: "forwards" }}>
-          Registro
+          style={{ animationDelay: "0.15s", animationFillMode: "forwards" }}
+        >
+          {t("registrationTitle")}
         </h1>
       </div>
 
@@ -77,7 +158,7 @@ export default function Home() {
           href="/"
           rel="noopener noreferrer"
         >
-          <p>Accede como aspirante</p>
+          <p>{t("candidateSignup")}</p>
         </a>
         <a
           className="flex max-w-fit items-center justify-center space-x-2 rounded-full border border-gray-300 bg-white px-5 py-2 text-sm text-gray-600 shadow-md transition-colors hover:border-gray-800"
@@ -85,24 +166,24 @@ export default function Home() {
           rel="noopener noreferrer"
         >
           <p>
-            <span className="hidden sm:inline-block">Accede como empresa</span>
+            <span className="hidden sm:inline-block">{t("companySignup")}</span>
           </p>
         </a>
       </div>
 
       <div className={styles.card}>
         <div>
-          <h2>
-            Conectamos profesionales de TI
-          </h2>
+          <h2 className="text-center">{t("slogan")}</h2>
         </div>
 
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
           <form className="space-y-6" onSubmit={register}>
-
             <div>
-              <label htmlFor="name" className="block text-sm font-medium leading-6 text-gray-900">
-                Nombre
+              <label
+                htmlFor="name"
+                className="block text-sm font-medium leading-6 text-gray-900"
+              >
+                {t("name")}
               </label>
               <div className="mt-2">
                 <input
@@ -110,7 +191,7 @@ export default function Home() {
                   name="name"
                   type="name"
                   autoComplete="name"
-                  placeholder="  Mi nombre"
+                  placeholder={t("namePlaceholder")}
                   required
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
@@ -118,8 +199,11 @@ export default function Home() {
             </div>
 
             <div>
-              <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">
-                Correo
+              <label
+                htmlFor="email"
+                className="block text-sm font-medium leading-6 text-gray-900"
+              >
+                {t("email")}
               </label>
               <div className="mt-2">
                 <input
@@ -136,8 +220,11 @@ export default function Home() {
 
             <div>
               <div className="flex items-center justify-between">
-                <label htmlFor="password" className="block text-sm font-medium leading-6 text-gray-900">
-                  Contraseña
+                <label
+                  htmlFor="password"
+                  className="block text-sm font-medium leading-6 text-gray-900"
+                >
+                  {t("password")}
                 </label>
               </div>
               <div className="mt-2">
@@ -153,17 +240,47 @@ export default function Home() {
               </div>
             </div>
 
+            <div>
+              <div className="flex items-center justify-between">
+                <label
+                  htmlFor="phone"
+                  className="block text-sm font-medium leading-6 text-gray-900"
+                >
+                  {t("cellphone")}
+                </label>
+              </div>
+              <div className="mt-2">
+                <input
+                  id="phone"
+                  name="phone"
+                  type="phone"
+                  autoComplete="phone"
+                  placeholder="+571112223333"
+                  required
+                  maxLength="10"
+                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                />
+              </div>
+            </div>
+
             <Listbox value={selected} onChange={setSelected}>
               {({ open }) => (
                 <>
-                  <Listbox.Label className="block text-sm font-medium leading-6 text-gray-900">Idioma</Listbox.Label>
+                  <Listbox.Label className="block text-sm font-medium leading-6 text-gray-900">
+                    {t("dialect")}
+                  </Listbox.Label>
                   <div className="relative mt-2">
                     <Listbox.Button className="relative w-full cursor-default rounded-md bg-white py-1.5 pr-10 text-left text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 sm:text-sm sm:leading-6">
                       <span className="flex items-center">
-                        <span className="ml-3 block truncate">{selected.name}</span>
+                        <span className="ml-3 block truncate">
+                          {selected.name}
+                        </span>
                       </span>
                       <span className="pointer-events-none absolute inset-y-0 right-0 ml-2 flex items-center pr-2 pt-2">
-                        <ChevronUpDownIcon className="h-5 w-5 text-gray-900" aria-hidden="true" />
+                        <ChevronUpDownIcon
+                          className="h-5 w-5 text-gray-900"
+                          aria-hidden="true"
+                        />
                       </span>
                     </Listbox.Button>
 
@@ -176,13 +293,18 @@ export default function Home() {
                     >
                       <Listbox.Options className="absolute z-10 mt-1 max-h-56 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
                         {language.map((person) => (
+                          // istanbul ignore next
                           <Listbox.Option
                             key={person.id}
-                            className={({ active }) =>
-                              classNames(
-                                active ? 'bg-indigo-600 text-white' : 'text-gray-900',
-                                'relative cursor-default select-none py-2 pl-3 pr-9'
-                              )
+                            className={
+                              // istanbul ignore next
+                              ({ active }) =>
+                                classNames(
+                                  active
+                                    ? "bg-indigo-600 text-white"
+                                    : "text-gray-900",
+                                  "relative cursor-default select-none py-2 pl-3 pr-9"
+                                )
                             }
                             value={person}
                           >
@@ -190,7 +312,12 @@ export default function Home() {
                               <>
                                 <div className="flex items-center">
                                   <span
-                                    className={classNames(selected ? 'font-semibold' : 'font-normal', 'ml-3 block truncate')}
+                                    className={classNames(
+                                      selected
+                                        ? "font-semibold"
+                                        : "font-normal",
+                                      "ml-3 block truncate"
+                                    )}
                                   >
                                     {person.name}
                                   </span>
@@ -199,11 +326,189 @@ export default function Home() {
                                 {selected ? (
                                   <span
                                     className={classNames(
-                                      active ? 'text-white' : 'text-indigo-600',
-                                      'absolute inset-y-0 right-0 flex items-center pr-4'
+                                      active ? "text-white" : "text-indigo-600",
+                                      "absolute inset-y-0 right-0 flex items-center pr-4"
                                     )}
                                   >
-                                    <CheckIcon className="h-5 w-5" aria-hidden="true" />
+                                    <CheckIcon
+                                      className="h-5 w-5"
+                                      aria-hidden="true"
+                                    />
+                                  </span>
+                                ) : null}
+                              </>
+                            )}
+                          </Listbox.Option>
+                        ))}
+                      </Listbox.Options>
+                    </Transition>
+                  </div>
+                </>
+              )}
+            </Listbox>
+
+            <Listbox value={pais} onChange={setPais}>
+              {({ open }) => (
+                <>
+                  <Listbox.Label className="block text-sm font-medium leading-6 text-gray-900">
+                    {t("country")}
+                  </Listbox.Label>
+                  <div className="relative mt-2">
+                    <Listbox.Button className="relative w-full cursor-default rounded-md bg-white py-1.5 pr-10 text-left text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 sm:text-sm sm:leading-6">
+                      <span className="flex items-center">
+                        <span className="ml-3 block truncate">{pais.name}</span>
+                      </span>
+                      <span className="pointer-events-none absolute inset-y-0 right-0 ml-2 flex items-center pr-2 pt-2">
+                        <ChevronUpDownIcon
+                          className="h-5 w-5 text-gray-900"
+                          aria-hidden="true"
+                        />
+                      </span>
+                    </Listbox.Button>
+
+                    <Transition
+                      show={open}
+                      as={Fragment}
+                      leave="transition ease-in duration-100"
+                      leaveFrom="opacity-100"
+                      leaveTo="opacity-0"
+                    >
+                      <Listbox.Options className="absolute z-10 mt-1 max-h-56 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+                        {paises.map((option) => (
+                          <Listbox.Option
+                            key={option.id}
+                            className={
+                              // istanbul ignore next
+                              ({ active }) =>
+                                classNames(
+                                  active
+                                    ? "bg-indigo-600 text-white"
+                                    : "text-gray-900",
+                                  "relative cursor-default select-none py-2 pl-3 pr-9"
+                                )
+                            }
+                            value={option}
+                          >
+                            {({ selected, active }) => (
+                              <>
+                                <div className="flex items-center">
+                                  <span
+                                    className={classNames(
+                                      selected
+                                        ? "font-semibold"
+                                        : "font-normal",
+                                      "ml-3 block truncate"
+                                    )}
+                                  >
+                                    {option.name}
+                                  </span>
+                                </div>
+
+                                {selected ? (
+                                  <span
+                                    className={classNames(
+                                      active ? "text-white" : "text-indigo-600",
+                                      "absolute inset-y-0 right-0 flex items-center pr-4"
+                                    )}
+                                  >
+                                    <CheckIcon
+                                      className="h-5 w-5"
+                                      aria-hidden="true"
+                                    />
+                                  </span>
+                                ) : null}
+                              </>
+                            )}
+                          </Listbox.Option>
+                        ))}
+                      </Listbox.Options>
+                    </Transition>
+                  </div>
+                </>
+              )}
+            </Listbox>
+
+            <Listbox
+              value={skillsSelected}
+              onChange={
+                // istanbul ignore next
+                (value) => handleSelectSkill(value)
+              }
+            >
+              {({ open }) => (
+                <>
+                  <Listbox.Label className="block text-sm font-medium leading-6 text-gray-900">
+                    {t("skill")}
+                  </Listbox.Label>
+                  <div className="relative mt-2">
+                    <Listbox.Button className="relative w-full cursor-default rounded-md bg-white py-1.5 pr-10 text-left text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 sm:text-sm sm:leading-6">
+                      <span className="flex items-center">
+                        <span className="ml-3 block truncate">
+                          {skillsSelected
+                            .map(
+                              // istanbul ignore next
+                              (el) => el.name
+                            )
+                            .join(", ")}
+                        </span>
+                      </span>
+                      <span className="pointer-events-none absolute inset-y-0 right-0 ml-2 flex items-center pr-2 pt-2">
+                        <ChevronUpDownIcon
+                          className="h-5 w-5 text-gray-900"
+                          aria-hidden="true"
+                        />
+                      </span>
+                    </Listbox.Button>
+
+                    <Transition
+                      show={open}
+                      as={Fragment}
+                      leave="transition ease-in duration-100"
+                      leaveFrom="opacity-100"
+                      leaveTo="opacity-0"
+                    >
+                      <Listbox.Options className="absolute z-10 mt-1 max-h-56 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+                        {skills.map((option) => (
+                          <Listbox.Option
+                            key={option.id}
+                            className={
+                              // istanbul ignore next
+                              ({ active }) =>
+                                classNames(
+                                  active
+                                    ? "bg-indigo-600 text-white"
+                                    : "text-gray-900",
+                                  "relative cursor-default select-none py-2 pl-3 pr-9"
+                                )
+                            }
+                            value={option}
+                          >
+                            {({ selected, active }) => (
+                              <>
+                                <div className="flex items-center">
+                                  <span
+                                    className={classNames(
+                                      selected
+                                        ? "font-semibold"
+                                        : "font-normal",
+                                      "ml-3 block truncate"
+                                    )}
+                                  >
+                                    {option.name}
+                                  </span>
+                                </div>
+
+                                {selected ? (
+                                  <span
+                                    className={classNames(
+                                      active ? "text-white" : "text-indigo-600",
+                                      "absolute inset-y-0 right-0 flex items-center pr-4"
+                                    )}
+                                  >
+                                    <CheckIcon
+                                      className="h-5 w-5"
+                                      aria-hidden="true"
+                                    />
                                   </span>
                                 ) : null}
                               </>
@@ -218,25 +523,11 @@ export default function Home() {
             </Listbox>
 
             <div>
-              <label htmlFor="skill" className="block text-sm font-medium leading-6 text-gray-900">
-                Habilidades
-              </label>
-              <div className="mt-2">
-                <input
-                  id="skill"
-                  name="skill"
-                  type="skill"
-                  autoComplete="skill"
-                  placeholder="  Selecciona tus habilidades"
-                  required
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                />
-              </div>
-            </div>
-
-            <div>
-              <label htmlFor="personality" className="block text-sm font-medium leading-6 text-gray-900">
-                Personalidad
+              <label
+                htmlFor="personality"
+                className="block text-sm font-medium leading-6 text-gray-900"
+              >
+                {t("personality")}
               </label>
               <div className="mt-2 pb-2">
                 <input
@@ -244,7 +535,7 @@ export default function Home() {
                   name="personality"
                   type="personality"
                   autoComplete="personality"
-                  placeholder="  Selecciona tu personalidad"
+                  placeholder={t("personalityPlaceholder")}
                   required
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
@@ -257,20 +548,23 @@ export default function Home() {
                 href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
                 className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
               >
-                Registrarse
+                {t("signupButton")}
               </button>
             </div>
           </form>
 
           <p className="mt-10 text-center text-sm text-gray-500 pt-4">
-            ¿Ya tienes una cuenta?{' '}
-            <a href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app" className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">
-              Iniciar sesión
+            {t("account")}{" "}
+            <a
+              href="http://localhost:3000/candidate_login"
+              className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
+            >
+              {t("login")}
             </a>
           </p>
         </div>
       </div>
-
+      <LanguageFlag></LanguageFlag>
     </main>
-  )
+  );
 }

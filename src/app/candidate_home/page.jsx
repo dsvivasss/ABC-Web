@@ -1,21 +1,12 @@
 "use client";
-import Image from "next/image";
-import styles from "../page.module.css";
 import { Fragment, useState } from "react";
-import { Listbox, Transition } from "@headlessui/react";
+import {Transition } from "@headlessui/react";
 import { Disclosure, Menu } from "@headlessui/react";
-import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
-import { PaperClipIcon } from "@heroicons/react/20/solid";
-import { useCallback, useEffect } from "react";
+import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline"
+import { useEffect } from "react";
 import {
-  BriefcaseIcon,
-  CalendarIcon,
   CheckIcon,
   ChevronDownIcon,
-  CurrencyDollarIcon,
-  LinkIcon,
-  MapPinIcon,
-  PencilIcon,
 } from "@heroicons/react/20/solid";
 
 import ProjectcardItem from "../components/ProjectcardItem";
@@ -32,13 +23,14 @@ export default function Project() {
   var company_id = null
   useEffect(() => {
     company_id = localStorage.getItem("company_id")
+    console.log({company_id})
     ListProject()
   }, []);
 
   function ListProject() {
     
     fetch(
-      `https://fli2mqd2g8.execute-api.us-east-1.amazonaws.com/dev/projects/companies/${company_id}`,
+      `https://fli2mqd2g8.execute-api.us-east-1.amazonaws.com/dev/projects/users/${company_id}`,
       {
         method: "GET",
         headers: {
@@ -213,25 +205,13 @@ export default function Project() {
           <div className="lg:flex lg:items-center lg:justify-between">
             <div className="min-w-0 flex-1 pl-6 pb-4">
               <h2 className="animate-fade-up from-black bg-clip-text text-2xl font-bold leading-7 text-gray-900 sm:truncate sm:text-3xl sm:tracking-tight py-2">
-                Mis proyectos
+                Proyectos de interés
               </h2>
               <p>
-                A continuación podrás ver el listado de tus proyectos en curso.
+                A continuación podrás ver el listado de los proyectos donde has sido seleccionado o asignado
               </p>
             </div>
             <div className="mt-5 flex lg:ml-4 lg:mt-0">
-              <span className="sm:ml-3">
-                <button
-                  type="button"
-                  className="inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                >
-                  <CheckIcon
-                    className="-ml-0.5 mr-1.5 h-5 w-5"
-                    aria-hidden="true"
-                  />
-                  <Link href="/project_create">Crear nuevo proyecto</Link>
-                </button>
-              </span>
 
               {/* Dropdown */}
               <Menu as="div" className="relative ml-3 sm:hidden">
@@ -288,6 +268,7 @@ export default function Project() {
             {projects.map((project, index) => (
               <ProjectcardItem 
               project_data={project}
+              origin="candidate"
               />
             ))}
           </div>
