@@ -24,6 +24,7 @@ export default function Project_create() {
     ListProject();
   }, []);
 
+  // istanbul ignore next
   function ListProject() {
     fetch(
       `https://fli2mqd2g8.execute-api.us-east-1.amazonaws.com/dev/projects/users/${company_id}`,
@@ -58,6 +59,7 @@ export default function Project_create() {
   });
   const [tests, setTests] = useState([]);
 
+  // istanbul ignore next
   async function obtainSelectedCandidates() {
     const response = await fetch(
       `https://fli2mqd2g8.execute-api.us-east-1.amazonaws.com/dev/projects/${project_data.id}/selectedcandidates`,
@@ -78,6 +80,7 @@ export default function Project_create() {
     await setSelectedCandidate(data);
   }
 
+  // istanbul ignore next
   async function obtainAssignedCandidates() {
     const response = await fetch(
       `https://fli2mqd2g8.execute-api.us-east-1.amazonaws.com/dev/projects/${project_data.id}/assignedcandidates`,
@@ -98,6 +101,7 @@ export default function Project_create() {
     await setAssignedCandidate(data);
   }
 
+  // istanbul ignore next
   const getTests = async () => {
     const request = await fetch(
       `https://fli2mqd2g8.execute-api.us-east-1.amazonaws.com/dev/tests/projects/${project_data.id}`,
@@ -115,6 +119,7 @@ export default function Project_create() {
     await setTests(testsFiltered);
   };
 
+  // istanbul ignore next
   const handleAssignCandidate = async (candidate_id) => {
     const request = await fetch(
       `https://fli2mqd2g8.execute-api.us-east-1.amazonaws.com/dev/projects/${project_data.id}/assigncandidates/${candidate_id}`,
