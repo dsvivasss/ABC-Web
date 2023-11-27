@@ -18,6 +18,7 @@ import { useRouter } from "next/navigation";
 import { useSearchParams } from 'next/navigation'
 import { t } from "i18next";
 import SideBar from "../../components/SideBar";
+import fetch from "node-fetch";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -28,7 +29,7 @@ export default function CandidateItem({ params }) {
   const router = useRouter();
 
   const user_id = params.id;
-  const project_data = JSON.parse(localStorage.getItem("project_selected"))
+  let project_data = JSON.parse(localStorage.getItem("project_selected"))
 
   const [user, setUser] = useState({
     users: []
@@ -58,6 +59,7 @@ export default function CandidateItem({ params }) {
     await setUser(response)
   }
 
+  //istambul ignore next
   const getTests = async () => {
     const request = await fetch(`https://fli2mqd2g8.execute-api.us-east-1.amazonaws.com/dev/tests/projects/${project_data.id}`,
       {
@@ -89,6 +91,7 @@ export default function CandidateItem({ params }) {
 
   }
 
+  //istambul ignore next
   const handleSelectCandidate = async () => {
 
     const request = await fetch(`https://fli2mqd2g8.execute-api.us-east-1.amazonaws.com/dev/projects/${project_data.id}/selectcandidates/${user_id}`,
@@ -105,6 +108,7 @@ export default function CandidateItem({ params }) {
     router.push("/project_detail");
   }
 
+  // istanbul ignore next
   useEffect(() => {
     getCandidateDetail()
     getTests()

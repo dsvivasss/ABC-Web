@@ -13,6 +13,7 @@ import "react-toastify/dist/ReactToastify.css";
 import TestcardItem from "../components/TestcardItem";
 import Link from "next/link";
 import SideBar from "../components/SideBar";
+import fetch from "node-fetch";
 
 const skills_soft = [
   {

@@ -209,7 +209,7 @@ exports[`Project_create page Project_create page renders correctly 1`] = `
           <h2
             class="animate-fade-up from-black bg-clip-text text-2xl font-bold leading-7 text-gray-900 sm:truncate sm:text-3xl sm:tracking-tight py-2"
           >
-            Crea un nuevo proyecto
+            Crea un nuevo test para los aspirantes
           </h2>
           <p>
             Estas a muy pocos pasos de crear algo que cambiará el mundo.
@@ -234,9 +234,9 @@ exports[`Project_create page Project_create page renders correctly 1`] = `
                 <div>
                   <label
                     class="block text-sm font-medium leading-6 text-gray-900"
-                    for="project_title"
+                    for="test_title"
                   >
-                    Nombre del proyecto
+                    Título de la prueba
                   </label>
                   <div
                     class="mt-2"
@@ -244,32 +244,11 @@ exports[`Project_create page Project_create page renders correctly 1`] = `
                     <input
                       autocomplete="name"
                       class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                      id="project_title"
-                      name="project_title"
-                      placeholder="  Mi proyecto exitoso"
+                      id="test_title"
+                      name="test_title"
+                      placeholder="  Python for senior software engineers"
                       required=""
-                      type="project_title"
-                    />
-                  </div>
-                </div>
-                <div>
-                  <label
-                    class="block text-sm font-medium leading-6 text-gray-900"
-                    for="description"
-                  >
-                    Descripción
-                  </label>
-                  <div
-                    class="mt-2"
-                  >
-                    <input
-                      autocomplete="project_description"
-                      class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                      id="description"
-                      name="project_description"
-                      placeholder="  Comparte tu objetivo ambicioso en 250 caracteres"
-                      required=""
-                      type="project_description"
+                      type="test_title"
                     />
                   </div>
                 </div>
@@ -278,7 +257,7 @@ exports[`Project_create page Project_create page renders correctly 1`] = `
                   data-headlessui-state=""
                   id="headlessui-listbox-label-:r2:"
                 >
-                  Habilidades blandas
+                  Temática a evaluar
                 </label>
                 <div
                   class="relative mt-0"
@@ -298,7 +277,7 @@ exports[`Project_create page Project_create page renders correctly 1`] = `
                       <span
                         class="ml-1 block truncate"
                       >
-                        Comunicación estratégica
+                        Tecnica
                       </span>
                     </span>
                     <span
@@ -325,7 +304,7 @@ exports[`Project_create page Project_create page renders correctly 1`] = `
                   data-headlessui-state=""
                   id="headlessui-listbox-label-:r4:"
                 >
-                  Habilidades duras
+                  Tópico
                 </label>
                 <div
                   class="relative mt-0"
@@ -372,7 +351,7 @@ exports[`Project_create page Project_create page renders correctly 1`] = `
                   data-headlessui-state=""
                   id="headlessui-listbox-label-:r6:"
                 >
-                  Roles necesarios
+                  Dificultad de la prueba
                 </label>
                 <div
                   class="relative mt-0"
@@ -392,7 +371,7 @@ exports[`Project_create page Project_create page renders correctly 1`] = `
                       <span
                         class="ml-1 block truncate"
                       >
-                        Backend Developer
+                        Alta
                       </span>
                     </span>
                     <span
@@ -425,7 +404,7 @@ exports[`Project_create page Project_create page renders correctly 1`] = `
                       type="button"
                     >
                       <a
-                        href="/project_list"
+                        href="/project_detail"
                       >
                         Cancelar
                       </a>
@@ -433,19 +412,25 @@ exports[`Project_create page Project_create page renders correctly 1`] = `
                   </span>
                   <button
                     class="justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                    href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
                     type="submit"
                   >
-                    Crear nuevo proyecto
+                    Crear test
                   </button>
                 </div>
               </form>
             </div>
           </div>
         </div>
-        <img
-          href="https://w7.pngwing.com/pngs/458/672/png-transparent-abstract-flowing-lines-purple-line-abstract-lines-elegant-lines.png"
-        />
+        <div
+          class="card"
+        >
+          <h3
+            class="animate-fade-up from-black bg-clip-text text-2xl font-bold leading-7 text-gray-900 sm:truncate sm:text-2xl sm:tracking-tight py-2"
+          >
+            Vista previa del test
+          </h3>
+          <div />
+        </div>
       </div>
     </div>
   </div>

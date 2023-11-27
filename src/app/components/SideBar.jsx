@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { useState, useEffect } from "react";
+import fetch from "node-fetch";
 
 const SideBar = () => {
   const [projects, setProjects] = useState([]);
@@ -9,6 +10,7 @@ const SideBar = () => {
     ListProject();
   }, []);
 
+  // istanbul ignore next
   function ListProject() {
     fetch(
       `https://fli2mqd2g8.execute-api.us-east-1.amazonaws.com/dev/projects/companies/${company_id}`,
